@@ -7,26 +7,29 @@ export default {
   theme: {
     extend: {
       colors: {
-        // Deep space background used in the 3D portfolio
-        background: "#050511", 
-        foreground: "#f8fafc", // slate-50 for crisp text
-        muted: "#94a3b8",      // slate-400 for secondary text
+        background: "#f8fafc", 
+        foreground: "#0f172a", 
+        muted: "#64748b",      
         accent: {
-          DEFAULT: "#22d3ee",  // cyan-400
-          secondary: "#d946ef",// fuchsia-500
+          DEFAULT: "#06b6d4",  
+          secondary: "#ec4899",
         }
       },
 
       fontFamily: {
         sans: ["Inter", "sans-serif"],
         display: ["Space Grotesk", "sans-serif"],
-        // Added mono for the tech/code elements in the portfolio
         mono: ["JetBrains Mono", "Fira Code", "monospace"], 
+      },
+
+      boxShadow: {
+        // Combined the standard '2xl' shadow with the custom pink glow
+        'pink-glow': '0 25px 50px -12px rgba(0, 0, 0, 0.25), 0 0 40px rgba(236, 72, 153, 0.2)',
+        'cyan-glow': '0 0 8px rgba(6, 182, 212, 0.8)',
       },
 
       transitionTimingFunction: {
         "custom-ease": "cubic-bezier(0.76, 0, 0.24, 1)",
-        // Added a springy easing for highly interactive hover effects
         "spring": "cubic-bezier(0.175, 0.885, 0.32, 1.275)", 
       },
       

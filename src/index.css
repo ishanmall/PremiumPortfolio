@@ -1,47 +1,55 @@
+/* --- PREMIUM WEB FONTS --- */
+@import url('https://fonts.googleapis.com/css2?family=Syncopate:wght@600;700&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap');
+
+/* --- TAILWIND DIRECTIVES --- */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
-  body {
-    @apply bg-[#050511] text-slate-200 antialiased overflow-x-hidden;
+  html {
+    /* Set to auto because Lenis React handles our smooth scrolling! */
+    scroll-behavior: auto; 
   }
   
-  html {
-    scroll-behavior: smooth;
+  body {
+    @apply bg-[#050511] text-slate-200 antialiased overflow-x-hidden font-sans;
   }
 }
 
 @layer utilities {
+  /* Premium Typography Classes */
+  .font-display {
+    font-family: 'Syncopate', sans-serif;
+  }
+  .font-sans {
+    font-family: 'Space Grotesk', sans-serif;
+  }
+  .font-mono {
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  /* Safe text balance for headings */
   .text-balance {
     text-wrap: balance;
   }
-  
-  .transform-style-3d {
-    transform-style: preserve-3d;
-  }
-  
-  /* Pushes elements forward in 3D space */
-  .translate-z-10 {
-    transform: translateZ(10px);
-  }
 }
 
+/* --- PREMIUM NEON SCROLLBAR --- */
 ::-webkit-scrollbar {
-  width: 0px;
-  background: transparent;
+  width: 8px;
 }
 
-  ::-webkit-scrollbar {
-    width: 8px;
-  }
-  ::-webkit-scrollbar-track {
-    background: #050511;
-  }
-  ::-webkit-scrollbar-thumb {
-    background: rgba(6, 182, 212, 0.3); 
-    border-radius: 10px;
-  }
-  ::-webkit-scrollbar-thumb:hover {
-    background: rgba(217, 70, 239, 0.5); 
-  }
+::-webkit-scrollbar-track {
+  background: #050511;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(6, 182, 212, 0.5); /* Cyan 400 */
+  border-radius: 10px;
+  border: 2px solid #050511; /* Creates a floating "pill" effect inside the track */
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(217, 70, 239, 0.8); /* Fuchsia 500 */
+}
