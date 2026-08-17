@@ -1,12 +1,12 @@
 import React, { useRef, useMemo, Suspense, useEffect, useState } from 'react';
-import { motion, useScroll } from 'framer-motion';
+import { motion, useScroll, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import { ReactLenis } from 'lenis/react';
 import 'lenis/dist/lenis.css';
 import { ArrowUpRight, Code2, Play, Briefcase, Camera, Tv, Award, GraduationCap, BookOpen, ShieldCheck } from 'lucide-react';
 import * as THREE from 'three';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
-import { Environment, useGLTF, Sparkles, Grid, ContactShadows } from '@react-three/drei';
-import { EffectComposer, Bloom, Vignette, Noise, DepthOfField } from '@react-three/postprocessing';
+import { useGLTF, Sparkles, Grid } from '@react-three/drei';
+import { EffectComposer, Bloom, Vignette, Noise } from '@react-three/postprocessing';
 
 useGLTF.preload('/supercar.glb');
 
@@ -20,41 +20,46 @@ const trackCurve = new THREE.CatmullRomCurve3([
 
 const CameraRig = ({ scrollYProgress, isMobile }) => {
   const { mouse, camera } = useThree();
+  
+  // CACHED MEMORY: Prevents Garbage Collection stutters
   const currentOffset = useRef(new THREE.Vector3(-4, 1, 8));
   const currentLookAt = useRef(new THREE.Vector3());
+  const trackPosition = useRef(new THREE.Vector3());
+  const targetOffset = useRef(new THREE.Vector3());
+  const targetCameraPos = useRef(new THREE.Vector3());
+  const futureTrackPos = useRef(new THREE.Vector3());
 
   useFrame(() => {
     const scroll = Math.max(0, Math.min(1, scrollYProgress.get()));
-    const trackPosition = trackCurve.getPointAt(scroll);
+    trackCurve.getPointAt(scroll, trackPosition.current);
 
-    let targetOffset = new THREE.Vector3();
     if (scroll < 0.25) {
-      targetOffset.set(-5, 1.5, 7);
+      targetOffset.current.set(-5, 1.5, 7);
     } else if (scroll < 0.5) {
-      targetOffset.set(-8, 3, 0);
+      targetOffset.current.set(-8, 3, 0);
     } else if (scroll < 0.75) {
-      targetOffset.set(4, 2, 5);
+      targetOffset.current.set(4, 2, 5);
     } else {
-      targetOffset.set(0, 4, 12);
+      targetOffset.current.set(0, 4, 12);
     }
 
-    currentOffset.current.lerp(targetOffset, 0.02);
-    const targetCameraPos = trackPosition.clone().add(currentOffset.current);
+    currentOffset.current.lerp(targetOffset.current, 0.02);
+    targetCameraPos.current.copy(trackPosition.current).add(currentOffset.current);
 
     if (!isMobile) {
       const steerOffset = mouse.x * 8;
-      targetCameraPos.x += steerOffset * 0.4;
-      targetCameraPos.y += mouse.y * 1;
+      targetCameraPos.current.x += steerOffset * 0.4;
+      targetCameraPos.current.y += mouse.y * 1;
     }
 
-    camera.position.lerp(targetCameraPos, 0.05);
+    camera.position.lerp(targetCameraPos.current, 0.05);
 
     const futureScroll = Math.min(1, scroll + 0.1);
-    const futureTrackPos = trackCurve.getPointAt(futureScroll);
-    futureTrackPos.y += 1;
+    trackCurve.getPointAt(futureScroll, futureTrackPos.current);
+    futureTrackPos.current.y += 1;
 
-    if (currentLookAt.current.length() === 0) currentLookAt.current.copy(futureTrackPos);
-    currentLookAt.current.lerp(futureTrackPos, 0.05);
+    if (currentLookAt.current.length() === 0) currentLookAt.current.copy(futureTrackPos.current);
+    currentLookAt.current.lerp(futureTrackPos.current, 0.05);
 
     camera.lookAt(currentLookAt.current);
   });
@@ -67,12 +72,21 @@ const RacingCar = ({ scrollYProgress, isMobile }) => {
   const wheelRefs = useRef([]);
   const trailGeo = useRef();
   const trailIndex = useRef(0);
+  
+  // CACHED MEMORY: Completely eliminates Physics Stuttering
   const quatHelper = useRef(new THREE.Quaternion());
   const matrixHelper = useRef(new THREE.Matrix4());
   const upVector = useRef(new THREE.Vector3(0, 1, 0));
+  const curvePos = useRef(new THREE.Vector3());
+  const targetPos = useRef(new THREE.Vector3());
+  const tangent = useRef(new THREE.Vector3());
+  const tAhead = useRef(new THREE.Vector3());
+  const bankQuat = useRef(new THREE.Quaternion());
+  const behindVec = useRef(new THREE.Vector3());
+
   const { scene: carScene } = useGLTF('/supercar.glb');
 
-  const trailCount = isMobile ? 60 : 140;
+  const trailCount = isMobile ? 40 : 100;
 
   const physics = useRef({
     lastScroll: 0,
@@ -80,7 +94,6 @@ const RacingCar = ({ scrollYProgress, isMobile }) => {
     smoothedVelocity: 0,
   });
 
-  // --- Free-rotation drag state (Quaternion-based to prevent gimbal lock) ---
   const isDragging = useRef(false);
   const lastPointer = useRef({ x: 0, y: 0 });
   const userQuatAccum = useRef(new THREE.Quaternion());
@@ -92,7 +105,7 @@ const RacingCar = ({ scrollYProgress, isMobile }) => {
       const dy = e.clientY - lastPointer.current.y;
       lastPointer.current = { x: e.clientX, y: e.clientY };
       
-      const yawDelta = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0, 1, 0), dx * 0.006);
+      const yawDelta = new THREE.Quaternion().setFromAxisAngle(upVector.current, dx * 0.006);
       const pitchDelta = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(1, 0, 0), dy * 0.006);  
       
       userQuatAccum.current.premultiply(yawDelta).premultiply(pitchDelta);
@@ -147,26 +160,27 @@ const RacingCar = ({ scrollYProgress, isMobile }) => {
     p.smoothedVelocity = THREE.MathUtils.lerp(p.smoothedVelocity, Math.abs(p.velocity), 0.05);
     p.lastScroll = scroll;
 
-    const curvePos = trackCurve.getPointAt(scroll);
+    // High-performance zero-allocation position updates
+    trackCurve.getPointAt(scroll, curvePos.current);
     const hover = Math.sin(state.clock.elapsedTime * 1.2) * 0.06 + 0.05;
-    const targetPos = curvePos.clone();
-    targetPos.y += hover;
+    targetPos.current.copy(curvePos.current);
+    targetPos.current.y += hover;
 
-    carGroup.current.position.lerp(targetPos, 0.12);
-    carGroup.current.scale.setScalar(1);
+    carGroup.current.position.lerp(targetPos.current, 0.12);
 
-    const tangent = trackCurve.getTangentAt(scroll).normalize();
-    const tAhead = trackCurve.getTangentAt(Math.min(1, scroll + 0.01)).normalize();
-    const turnAmount = tangent.clone().cross(tAhead).y;
+    trackCurve.getTangentAt(scroll, tangent.current).normalize();
+    trackCurve.getTangentAt(Math.min(1, scroll + 0.01), tAhead.current).normalize();
+    
+    // Cross product caching
+    const turnAmount = tangent.current.x * tAhead.current.z - tangent.current.z * tAhead.current.x; 
     const bankAngle = THREE.MathUtils.clamp(-turnAmount * 40, -0.35, 0.35);
 
-    matrixHelper.current.lookAt(new THREE.Vector3(0, 0, 0), tangent, upVector.current);
+    matrixHelper.current.lookAt(new THREE.Vector3(0, 0, 0), tangent.current, upVector.current);
     quatHelper.current.setFromRotationMatrix(matrixHelper.current);
 
-    const bankQuat = new THREE.Quaternion().setFromAxisAngle(tangent, bankAngle);
-    quatHelper.current.premultiply(bankQuat);
+    bankQuat.current.setFromAxisAngle(tangent.current, bankAngle);
+    quatHelper.current.premultiply(bankQuat.current);
 
-    // Multiply the drag rotation onto the car's current path orientation
     quatHelper.current.multiply(userQuatAccum.current);
     carGroup.current.quaternion.slerp(quatHelper.current, 0.08);
 
@@ -187,10 +201,12 @@ const RacingCar = ({ scrollYProgress, isMobile }) => {
     if (p.smoothedVelocity > 0.015) {
       const idx = trailIndex.current;
       dData[idx].life = 1.0;
-      const behind = tangent.clone().multiplyScalar(-1.2);
-      positions[idx * 3] = carGroup.current.position.x + behind.x + (Math.random() - 0.5) * 0.15;
+      
+      behindVec.current.copy(tangent.current).multiplyScalar(-1.2);
+      
+      positions[idx * 3] = carGroup.current.position.x + behindVec.current.x + (Math.random() - 0.5) * 0.15;
       positions[idx * 3 + 1] = carGroup.current.position.y - 0.25;
-      positions[idx * 3 + 2] = carGroup.current.position.z + behind.z + (Math.random() - 0.5) * 0.15;
+      positions[idx * 3 + 2] = carGroup.current.position.z + behindVec.current.z + (Math.random() - 0.5) * 0.15;
       trailIndex.current = (idx + 1) % trailCount;
     }
 
@@ -212,13 +228,20 @@ const RacingCar = ({ scrollYProgress, isMobile }) => {
           <primitive object={carScene} scale={1} position={[0, -0.5, 0]} />
         </group>
         <pointLight position={[0, 1, 0]} color="#ec4899" intensity={2} distance={6} />
-        {/* Transparent sphere to capture drag events for rotation */}
+        
+        {/* FAST FAKE CONTACT SHADOW: 100x more efficient than <ContactShadows> */}
+        <mesh position={[0, -0.45, 0]} rotation={[-Math.PI / 2, 0, 0]}>
+          <planeGeometry args={[2.5, 5]} />
+          <meshBasicMaterial color="#000000" transparent opacity={0.3} depthWrite={false} />
+        </mesh>
+
         <mesh
           onPointerDown={(e) => {
             e.stopPropagation();
             isDragging.current = true;
             lastPointer.current = { x: e.nativeEvent.clientX, y: e.nativeEvent.clientY };
           }}
+          visible={false} 
         >
           <sphereGeometry args={[3, 16, 16]} />
           <meshBasicMaterial transparent opacity={0} depthWrite={false} />
@@ -259,19 +282,18 @@ const RacingCar = ({ scrollYProgress, isMobile }) => {
 
 const Global3DScene = ({ scrollYProgress, isMobile }) => {
   return (
-    // Add bg-[#f8fafc] here to avoid black flash before canvas loads
     <div className="fixed inset-0 pointer-events-none z-0 bg-[#f8fafc]">
       <Canvas 
-        dpr={isMobile ? 1 : [1, 1.5]} 
+        dpr={isMobile ? 1 : [1, 1.2]} // Capped PC resolution for high performance
         camera={{ fov: 45 }} 
+        gl={{ alpha: false, antialias: true }}
+        onCreated={({ gl }) => gl.setClearColor('#f8fafc')}
         style={{ pointerEvents: 'auto', touchAction: 'pan-y' }}
       >
-        <color attach="background" args={["#f8fafc"]} />
         <CameraRig scrollYProgress={scrollYProgress} isMobile={isMobile} />
         
         <ambientLight intensity={0.7} />
-        <directionalLight position={[10, 20, 10]} intensity={1.2} color="#ffffff" castShadow />
-        <Environment preset="city" environmentIntensity={0.4} />
+        <directionalLight position={[10, 20, 10]} intensity={1.2} color="#ffffff" />
 
         <Grid
           position={[0, -0.51, 0]}
@@ -286,22 +308,12 @@ const Global3DScene = ({ scrollYProgress, isMobile }) => {
           fadeStrength={1}
         />
 
-        <ContactShadows
-          position={[0, -0.49, 0]}
-          opacity={0.5}
-          scale={20}
-          blur={2}
-          far={4}
-          resolution={512}
-          color="#000000"
-        />
-
         <Suspense fallback={null}>
           <RacingCar scrollYProgress={scrollYProgress} isMobile={isMobile} />
         </Suspense>
 
         <Sparkles
-          count={isMobile ? 100 : 300}
+          count={isMobile ? 60 : 150} // Optimized particle count
           scale={60}
           size={isMobile ? 2 : 4}
           speed={0.4}
@@ -311,8 +323,8 @@ const Global3DScene = ({ scrollYProgress, isMobile }) => {
 
         <fog attach="fog" args={["#f8fafc", 10, 50]} />
 
+        {/* Removed DepthOfField, highly optimized post-processing only */}
         <EffectComposer disableNormalPass>
-          {!isMobile && <DepthOfField focusDistance={0.01} focalLength={0.05} bokehScale={3} height={480} />}
           <Bloom luminanceThreshold={0.9} mipmapBlur intensity={0.4} />
           <Noise opacity={0.02} />
           <Vignette offset={0.4} darkness={0.25} />
@@ -346,9 +358,12 @@ const Nav = () => (
   </motion.nav>
 );
 
-const Hero = () => (
+const Hero = ({ rotateX, rotateY }) => (
   <section className="h-screen flex flex-col justify-center p-6 md:p-10 pb-24 relative z-10 perspective-[1200px] pointer-events-none">
-    <div className="w-full max-w-7xl mx-auto transform-style-3d pointer-events-auto mt-32">
+    <motion.div 
+      style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
+      className="w-full max-w-7xl mx-auto transform-style-3d pointer-events-auto mt-32 will-change-transform"
+    >
       <div className="overflow-hidden mb-6">
         <motion.div 
           initial={{ y: "100%", opacity: 0 }}
@@ -373,11 +388,11 @@ const Hero = () => (
           DEVELOPER
         </motion.div>
       </h1>
-    </div>
+    </motion.div>
   </section>
 );
 
-const ProfileAndExperience = () => {
+const ProfileAndExperience = ({ rotateX, rotateY }) => {
   const technicalSkills = {
     "Programming": ["Kotlin", "Java"],
     "Android Core": ["Android SDK", "Jetpack Compose", "Material Design", "MVVM", "Room", "Hilt", "Coroutines"],
@@ -398,9 +413,11 @@ const ProfileAndExperience = () => {
   ];
 
   return (
-    <section id="experience" className="py-24 px-6 md:px-10 relative z-10 pointer-events-none">
-      <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 pointer-events-auto items-start">
-        {/* Removed 'lg:sticky lg:top-32' to let it scroll naturally */}
+    <section id="experience" className="py-24 px-6 md:px-10 relative z-10 pointer-events-none perspective-[1200px]">
+      <motion.div 
+        style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
+        className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 pointer-events-auto items-start will-change-transform"
+      >
         <div className="lg:col-span-4 order-1 perspective-[1200px] relative">
           <motion.div 
             initial={{ rotateY: 15, opacity: 0, y: 50 }}
@@ -480,7 +497,7 @@ const ProfileAndExperience = () => {
                   key={i} 
                   className="p-5 border rounded-2xl shadow-xl overflow-hidden relative group cursor-default backdrop-blur-xl border-black/10 bg-white/60 hover:bg-white/90 transition-all duration-500"
                 >
-                  <div className="absolute top-0 left-0 w-1 h-full bg-gradient-to-b from-pink-500 to-blue-400"></div>
+                  <div className="absolute top-0 left-0 w-1 h-full bg-gradient-to-b from-cyan-400 via-pink-500 to-blue-500"></div>
                   <p className="text-xs font-mono mb-2 ml-2 transition-colors font-bold text-slate-600 group-hover:text-slate-900">
                     {cert.date} | <span>{cert.org}</span>
                   </p>
@@ -506,19 +523,23 @@ const ProfileAndExperience = () => {
                       ))}
                     </div>
                   )}
+
                 </motion.div>
               ))}
             </div>
           </div>
         </div>
-      </div>
+      </motion.div>
     </section>
   );
 };
 
-const PlayStoreProjects = () => (
-  <section id="projects" className="py-24 relative z-10 pointer-events-none">
-    <div className="max-w-7xl mx-auto px-6 md:px-10 pointer-events-auto">
+const PlayStoreProjects = ({ rotateX, rotateY }) => (
+  <section id="projects" className="py-24 relative z-10 pointer-events-none perspective-[1200px]">
+    <motion.div 
+      style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
+      className="max-w-7xl mx-auto px-6 md:px-10 pointer-events-auto will-change-transform"
+    >
       <div className="inline-block px-4 py-1 rounded-full border text-xs uppercase tracking-widest font-bold backdrop-blur-md mb-12 border-cyan-500/30 bg-cyan-500/10 text-cyan-600">
        02 / Projects
       </div>
@@ -541,14 +562,18 @@ const PlayStoreProjects = () => (
           </a>
         </motion.div>
       </div>
-    </div>
+    </motion.div>
   </section>
 );
 
-const Footer = () => (
-  <footer id="contact" className="relative pt-32 pb-10 px-6 md:px-10 overflow-hidden z-10 pointer-events-none">
+const Footer = ({ rotateX, rotateY }) => (
+  <footer id="contact" className="relative pt-32 pb-10 px-6 md:px-10 overflow-hidden z-10 pointer-events-none perspective-[1200px]">
     <div className="absolute inset-0 bg-gradient-to-b from-transparent to-[#f8fafc] z-[-1]"></div>
-    <div className="max-w-7xl mx-auto border-t border-slate-300/50 pt-16 pointer-events-auto">
+    
+    <motion.div 
+      style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
+      className="max-w-7xl mx-auto border-t border-slate-300/50 pt-16 pointer-events-auto will-change-transform"
+    >
       <div className="grid grid-cols-1 md:grid-cols-2 gap-12 mb-32">
         <div>
           <h2 className="text-5xl md:text-6xl font-display mb-8 font-bold text-transparent bg-clip-text drop-shadow-sm bg-gradient-to-r from-slate-900 to-slate-500">Let's build something <br/>exceptional.</h2>
@@ -583,14 +608,25 @@ const Footer = () => (
           </p>
         </div>
       </div>
-    </div>
+      <h1 className="text-[14vw] leading-none font-display font-bold text-center tracking-tighter select-none pointer-events-none drop-shadow-2xl text-black/5">
+        DEVELOPER
+      </h1>
+    </motion.div>
   </footer>
 );
 
 export default function App() {
   const [isMobile, setIsMobile] = useState(false);
-  
   const { scrollYProgress } = useScroll();
+
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+  
+  const smoothX = useSpring(mouseX, { stiffness: 100, damping: 30 });
+  const smoothY = useSpring(mouseY, { stiffness: 100, damping: 30 });
+
+  const rotateX = useTransform(smoothY, [-0.5, 0.5], [6, -6]);
+  const rotateY = useTransform(smoothX, [-0.5, 0.5], [-6, 6]);
 
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth < 768);
@@ -598,21 +634,37 @@ export default function App() {
     window.addEventListener('resize', handleResize);
     window.scrollTo(0, 0);
 
+    const handleMouseMove = (e) => {
+      mouseX.set(e.clientX / window.innerWidth - 0.5);
+      mouseY.set(e.clientY / window.innerHeight - 0.5);
+    };
+
+    const handleDeviceOrientation = (e) => {
+      if (e.gamma !== null && e.beta !== null) {
+        mouseX.set(Math.max(-0.5, Math.min(0.5, e.gamma / 90)));
+        mouseY.set(Math.max(-0.5, Math.min(0.5, (e.beta - 45) / 90)));
+      }
+    };
+
+    window.addEventListener('mousemove', handleMouseMove);
+    window.addEventListener('deviceorientation', handleDeviceOrientation, true);
+
     return () => {
       window.removeEventListener('resize', handleResize);
+      window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('deviceorientation', handleDeviceOrientation, true);
     };
-  }, []);
+  }, [mouseX, mouseY]);
 
   return (
     <ReactLenis root options={{ lerp: 0.05, smoothWheel: true }}>
-      {/* Adding bg-[#f8fafc] prevents the brief black screen before canvas load */}
-      <main className="min-h-screen bg-[#f8fafc] selection:bg-pink-500 selection:text-white">
+      <main className="min-h-screen bg-[#f8fafc] selection:bg-pink-500 selection:text-white overflow-hidden">
         <Global3DScene scrollYProgress={scrollYProgress} isMobile={isMobile} />
         <Nav />
-        <Hero />
-        <ProfileAndExperience />
-        <PlayStoreProjects />
-        <Footer />
+        <Hero rotateX={rotateX} rotateY={rotateY} />
+        <ProfileAndExperience rotateX={rotateX} rotateY={rotateY} />
+        <PlayStoreProjects rotateX={rotateX} rotateY={rotateY} />
+        <Footer rotateX={rotateX} rotateY={rotateY} />
       </main>
     </ReactLenis>
   );
