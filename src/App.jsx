@@ -395,7 +395,6 @@ const Hero = ({ rotateX, rotateY, isMobile }) => (
 );
 
 const ProfileAndExperience = ({ rotateX, rotateY, isMobile }) => {
-  // All original skills restored exactly as requested
   const technicalSkills = {
     "Kotlin": [ "Kotlin", "Null Safety", "Collections", "Generics", "Extension Functions", "Higher-Order Functions", "Lambda Expressions", "Sealed Classes", "Data Classes", "Coroutines", "Flow", "StateFlow", "SharedFlow" ],
     "Java": [ "Java Basics", "OOP", "Classes & Objects", "Inheritance", "Interfaces", "Exception Handling", "Collections" ],
@@ -407,7 +406,6 @@ const ProfileAndExperience = ({ rotateX, rotateY, isMobile }) => {
     "Development Workflow": [ "Git", "GitHub", "Gradle", "Code Review", "Issue Tracking", "Release Management", "App Store Optimization" ]
   };
 
-  // All 11 original certifications restored exactly as requested
   const certifications = [
     {
       title: "ISRO/IIRS — Earth Observations & Tropical Cyclone Monitoring",
@@ -669,93 +667,89 @@ const Projects = ({ rotateX, rotateY, isMobile }) => {
           <p className="mt-4 text-sm md:text-base font-bold text-slate-500">Production-grade native applications.</p>
         </div>
 
-       {/* Flagship Project: GalleryBox */}
-<motion.div 
-  initial={{ opacity: 0, y: 30 }}
-  whileInView={{ opacity: 1, y: 0 }}
-  viewport={{ once: true, margin: "-100px" }}
-  transition={{ duration: 0.6 }}
-  className="mb-16 md:mb-24 rounded-[2rem] md:rounded-[3rem] border shadow-2xl overflow-hidden bg-white/80 border-black/5 backdrop-blur-xl relative group"
->
-  <div className="absolute inset-0 bg-gradient-to-br from-pink-50/50 to-cyan-50/50 z-0"></div>
-  <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-8 items-center p-8 md:p-12 lg:p-16">
-    
-    {/* Left Content (Info & Features) */}
-    <div className="order-2 lg:order-1 space-y-6">
-      <div>
-        <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold bg-pink-100 text-pink-600 mb-4">
-          <ShieldCheck size={14} /> Flagship Project
-        </span>
-        <h3 className="text-3xl md:text-4xl font-display font-bold text-slate-900 mb-2">GalleryBox</h3>
-        <p className="text-sm font-mono font-bold text-slate-500">Oct 2025 - Aug 2026</p>
-      </div>
-      
-      <p className="text-sm md:text-base font-medium text-slate-700 leading-relaxed">
-        A modern offline gallery and multimedia application designed to bring photos, videos, albums, Stories, music, and FM radio together in one seamless experience. 100% offline and private by design.
-      </p>
+        <motion.div 
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.6 }}
+          className="mb-16 md:mb-24 rounded-[2rem] md:rounded-[3rem] border shadow-2xl overflow-hidden bg-white/80 border-black/5 backdrop-blur-xl relative group"
+        >
+          <div className="absolute inset-0 bg-gradient-to-br from-pink-50/50 to-cyan-50/50 z-0"></div>
+          <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-8 items-center p-8 md:p-12 lg:p-16">
+            
+            <div className="order-2 lg:order-1 space-y-6">
+              <div>
+                <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold bg-pink-100 text-pink-600 mb-4">
+                  <ShieldCheck size={14} /> Flagship Project
+                </span>
+                <h3 className="text-3xl md:text-4xl font-display font-bold text-slate-900 mb-2">GalleryBox</h3>
+                <p className="text-sm font-mono font-bold text-slate-500">Oct 2025 - Aug 2026</p>
+              </div>
+              
+              <p className="text-sm md:text-base font-medium text-slate-700 leading-relaxed">
+                A modern offline gallery and multimedia application designed to bring photos, videos, albums, Stories, music, and FM radio together in one seamless experience. 100% offline and private by design.
+              </p>
 
-      {/* 2x2 Feature Grid */}
-      <div className="grid grid-cols-2 gap-4">
-        
-        {/* Photos & Videos */}
-        <div className="p-4 rounded-2xl bg-slate-50 border border-slate-100 hover:shadow-md transition-shadow">
-          <Camera className="text-pink-500 mb-2" size={20} />
-          <h4 className="text-sm font-bold text-slate-900">Photos & Videos</h4>
-          <p className="text-xs text-slate-500 mt-1">Full-screen viewing, RAW/GIF support, and hidden media recovery.</p>
-        </div>
+              {/* 2x2 Feature Grid */}
+              <div className="grid grid-cols-2 gap-4">
+                
+                {/* Photos & Videos */}
+                <div className="p-4 rounded-2xl bg-slate-50 border border-slate-100 hover:shadow-md transition-shadow">
+                  <Camera className="text-pink-500 mb-2" size={20} />
+                  <h4 className="text-sm font-bold text-slate-900">Photos & Videos</h4>
+                  <p className="text-xs text-slate-500 mt-1">Full-screen viewing, RAW/GIF support, and hidden media recovery.</p>
+                </div>
 
-        {/* Memories */}
-        <div className="p-4 rounded-2xl bg-slate-50 border border-slate-100 hover:shadow-md transition-shadow">
-          <Layers className="text-orange-500 mb-2" size={20} />
-          <h4 className="text-sm font-bold text-slate-900">Memories</h4>
-          <p className="text-xs text-slate-500 mt-1">Timeline-based highlights and beautifully auto-generated Stories.</p>
-        </div>
+                {/* Memories */}
+                <div className="p-4 rounded-2xl bg-slate-50 border border-slate-100 hover:shadow-md transition-shadow">
+                  <Layers className="text-orange-500 mb-2" size={20} />
+                  <h4 className="text-sm font-bold text-slate-900">Memories</h4>
+                  <p className="text-xs text-slate-500 mt-1">Timeline-based highlights and beautifully auto-generated Stories.</p>
+                </div>
 
-        {/* Music Player */}
-        <div className="p-4 rounded-2xl bg-slate-50 border border-slate-100 hover:shadow-md transition-shadow">
-          <Music className="text-cyan-500 mb-2" size={20} />
-          <h4 className="text-sm font-bold text-slate-900">Music Player</h4>
-          <p className="text-xs text-slate-500 mt-1">Offline MP3 player featuring Duo mode with independent L/R controls.</p>
-        </div>
+                {/* Music Player */}
+                <div className="p-4 rounded-2xl bg-slate-50 border border-slate-100 hover:shadow-md transition-shadow">
+                  <Music className="text-cyan-500 mb-2" size={20} />
+                  <h4 className="text-sm font-bold text-slate-900">Music Player</h4>
+                  <p className="text-xs text-slate-500 mt-1">Offline MP3 player featuring Duo mode with independent L/R controls.</p>
+                </div>
 
-        {/* Live Wallpaper */}
-        <div className="p-4 rounded-2xl bg-slate-50 border border-slate-100 hover:shadow-md transition-shadow">
-          <Smartphone className="text-purple-500 mb-2" size={20} />
-          <h4 className="text-sm font-bold text-slate-900">Live Wallpaper</h4>
-          <p className="text-xs text-slate-500 mt-1">Set your favorite dynamic videos and GIFs as your home screen background.</p>
-        </div>
+                {/* Live Wallpaper */}
+                <div className="p-4 rounded-2xl bg-slate-50 border border-slate-100 hover:shadow-md transition-shadow">
+                  <Smartphone className="text-purple-500 mb-2" size={20} />
+                  <h4 className="text-sm font-bold text-slate-900">Live Wallpaper</h4>
+                  <p className="text-xs text-slate-500 mt-1">Set your favorite dynamic videos and GIFs as your home screen background.</p>
+                </div>
 
-      </div>
+              </div>
 
-      {/* Tech Stack Tags */}
-      <div className="flex flex-wrap gap-2 pt-2">
-        {["Jetpack Compose", "Room", "Hilt", "Media3 (ExoPlayer)", "WorkManager"].map(tech => (
-          <span key={tech} className="px-3 py-1 bg-slate-100 text-slate-600 rounded-lg text-xs font-bold">{tech}</span>
-        ))}
-      </div>
-    </div>
+              <div className="flex flex-wrap gap-2 pt-2">
+                {["Jetpack Compose", "Room", "Hilt", "Media3 (ExoPlayer)", "WorkManager"].map(tech => (
+                  <span key={tech} className="px-3 py-1 bg-slate-100 text-slate-600 rounded-lg text-xs font-bold">{tech}</span>
+                ))}
+              </div>
+            </div>
 
-    {/* Right Content (3D Mockup) */}
-    <div className="order-1 lg:order-2 flex justify-center lg:justify-end perspective-[1000px]">
-      <motion.div 
-        whileHover={!isMobile ? { rotateY: -5, rotateX: 5, scale: 1.05 } : {}}
-        className="w-full max-w-sm aspect-[9/16] bg-slate-900 rounded-[2rem] border-8 border-slate-800 shadow-2xl relative overflow-hidden flex flex-col cursor-pointer"
-      >
-        {/* Notch */}
-        <div className="h-6 w-1/3 bg-slate-800 absolute top-0 left-1/2 -translate-x-1/2 rounded-b-xl z-20"></div>
-        {/* Screen Content */}
-        <div className="flex-1 bg-gradient-to-b from-slate-800 to-slate-900 p-6 flex flex-col justify-center items-center text-center relative">
-           <div className="absolute inset-0 opacity-20 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] mix-blend-overlay"></div>
-           <h4 className="text-2xl font-display font-bold text-white relative z-10">GalleryBox</h4>
-           <p className="text-xs text-slate-400 mt-2 relative z-10">Your Offline Media Hub</p>
-           {/* Abstract Glow */}
-           <div className="w-24 h-24 mt-8 rounded-full bg-gradient-to-tr from-pink-500 to-cyan-500 blur-xl opacity-50 absolute"></div>
-           <Smartphone size={64} className="text-white relative z-10 mt-6 drop-shadow-2xl" />
-        </div>
-      </motion.div>
-    </div>
-  </div>
-</motion.div>
+            <div className="order-1 lg:order-2 flex justify-center lg:justify-end perspective-[1000px]">
+              <motion.div 
+                whileHover={!isMobile ? { rotateY: -5, rotateX: 5, scale: 1.05 } : {}}
+                className="w-full max-w-sm aspect-[9/16] bg-slate-900 rounded-[2rem] border-8 border-slate-800 shadow-2xl relative overflow-hidden flex flex-col cursor-pointer"
+              >
+                {/* Notch */}
+                <div className="h-6 w-1/3 bg-slate-800 absolute top-0 left-1/2 -translate-x-1/2 rounded-b-xl z-20"></div>
+                
+                {/* Screen Content - Real App UI */}
+                <div className="flex-1 relative bg-white">
+                  <img 
+                    src="/textures/dbdb52ee-8443-4d55-9ed9-feb8bb437f30.jpg" 
+                    alt="GalleryBox App Interface" 
+                    className="absolute inset-0 w-full h-full object-cover object-top"
+                  />
+                </div>
+              </motion.div>
+            </div>
+          </div>
+        </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 mb-16">
           {secondaryProjects.map((project, idx) => (
