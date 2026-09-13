@@ -362,120 +362,127 @@ const ProfileAndExperience = ({ rotateX, rotateY }) => {
     "Development Workflow": ["Git", "Gradle", "Code review", "Issue tracking", "Release management", "App store optimization"]
   };
 
-  const certifications = [
-    {
-      title: "ISRO/IIRS — Earth Observations & Tropical Cyclone Monitoring",
-      topics: [
-        "Fundamentals of Tropical Cyclones: Genesis, Structure, Life Cycle, and NWP Models",
-        "Multi-Sensor EO Satellite for Tropical Cyclone Monitoring",
-        "Application of Data Assimilation and AI/ML for Improved Forecasting",
-        "Next-Generation AI Framework for Extreme Weather Prediction",
-        "Earth Observations Data for Cyclone-Induced Inundation and Hazard Mitigation"
-      ]
-    },
-    {
-      title: "ISRO/IIRS — Climate Change Induced Disasters",
-      topics: [
-        "Application of Geospatial Technology in Cryospheric Hazards",
-        "Application of Geospatial Technology in Forest Fires",
-        "Application of Geospatial Technology in Heatwaves",
-        "Application of Geospatial Technology in Droughts",
-        "Application of Geospatial Technology in Hydrological Hazards"
-      ]
-    },
-    {
-      title: "ISRO/IIRS — Aerosols: Measurement, Retrieval and Impacts",
-      topics: [
-        "Structure and Composition of Aerosols (Physics & Optics)",
-        "Aerosol Forcing & Boundary Layer Dynamics",
-        "Aerosol Chemistry",
-        "Health Impacts of Aerosols",
-        "Ground Based Aerosol Instrumentation",
-        "Remote Sensing of Aerosols: Physics and Retrieval",
-        "Modelling of Aerosols"
-      ]
-    },
-    {
-      title: "ISRO/IIRS — AI/ML for Geodata Analytics",
-      topics: [
-        "GIS Data analytics",
-        "Image Processing Methods",
-        "Geodata Models and Concept of Data Science",
-        "Python for Image Processing",
-        "Image Restoration and Filtering",
-        "Machine Learning for Geospatial Analysis",
-        "ANN and Deep Learning in Geospatial Analysis",
-        "AI/ML for Agriculture Analytics",
-        "Advances in AI/ML for Geo-data processing",
-        "Generative AI and NLP for Geodata Analytics"
-      ]
-    },
-    {
-      title: "NASA — Hyperspectral Remote Sensing",
-      topics: [
-        "Characteristics of hyperspectral remote sensing",
-        "Current and future satellite/airborne imagers",
-        "Hyperspectral data availability and processing considerations",
-        "Web platforms to access and visualize imagery",
-        "Narrow band indices for aquatic applications"
-      ]
-    },
-    {
-      title: "NASA — Fundamentals of Remote Sensing",
-      topics: [
-        "Satellite remote sensing observations for Earth's systems",
-        "Measuring electromagnetic radiation to derive geophysical parameters",
-        "Remote sensing data product levels",
-        "Methods to work with remotely sensed data",
-        "NASA Worldview webtool"
-      ]
-    },
-    {
-      title: "NASA — Sustainable Earth Science Applications",
-      topics: [
-        "Building and maintaining effective collaborations",
-        "Strategies for leading effective communication with end users",
-        "Project management approaches for EO development",
-        "Ensuring societal benefit and evaluating user impact"
-      ]
-    },
-    {
-      title: "NASA — Open Science 101",
-      topics: [
-        "Ethos of Open Science",
-        "Open Tools and Resources (Use, Make, Share framework & FAIR principles)",
-        "Open Data and Data Management Plans",
-        "Open Code and code development lifecycle",
-        "Open Results and ethical contributorship guidelines"
-      ]
-    },
-    {
-      title: "Internshala — Android App Development with AI",
-      topics: [
-        "Kotlin Bootcamp",
-        "Kickstarting Android App Development: Kotlin and Jetpack Compose",
-        "Levelling Up Kotlin Skills",
-        "Making an Android App Interactive",
-        "Adding Additional Screens to our Android App",
-        "Connecting Our App to the Internet",
-        "Introduction to BaaS and Firebase",
-        "Listing Apps in Google Play Store",
-        "Future of Android Development: Artificial Intelligence & Kotlin Multiplatform"
-      ]
-    },
-    {
-      title: "NASSCOM FutureSkills Prime — YUVA AI for ALL",
-      topics: []
-    },
-    {
-      title: "TCS iON — YUVA Artificial Intelligence (AI)",
-      topics: []
-    },
-    {
-      title: "Cisco Networking Academy — Operating Systems Basics",
-      topics: []
-    },
-  ];
+ const certifications = [
+  {
+    title: "ISRO/IIRS — Earth Observations & Tropical Cyclone Monitoring",
+    topics: [
+      "Fundamentals of Tropical Cyclones: Genesis, Structure, Life Cycle, and NWP Models",
+      "Multi-Sensor EO Satellite for Tropical Cyclone Monitoring",
+      "Application of Data Assimilation and AI/ML for Improved Forecasting",
+      "Next-Generation AI Framework for Extreme Weather Prediction",
+      "Earth Observations Data for Cyclone-Induced Inundation and Hazard Mitigation"
+    ]
+  },
+  {
+    title: "ISRO/IIRS — Climate Change Induced Disasters",
+    topics: [
+      "Application of Geospatial Technology in Cryospheric Hazards",
+      "Application of Geospatial Technology in Forest Fires",
+      "Application of Geospatial Technology in Heatwaves",
+      "Application of Geospatial Technology in Droughts",
+      "Application of Geospatial Technology in Hydrological Hazards"
+    ]
+  },
+  {
+    title: "ISRO/IIRS — Aerosols: Measurement, Retrieval and Impacts",
+    topics: [
+      "Structure and Composition of Aerosols (Physics & Optics)",
+      "Aerosol Forcing & Boundary Layer Dynamics",
+      "Aerosol Chemistry",
+      "Health Impacts of Aerosols",
+      "Ground Based Aerosol Instrumentation",
+      "Remote Sensing of Aerosols: Physics and Retrieval",
+      "Modelling of Aerosols"
+    ]
+  },
+  {
+    title: "ISRO/IIRS — AI/ML for Geodata Analytics",
+    topics: [
+      "GIS Data analytics",
+      "Image Processing Methods",
+      "Geodata Models and Concept of Data Science",
+      "Python for Image Processing",
+      "Image Restoration and Filtering",
+      "Machine Learning for Geospatial Analysis",
+      "ANN and Deep Learning in Geospatial Analysis",
+      "AI/ML for Agriculture Analytics",
+      "Advances in AI/ML for Geo-data processing",
+      "Generative AI and NLP for Geodata Analytics"
+    ]
+  },
+  {
+    title: "NASA — Hyperspectral Remote Sensing",
+    topics: [
+      "Characteristics of hyperspectral remote sensing",
+      "Current and future satellite/airborne imagers",
+      "Hyperspectral data availability and processing considerations",
+      "Web platforms to access and visualize imagery",
+      "Narrow band indices for aquatic applications"
+    ]
+  },
+  {
+    title: "NASA — Fundamentals of Remote Sensing",
+    topics: [
+      "Satellite remote sensing observations for Earth's systems",
+      "Measuring electromagnetic radiation to derive geophysical parameters",
+      "Remote sensing data product levels",
+      "Methods to work with remotely sensed data",
+      "NASA Worldview webtool"
+    ]
+  },
+  {
+    title: "NASA — Sustainable Earth Science Applications",
+    topics: [
+      "Building and maintaining effective collaborations",
+      "Strategies for leading effective communication with end users",
+      "Project management approaches for EO development",
+      "Ensuring societal benefit and evaluating user impact"
+    ]
+  },
+  {
+    title: "NASA — Open Science 101",
+    topics: [
+      "Ethos of Open Science",
+      "Open Tools and Resources (Use, Make, Share framework & FAIR principles)",
+      "Open Data and Data Management Plans",
+      "Open Code and code development lifecycle",
+      "Open Results and ethical contributorship guidelines"
+    ]
+  },
+  {
+    title: "Internshala — Android App Development with AI",
+    topics: [
+      "Kotlin Bootcamp",
+      "Kickstarting Android App Development: Kotlin and Jetpack Compose",
+      "Levelling Up Kotlin Skills",
+      "Making an Android App Interactive",
+      "Adding Additional Screens to our Android App",
+      "Connecting Our App to the Internet",
+      "Introduction to BaaS and Firebase",
+      "Listing Apps in Google Play Store",
+      "Future of Android Development: Artificial Intelligence & Kotlin Multiplatform"
+    ]
+  },
+  {
+    title: "NASSCOM FutureSkills Prime & TCS iON — YUVA Artificial Intelligence (AI) for ALL",
+    topics: [
+      "AI Ethics and Responsible AI",
+      "Using AI to think and solve problems",
+      "Using AI to learn and create",
+      "Technology behind AI: Machine Learning, Deep Learning, and Neural Networks",
+      "Future of AI: Generative AI, Large Language Models, and AI in the Metaverse"
+    ]
+  },
+  {
+    title: "Cisco Networking Academy — Operating Systems Basics",
+    topics: [
+      "Windows Operating System Basics",
+      "Linux Operating System Basics",
+      "Mobile device connectivity and operating system basics",
+      "Operating system security and troubleshooting"
+    ]
+  }
+];
 
   return (
     <section id="experience" className="py-24 px-6 md:px-10 relative z-10 pointer-events-none perspective-[1200px]">
