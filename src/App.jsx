@@ -85,7 +85,6 @@ const RacingCar = ({ scrollYProgress, isMobile, reducedMotion }) => {
 
   const { scene: carScene } = useGLTF('/supercar.glb');
 
-  // heavily reduce trails on mobile for performance
   const trailCount = isMobile ? 20 : 100; 
 
   const physics = useRef({ lastScroll: 0, velocity: 0, smoothedVelocity: 0 });
@@ -94,7 +93,7 @@ const RacingCar = ({ scrollYProgress, isMobile, reducedMotion }) => {
   const userQuatAccum = useRef(new THREE.Quaternion());
 
   useEffect(() => {
-    if (isMobile) return; // Disable manual drag rotation on mobile for better scroll experience
+    if (isMobile) return; 
     const handleMove = (e) => {
       if (!isDragging.current) return;
       const dx = e.clientX - lastPointer.current.x;
@@ -127,7 +126,7 @@ const RacingCar = ({ scrollYProgress, isMobile, reducedMotion }) => {
       if (child.isMesh && child.material.name) {
         if (child.material.name.includes("Headlight") || child.material.name.includes("Brake")) {
           child.material.toneMapped = false;
-          child.material.emissiveIntensity = isMobile ? 2 : 5; // Less glow on mobile
+          child.material.emissiveIntensity = isMobile ? 2 : 5;
         }
       }
     });
@@ -290,7 +289,6 @@ const Global3DScene = ({ scrollYProgress, isMobile, reducedMotion }) => {
           )}
           <fog attach="fog" args={["#f8fafc", 10, isMobile ? 40 : 50]} />
           
-          {/* Post-processing disabled on mobile for stable 60fps */}
           {!isMobile && !reducedMotion && (
             <EffectComposer disableNormalPass multisampling={0}>
               <Bloom luminanceThreshold={0.9} mipmapBlur intensity={0.3} />
@@ -322,7 +320,6 @@ const Nav = () => {
           ISHAN
         </div>
         
-        {/* Desktop Nav */}
         <ul className="hidden md:flex gap-8 text-sm font-bold text-slate-800">
           {links.map((item) => (
             <li key={item}>
@@ -334,13 +331,11 @@ const Nav = () => {
           ))}
         </ul>
 
-        {/* Mobile Nav Toggle */}
         <button className="md:hidden p-2 text-slate-800" onClick={() => setIsOpen(!isOpen)}>
           {isOpen ? <X size={24} /> : <Menu size={24} />}
         </button>
       </motion.nav>
 
-      {/* Mobile Menu */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
@@ -384,9 +379,9 @@ const Hero = ({ rotateX, rotateY, isMobile }) => (
           transition={{ duration: 0.8, delay: 0.2, type: "spring", stiffness: 100 }}
           className="inline-flex items-center gap-3 md:gap-4 px-4 py-2 md:px-5 md:py-3 rounded-full backdrop-blur-xl border shadow-lg bg-white/70 border-pink-500/20 shadow-pink-500/10 text-pink-600"
         >
-          <span className="text-xs md:text-sm font-bold uppercase tracking-widest">Kotlin & Compose</span>
+          <span className="text-xs md:text-sm font-bold uppercase tracking-widest">Kotlin & Jetpack Compose</span>
           <span className="w-2 h-2 rounded-full animate-pulse bg-cyan-500 shadow-[0_0_8px_rgba(6,182,212,0.8)]"></span>
-          <span className="text-xs md:text-sm uppercase tracking-widest text-slate-700">Independent Dev</span>
+          <span className="hidden md:block text-xs md:text-sm uppercase tracking-widest text-slate-700">Independent Developer</span>
         </motion.div>
       </div>
       
@@ -400,18 +395,139 @@ const Hero = ({ rotateX, rotateY, isMobile }) => (
 );
 
 const ProfileAndExperience = ({ rotateX, rotateY, isMobile }) => {
+  // All original skills restored exactly as requested
   const technicalSkills = {
-    "Android Native": ["Kotlin", "Jetpack Compose", "Material 3", "Coroutines", "Flow/StateFlow", "Room", "DataStore", "WorkManager", "MediaStore", "ExoPlayer"],
-    "Architecture": ["MVVM", "Clean Architecture", "Repository Pattern", "Hilt/DI", "Offline-First"],
-    "Firebase & Play": ["Firestore", "FCM", "Crashlytics", "Google Play Console", "App Signing", "Release Management"],
+    "Kotlin": [ "Kotlin", "Null Safety", "Collections", "Generics", "Extension Functions", "Higher-Order Functions", "Lambda Expressions", "Sealed Classes", "Data Classes", "Coroutines", "Flow", "StateFlow", "SharedFlow" ],
+    "Java": [ "Java Basics", "OOP", "Classes & Objects", "Inheritance", "Interfaces", "Exception Handling", "Collections" ],
+    "Android Development": [ "Android SDK", "Android Studio", "Jetpack Compose", "Material 3", "Navigation Compose", "ViewModel", "Room", "DataStore", "WorkManager", "MediaStore", "Media3 / ExoPlayer" ],
+    "Architecture & Design": [ "MVVM", "Clean Architecture", "Android App Architecture", "Repository Pattern", "Dependency Injection", "Hilt", "Offline-First Architecture" ],
+    "Firebase": [ "Firebase Authentication", "Firebase Cloud Messaging (FCM)", "Cloud Firestore", "Firebase Storage", "Firebase Analytics", "Firebase Crashlytics", "Firebase Remote Config", "Firebase App Check" ],
+    "App Quality & Testing": [ "Unit Testing", "UI Testing", "Debugging", "Crash Reporting", "Performance Optimization", "App Localization" ],
+    "Google Play Console": [ "Google Play Console", "App Registration", "App Signing", "Play App Signing", "Android App Bundle (AAB)", "APK Management", "Internal Testing", "Closed Testing", "Open Testing", "Production Releases", "Release Management", "Store Listing", "Store Listing Optimization", "App Content", "Data Safety", "Content Rating", "Target Audience", "App Access", "Privacy Policy", "Pre-Launch Reports", "Crash & ANR Monitoring", "Android Vitals", "User Feedback & Reviews", "Statistics & Analytics", "Acquisition Reports" ],
+    "Development Workflow": [ "Git", "GitHub", "Gradle", "Code Review", "Issue Tracking", "Release Management", "App Store Optimization" ]
   };
 
+  // All 11 original certifications restored exactly as requested
   const certifications = [
-    { title: "ISRO/IIRS — Earth Observations & Tropical Cyclone Monitoring", topics: ["Fundamentals of Tropical Cyclones", "Multi-Sensor EO Satellite", "Data Assimilation and AI/ML"] },
-    { title: "ISRO/IIRS — Climate Change Induced Disasters", topics: ["Cryospheric Hazards", "Forest Fires", "Heatwaves", "Hydrological Hazards"] },
-    { title: "ISRO/IIRS — AI/ML for Geodata Analytics", topics: ["GIS Data analytics", "Machine Learning for Geospatial Analysis", "Deep Learning"] },
-    { title: "NASA — Fundamentals of Remote Sensing", topics: ["Satellite observations", "Electromagnetic radiation", "NASA Worldview webtool"] },
-    { title: "Internshala — Android App Development with AI", topics: ["Kotlin Bootcamp", "Jetpack Compose", "BaaS and Firebase", "Listing Apps"] }
+    {
+      title: "ISRO/IIRS — Earth Observations & Tropical Cyclone Monitoring",
+      topics: [
+        "Fundamentals of Tropical Cyclones: Genesis, Structure, Life Cycle, and NWP Models",
+        "Multi-Sensor EO Satellite for Tropical Cyclone Monitoring",
+        "Application of Data Assimilation and AI/ML for Improved Forecasting",
+        "Next-Generation AI Framework for Extreme Weather Prediction",
+        "Earth Observations Data for Cyclone-Induced Inundation and Hazard Mitigation"
+      ]
+    },
+    {
+      title: "ISRO/IIRS — Climate Change Induced Disasters",
+      topics: [
+        "Application of Geospatial Technology in Cryospheric Hazards",
+        "Application of Geospatial Technology in Forest Fires",
+        "Application of Geospatial Technology in Heatwaves",
+        "Application of Geospatial Technology in Droughts",
+        "Application of Geospatial Technology in Hydrological Hazards"
+      ]
+    },
+    {
+      title: "ISRO/IIRS — Aerosols: Measurement, Retrieval and Impacts",
+      topics: [
+        "Structure and Composition of Aerosols (Physics & Optics)",
+        "Aerosol Forcing & Boundary Layer Dynamics",
+        "Aerosol Chemistry",
+        "Health Impacts of Aerosols",
+        "Ground Based Aerosol Instrumentation",
+        "Remote Sensing of Aerosols: Physics and Retrieval",
+        "Modelling of Aerosols"
+      ]
+    },
+    {
+      title: "ISRO/IIRS — AI/ML for Geodata Analytics",
+      topics: [
+        "GIS Data analytics",
+        "Image Processing Methods",
+        "Geodata Models and Concept of Data Science",
+        "Python for Image Processing",
+        "Image Restoration and Filtering",
+        "Machine Learning for Geospatial Analysis",
+        "ANN and Deep Learning in Geospatial Analysis",
+        "AI/ML for Agriculture Analytics",
+        "Advances in AI/ML for Geo-data processing",
+        "Generative AI and NLP for Geodata Analytics"
+      ]
+    },
+    {
+      title: "NASA — Hyperspectral Remote Sensing",
+      topics: [
+        "Characteristics of hyperspectral remote sensing",
+        "Current and future satellite/airborne imagers",
+        "Hyperspectral data availability and processing considerations",
+        "Web platforms to access and visualize imagery",
+        "Narrow band indices for aquatic applications"
+      ]
+    },
+    {
+      title: "NASA — Fundamentals of Remote Sensing",
+      topics: [
+        "Satellite remote sensing observations for Earth's systems",
+        "Measuring electromagnetic radiation to derive geophysical parameters",
+        "Remote sensing data product levels",
+        "Methods to work with remotely sensed data",
+        "NASA Worldview webtool"
+      ]
+    },
+    {
+      title: "NASA — Sustainable Earth Science Applications",
+      topics: [
+        "Building and maintaining effective collaborations",
+        "Strategies for leading effective communication with end users",
+        "Project management approaches for EO development",
+        "Ensuring societal benefit and evaluating user impact"
+      ]
+    },
+    {
+      title: "NASA — Open Science 101",
+      topics: [
+        "Ethos of Open Science",
+        "Open Tools and Resources (Use, Make, Share framework & FAIR principles)",
+        "Open Data and Data Management Plans",
+        "Open Code and code development lifecycle",
+        "Open Results and ethical contributorship guidelines"
+      ]
+    },
+    {
+      title: "Internshala — Android App Development with AI",
+      topics: [
+        "Kotlin Bootcamp",
+        "Kickstarting Android App Development: Kotlin and Jetpack Compose",
+        "Levelling Up Kotlin Skills",
+        "Making an Android App Interactive",
+        "Adding Additional Screens to our Android App",
+        "Connecting Our App to the Internet",
+        "Introduction to BaaS and Firebase",
+        "Listing Apps in Google Play Store",
+        "Future of Android Development: Artificial Intelligence & Kotlin Multiplatform"
+      ]
+    },
+    {
+      title: "NASSCOM FutureSkills Prime & TCS iON — YUVA Artificial Intelligence (AI) for ALL",
+      topics: [
+        "AI Ethics and Responsible AI",
+        "Using AI to think and solve problems",
+        "Using AI to learn and create",
+        "Technology behind AI: Machine Learning, Deep Learning, and Neural Networks",
+        "Future of AI: Generative AI, Large Language Models, and AI in the Metaverse"
+      ]
+    },
+    {
+      title: "Cisco Networking Academy — Operating Systems Basics",
+      topics: [
+        "Windows Operating System Basics",
+        "Linux Operating System Basics",
+        "Mobile device connectivity and operating system basics",
+        "Operating system security and troubleshooting"
+      ]
+    }
   ];
 
   return (
@@ -427,7 +543,7 @@ const ProfileAndExperience = ({ rotateX, rotateY, isMobile }) => {
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.8 }}
             whileHover={!isMobile ? { scale: 1.02, rotateY: 10, rotateX: 5 } : {}}
-            className="w-full max-w-sm mx-auto lg:mx-0 rounded-3xl overflow-hidden border shadow-xl backdrop-blur-xl p-2 transform-style-3d bg-white/80 border-black/5"
+            className="w-full max-w-sm mx-auto lg:mx-0 rounded-3xl overflow-hidden border shadow-xl backdrop-blur-xl p-2 transform-style-3d bg-white/80 border-black/5 sticky top-32"
           >
              <div className="rounded-2xl overflow-hidden aspect-[4/5] relative bg-slate-200">
               <img src="/isha.ndisha_1785611777_3954320607764516452_77465641188.webp" alt="Ishan Mall" loading="lazy" className="absolute inset-0 w-full h-full object-cover object-center z-0" />
@@ -437,6 +553,7 @@ const ProfileAndExperience = ({ rotateX, rotateY, isMobile }) => {
                 <div className="space-y-2">
                   <p className="text-slate-200 text-xs flex items-center gap-2 font-bold"><GraduationCap size={16} className="text-cyan-400 shrink-0"/> B.Tech CSE (2024-2027), AKTU</p>
                   <p className="text-slate-200 text-xs flex items-center gap-2 font-bold"><Award size={16} className="text-pink-400 shrink-0"/> Class XII Science (2022)</p>
+                  <p className="text-slate-200 text-xs flex items-center gap-2 font-bold"><BookOpen size={16} className="text-blue-400 shrink-0"/> Class X (2020)</p>
                 </div>
               </div>
             </div>
@@ -458,18 +575,20 @@ const ProfileAndExperience = ({ rotateX, rotateY, isMobile }) => {
               <li className="flex items-start gap-3"><span className="text-pink-500 mt-1 shrink-0">✦</span> Develop Android screens weekly with Jetpack Compose and Material UI, supporting app navigation and layout consistency.</li>
               <li className="flex items-start gap-3"><span className="text-pink-500 mt-1 shrink-0">✦</span> Build Android applications in Kotlin using MVVM, Hilt, and Coroutines to keep code modular and maintainable.</li>
               <li className="flex items-start gap-3"><span className="text-pink-500 mt-1 shrink-0">✦</span> Implement local storage flows with Room and file management to support offline-first app behavior.</li>
+              <li className="flex items-start gap-3"><span className="text-pink-500 mt-1 shrink-0">✦</span> Handle media workflows through Android SDK features and MediaStore for content access and organization.</li>
+              <li className="flex items-start gap-3"><span className="text-pink-500 mt-1 shrink-0">✦</span> Test and debug builds in Android Studio, using Git and GitHub to track changes and maintain source control.</li>
             </ul>
           </motion.div>
 
           <div>
             <h4 className="text-2xl md:text-3xl font-display font-bold mb-6 drop-shadow-md text-slate-900">Technical Arsenal</h4>
-            <div className="space-y-6">
+            <div className="space-y-6 max-h-[600px] overflow-y-auto pr-4 custom-scrollbar">
               {Object.entries(technicalSkills).map(([category, skills]) => (
                 <div key={category}>
                   <p className="text-xs uppercase mb-3 tracking-wider font-bold text-pink-500">{category}</p>
                   <div className="flex flex-wrap gap-2">
                     {skills.map(skill => (
-                      <motion.span whileHover={!isMobile ? { scale: 1.05 } : {}} key={skill} className="px-3 py-1.5 md:px-4 md:py-2 border rounded-xl text-xs md:text-sm shadow-sm cursor-default font-bold backdrop-blur-md border-slate-200 bg-white/50 text-slate-700 hover:bg-slate-50 hover:text-slate-900 transition-colors">
+                      <motion.span whileHover={!isMobile ? { scale: 1.05 } : {}} key={skill} className="px-3 py-1.5 md:px-4 md:py-2 border rounded-xl text-[11px] md:text-xs shadow-sm cursor-default font-bold backdrop-blur-md border-slate-200 bg-white/70 text-slate-700 hover:bg-slate-50 hover:text-slate-900 transition-colors">
                         {skill}
                       </motion.span>
                     ))}
@@ -480,8 +599,8 @@ const ProfileAndExperience = ({ rotateX, rotateY, isMobile }) => {
           </div>
 
           <div>
-            <h4 className="text-2xl md:text-3xl font-display font-bold mb-6 drop-shadow-md text-slate-900">Key Certifications</h4>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6">
+            <h4 className="text-2xl md:text-3xl font-display font-bold mb-6 drop-shadow-md text-slate-900">Certifications & Syllabus Topics</h4>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
               {certifications.map((cert, i) => (
                 <motion.div 
                   initial={{ opacity: 0, y: 20 }}
@@ -492,14 +611,18 @@ const ProfileAndExperience = ({ rotateX, rotateY, isMobile }) => {
                   className="p-5 md:p-6 border rounded-2xl shadow-sm relative group backdrop-blur-xl border-slate-200 bg-white/60 hover:bg-white/90 hover:shadow-md transition-all duration-300 flex flex-col"
                 >
                   <div className="absolute top-0 left-0 w-1 h-full bg-gradient-to-b from-cyan-400 to-blue-500 rounded-l-2xl"></div>
-                  <h5 className="text-sm md:text-base font-display font-bold text-slate-800 mb-3 leading-tight">{cert.title}</h5>
-                  <ul className="space-y-1.5 mt-auto">
-                    {cert.topics.slice(0, 3).map((topic, j) => (
-                      <li key={j} className="text-[11px] md:text-xs font-medium text-slate-500 flex items-start gap-2">
-                         <span className="text-pink-400 mt-[2px] shrink-0">▹</span> <span className="line-clamp-2">{topic}</span>
-                      </li>
-                    ))}
-                  </ul>
+                  <h5 className={`text-sm md:text-base font-display font-bold text-slate-800 leading-tight ${cert.topics.length > 0 ? "mb-3" : ""}`}>
+                    {cert.title}
+                  </h5>
+                  {cert.topics && cert.topics.length > 0 && (
+                    <ul className="space-y-1.5 mt-auto">
+                      {cert.topics.map((topic, j) => (
+                        <li key={j} className="text-[11px] md:text-xs font-medium text-slate-500 flex items-start gap-2">
+                           <span className="text-pink-400 mt-[2px] shrink-0">▹</span> <span>{topic}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
                 </motion.div>
               ))}
             </div>
@@ -546,7 +669,6 @@ const Projects = ({ rotateX, rotateY, isMobile }) => {
           <p className="mt-4 text-sm md:text-base font-bold text-slate-500">Production-grade native applications.</p>
         </div>
 
-        {/* Flagship Project: GalleryBox */}
         <motion.div 
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -595,7 +717,6 @@ const Projects = ({ rotateX, rotateY, isMobile }) => {
                 whileHover={!isMobile ? { rotateY: -5, rotateX: 5, scale: 1.05 } : {}}
                 className="w-full max-w-sm aspect-[9/16] bg-slate-900 rounded-[2rem] border-8 border-slate-800 shadow-2xl relative overflow-hidden flex flex-col"
               >
-                {/* Mockup UI representation */}
                 <div className="h-6 w-1/3 bg-slate-800 absolute top-0 left-1/2 -translate-x-1/2 rounded-b-xl z-20"></div>
                 <div className="flex-1 bg-gradient-to-b from-slate-800 to-slate-900 p-6 flex flex-col justify-center items-center text-center relative">
                    <div className="absolute inset-0 opacity-20 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] mix-blend-overlay"></div>
@@ -609,7 +730,6 @@ const Projects = ({ rotateX, rotateY, isMobile }) => {
           </div>
         </motion.div>
 
-        {/* Secondary Projects Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 mb-16">
           {secondaryProjects.map((project, idx) => (
             <motion.div 
@@ -634,7 +754,6 @@ const Projects = ({ rotateX, rotateY, isMobile }) => {
           ))}
         </div>
 
-        {/* Call to action */}
         <motion.div 
           initial={{ opacity: 0, scale: 0.95 }}
           whileInView={{ opacity: 1, scale: 1 }}
@@ -702,11 +821,9 @@ export default function App() {
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
   
-  // Stiffer springs for more stable 2.5D tilt
   const smoothX = useSpring(mouseX, { stiffness: 150, damping: 25 });
   const smoothY = useSpring(mouseY, { stiffness: 150, damping: 25 });
   
-  // Tone down the rotation degrees for a more subtle, premium feel
   const rotateX = useTransform(smoothY, [-0.5, 0.5], [4, -4]);
   const rotateY = useTransform(smoothX, [-0.5, 0.5], [-4, 4]);
 
