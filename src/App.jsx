@@ -356,11 +356,115 @@ const Hero = ({ rotateX, rotateY }) => (
 );
 
 const ProfileAndExperience = ({ rotateX, rotateY }) => {
-  const technicalSkills = {
-    "Technical Skills": ["Kotlin", "Android SDK", "Jetpack Compose", "MVVM", "Room", "Material Design", "Hilt", "Coroutines", "Android App Architecture", "Firebase Auth", "FCM", "Navigation Component", "Dependency Injection"],
-    "App Quality & Testing": ["Unit testing", "Debugging", "UI testing", "App localization", "Crash reporting"],
-    "Development Workflow": ["Git", "Gradle", "Code review", "Issue tracking", "Release management", "App store optimization"]
-  };
+const technicalSkills = {
+  "Kotlin": [
+    "Kotlin",
+    "Null Safety",
+    "Collections",
+    "Generics",
+    "Extension Functions",
+    "Higher-Order Functions",
+    "Lambda Expressions",
+    "Sealed Classes",
+    "Data Classes",
+    "Coroutines",
+    "Flow",
+    "StateFlow",
+    "SharedFlow"
+  ],
+
+  "Java": [
+    "Java Basics",
+    "OOP",
+    "Classes & Objects",
+    "Inheritance",
+    "Interfaces",
+    "Exception Handling",
+    "Collections"
+  ],
+
+  "Android Development": [
+    "Android SDK",
+    "Android Studio",
+    "Jetpack Compose",
+    "Material 3",
+    "Navigation Compose",
+    "ViewModel",
+    "Room",
+    "DataStore",
+    "WorkManager",
+    "MediaStore",
+    "Media3 / ExoPlayer"
+  ],
+
+  "Architecture & Design": [
+    "MVVM",
+    "Clean Architecture",
+    "Android App Architecture",
+    "Repository Pattern",
+    "Dependency Injection",
+    "Hilt",
+    "Offline-First Architecture"
+  ],
+
+  "Firebase": [
+    "Firebase Authentication",
+    "Firebase Cloud Messaging (FCM)",
+    "Cloud Firestore",
+    "Firebase Storage",
+    "Firebase Analytics",
+    "Firebase Crashlytics",
+    "Firebase Remote Config",
+    "Firebase App Check"
+  ],
+
+  "App Quality & Testing": [
+    "Unit Testing",
+    "UI Testing",
+    "Debugging",
+    "Crash Reporting",
+    "Performance Optimization",
+    "App Localization"
+  ],
+
+  "Google Play Console": [
+    "Google Play Console",
+    "App Registration",
+    "App Signing",
+    "Play App Signing",
+    "Android App Bundle (AAB)",
+    "APK Management",
+    "Internal Testing",
+    "Closed Testing",
+    "Open Testing",
+    "Production Releases",
+    "Release Management",
+    "Store Listing",
+    "Store Listing Optimization",
+    "App Content",
+    "Data Safety",
+    "Content Rating",
+    "Target Audience",
+    "App Access",
+    "Privacy Policy",
+    "Pre-Launch Reports",
+    "Crash & ANR Monitoring",
+    "Android Vitals",
+    "User Feedback & Reviews",
+    "Statistics & Analytics",
+    "Acquisition Reports"
+  ],
+
+  "Development Workflow": [
+    "Git",
+    "GitHub",
+    "Gradle",
+    "Code Review",
+    "Issue Tracking",
+    "Release Management",
+    "App Store Optimization"
+  ]
+};
 
  const certifications = [
   {
