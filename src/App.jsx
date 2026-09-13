@@ -5,7 +5,7 @@ import 'lenis/dist/lenis.css';
 import { ArrowUpRight, Code2, Play, Briefcase, Camera, Tv, Award, GraduationCap, BookOpen, Menu, X, Smartphone, Layers, ShieldCheck, Database, Music } from 'lucide-react';
 import * as THREE from 'three';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
-import { useGLTF, Sparkles, Grid, useProgress, Html } from '@react-three/drei';
+import { useGLTF, Sparkles, Grid, useProgress } from '@react-three/drei';
 import { EffectComposer, Bloom, Vignette, Noise } from '@react-three/postprocessing';
 
 useGLTF.preload('/supercar.glb');
@@ -250,20 +250,29 @@ const RacingCar = ({ scrollYProgress, isMobile, reducedMotion }) => {
   );
 };
 
-const LoadingScreen = () => {
-  const { progress } = useProgress();
+// --- SINGLE LOADER OVERLAY (Moved outside the Canvas completely) ---
+const LoaderOverlay = () => {
+  const { progress, active } = useProgress();
+  
   return (
-    <Html center>
-      <div className="flex flex-col items-center justify-center w-screen h-screen bg-[#f8fafc] z-50">
-        <div className="text-4xl font-display font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-500 via-pink-500 to-blue-500 mb-4 animate-pulse">
-          ISHAN
-        </div>
-        <div className="w-48 h-1 bg-slate-200 rounded-full overflow-hidden">
-          <div className="h-full bg-gradient-to-r from-cyan-500 to-pink-500 transition-all duration-300" style={{ width: `${progress}%` }}></div>
-        </div>
-        <p className="text-sm font-bold text-slate-500 mt-2">{Math.round(progress)}% Loaded</p>
-      </div>
-    </Html>
+    <AnimatePresence>
+      {active && (
+        <motion.div 
+          initial={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.5 }}
+          className="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-[#f8fafc]"
+        >
+          <div className="text-4xl font-display font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-500 via-pink-500 to-blue-500 mb-4 animate-pulse">
+            ISHAN
+          </div>
+          <div className="w-48 h-1 bg-slate-200 rounded-full overflow-hidden">
+            <div className="h-full bg-gradient-to-r from-cyan-500 to-pink-500 transition-all duration-300" style={{ width: `${progress}%` }}></div>
+          </div>
+          <p className="text-sm font-bold text-slate-500 mt-2">{Math.round(progress)}% Loaded</p>
+        </motion.div>
+      )}
+    </AnimatePresence>
   );
 };
 
@@ -277,7 +286,7 @@ const Global3DScene = ({ scrollYProgress, isMobile, reducedMotion }) => {
         onCreated={({ gl }) => gl.setClearColor('#f8fafc')}
         style={{ pointerEvents: 'auto', touchAction: 'pan-y' }}
       >
-        <Suspense fallback={<LoadingScreen />}>
+        <Suspense fallback={null}>
           <CameraRig scrollYProgress={scrollYProgress} isMobile={isMobile} reducedMotion={reducedMotion} />
           <ambientLight intensity={0.7} />
           <directionalLight position={[10, 20, 10]} intensity={1.2} color="#ffffff" />
@@ -741,7 +750,7 @@ const Projects = ({ rotateX, rotateY, isMobile }) => {
                 {/* Screen Content - Real App UI */}
                 <div className="flex-1 relative bg-white">
                   <img 
-                    src="/textures/dbdb52ee-8443-4d55-9ed9-feb8bb437f30.jpg" 
+                    src="/dbdb52ee-8443-4d55-9ed9-feb8bb437f30.jpg" 
                     alt="GalleryBox App Interface" 
                     className="absolute inset-0 w-full h-full object-cover object-top"
                   />
@@ -870,6 +879,7 @@ export default function App() {
   return (
     <ReactLenis root options={{ lerp: isMobile ? 0.08 : 0.05, smoothWheel: true }}>
       <main className="min-h-screen bg-[#f8fafc] selection:bg-pink-500 selection:text-white overflow-hidden font-sans">
+        <LoaderOverlay />
         <Global3DScene scrollYProgress={scrollYProgress} isMobile={isMobile} reducedMotion={shouldReduceMotion} />
         <Nav />
         <Hero rotateX={rotateX} rotateY={rotateY} isMobile={isMobile} />
