@@ -753,6 +753,12 @@ const WebsitesSection = ({ rotateX, rotateY, isMobile }) => {
       url: 'https://portfolio-b1973.web.app/',
       desc: 'Immersive interactive portfolio built with React Three Fiber, Framer Motion, and TailwindCSS showcasing 3D experiences on the web.',
       icon: <Code2 size={24} className="text-pink-500" />
+    },
+      {
+      title: 'Future Prediction Prank',
+      url: 'https://gaystiny-a5016.web.app/',
+      desc: 'Immersive interactive prank built with React ',
+      icon: <Code2 size={24} className="text-pink-500" />
     }
   ];
 
