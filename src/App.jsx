@@ -13,7 +13,7 @@ import 'lenis/dist/lenis.css';
 import { 
   ArrowUpRight, Code2, Play, Briefcase, Camera, Tv, Award, 
   GraduationCap, BookOpen, Menu, X, Smartphone, Layers, 
-  ShieldCheck, Database, Music, CheckCircle2, Mail, Send, Terminal, Globe 
+  ShieldCheck, Database, Music, CheckCircle2, Mail, Send, Terminal, Globe, Rocket, BrainCircuit 
 } from 'lucide-react';
 import * as THREE from 'three';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
@@ -384,7 +384,7 @@ const Global3DScene = ({ scrollYProgress, isMobile, reducedMotion }) => {
 
 const Nav = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const links = ['Experience', 'Projects', 'Websites', 'Arsenal', 'Credentials', 'Contact'];
+  const links = ['Experience', 'Projects', 'Websites', 'Arsenal', 'Credentials', 'Training', 'Contact'];
 
   return (
     <>
@@ -714,7 +714,7 @@ const Projects = ({ rotateX, rotateY, isMobile }) => {
         >
           <div className="mb-6 md:mb-0">
             <Text3D depth={3} className="text-2xl md:text-3xl font-black mb-2" gradient="from-cyan-500 via-pink-500 to-blue-500" shadowColor="#bae6fd">
-              Explore My Other Android Projects 
+              Explore My Releases
             </Text3D>
             <p className="text-sm md:text-base font-bold text-slate-600 max-w-lg">
               To test all my latest Android releases, APK bundles, and community tools, visit my verified Google Play Developer Console Profile.
@@ -921,7 +921,7 @@ const CertificationsSection = ({ rotateX, rotateY, isMobile }) => {
       >
         <div className="mb-12 text-center md:text-left">
           <Text3D depth={4} className="text-3xl md:text-5xl font-black tracking-tight" color="text-slate-900" shadowColor="#cbd5e1">
-            Accreditations & Badges
+            Google Credentials
           </Text3D>
           <p className="mt-2 text-sm md:text-base font-bold text-slate-500">
             Google Developer Profile and Cloud credentials.
@@ -943,6 +943,110 @@ const CertificationsSection = ({ rotateX, rotateY, isMobile }) => {
               <span className="text-sm font-bold text-slate-800 leading-tight">
                 {badge}
               </span>
+            </motion.div>
+          ))}
+        </div>
+      </motion.div>
+    </section>
+  );
+};
+
+// ==========================================
+// NEW TRAINING & CERTIFICATIONS SECTION
+// ==========================================
+const TrainingCertificationsSection = ({ rotateX, rotateY, isMobile }) => {
+  const trainingData = [
+    {
+      org: 'NASA',
+      courses: [
+        'Fundamentals of Remote Sensing',
+        'Hyperspectral Data for Land and Coastal Systems',
+        'Sustainable Earth Science Applications — Modules 1, 2, 3',
+        'NASA Open Science 101'
+      ],
+      icon: <Rocket size={24} className="text-blue-500" />
+    },
+    {
+      org: 'ISRO / IIRS',
+      courses: [
+        'Aerosols: Measurement, Retrieval and Impacts',
+        'AI/ML for Geodata Analysis',
+        'Climate Change Induced Disasters',
+        'Earth Observations & Tropical Cyclone Monitoring and Forecasting'
+      ],
+      icon: <Globe size={24} className="text-orange-500" />
+    },
+    {
+      org: 'Android App Development',
+      courses: [
+        'Android App Development',
+        'Android App Development with AI'
+      ],
+      icon: <Smartphone size={24} className="text-green-500" />
+    },
+    {
+      org: 'AI / AI Training',
+      courses: [
+        'YUVA AI for ALL — NASSCOM FutureSkills Prime',
+        'YUVA Artificial Intelligence (AI) — TCS iON'
+      ],
+      icon: <BrainCircuit size={24} className="text-purple-500" />
+    },
+    {
+      org: 'Other',
+      courses: [
+        'Operating Systems Basics — Cisco Networking Academy',
+        'Visit Bharat Online Pledge; Recognition; VBYLD 2026',
+        'TATA Crucible Campus Quiz 2025',
+        'Puzzler\'s Pursuit — IIM Rohtak',
+        'dearMoon Crew Candidate'
+      ],
+      icon: <Award size={24} className="text-pink-500" />
+    }
+  ];
+
+  return (
+    <section id="training" className="py-20 md:py-32 px-6 md:px-10 relative z-10 pointer-events-none perspective-[1200px]">
+      <motion.div
+        style={{ rotateX: isMobile ? 0 : rotateX, rotateY: isMobile ? 0 : rotateY, transformStyle: 'preserve-3d' }}
+        className="max-w-7xl mx-auto pointer-events-auto will-change-transform"
+      >
+        <div className="mb-12 text-center md:text-left">
+          <Text3D depth={4} className="text-3xl md:text-5xl font-black tracking-tight" color="text-slate-900" shadowColor="#cbd5e1">
+            Training & Certifications
+          </Text3D>
+          <p className="mt-2 text-sm md:text-base font-bold text-slate-500">
+            Professional development, specialized training, and foundational knowledge.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+          {trainingData.map((category, idx) => (
+            <motion.div
+              key={idx}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-50px' }}
+              transition={{ duration: 0.5, delay: isMobile ? 0 : idx * 0.1 }}
+              whileHover={!isMobile ? { y: -6, boxShadow: '0px 20px 30px -10px rgba(0,0,0,0.1)' } : {}}
+              className="p-6 md:p-8 rounded-3xl border shadow-md backdrop-blur-xl bg-white/75 border-black/5 flex flex-col h-full transition-all duration-300"
+            >
+              <div className="p-3 bg-slate-50 rounded-2xl w-fit mb-4 border border-slate-100 shadow-sm">
+                {category.icon}
+              </div>
+              <div className="mb-4">
+                <Text3D depth={1} className="text-xl font-black" color="text-slate-900" shadowColor="#cbd5e1">
+                  {category.org}
+                </Text3D>
+              </div>
+              <ul className="space-y-3 mt-auto">
+                {category.courses.map((course, cIdx) => (
+                  <li key={cIdx} className="text-sm font-medium text-slate-600 flex items-start gap-2">
+                    <span className="text-pink-500 font-black mt-0.5 shrink-0">•</span>
+                    <span className="leading-tight">{course}</span>
+                  </li>
+                ))}
+              </ul>
             </motion.div>
           ))}
         </div>
@@ -1105,6 +1209,7 @@ export default function App() {
         <WebsitesSection rotateX={rotateX} rotateY={rotateY} isMobile={isMobile} />
         <ArsenalSection rotateX={rotateX} rotateY={rotateY} isMobile={isMobile} />
         <CertificationsSection rotateX={rotateX} rotateY={rotateY} isMobile={isMobile} />
+        <TrainingCertificationsSection rotateX={rotateX} rotateY={rotateY} isMobile={isMobile} />
         <Footer rotateX={rotateX} rotateY={rotateY} isMobile={isMobile} />
       </main>
     </ReactLenis>
