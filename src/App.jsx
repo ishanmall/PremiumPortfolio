@@ -29,13 +29,13 @@ useGLTF.preload('/supercar.glb');
 const Text3D = ({
   children,
   className = '',
-  depth = 4,
+  depth = 6, // Increased default depth for more 3D effect
   gradient = null,
   color = 'text-slate-900',
-  shadowColor = '#cbd5e1', // slate-300
+  shadowColor = '#cbd5e1', 
   isMobile = false,
 }) => {
-  const activeDepth = isMobile ? Math.max(1, Math.floor(depth / 2)) : depth;
+  const activeDepth = isMobile ? Math.max(2, Math.floor(depth / 1.5)) : depth;
   
   // Generate solid diagonal extrusion using stacked text-shadows
   const shadow = Array.from({ length: activeDepth })
@@ -47,7 +47,7 @@ const Text3D = ({
       {/* Background Shadow Layer */}
       <span
         aria-hidden="true"
-        className="absolute inset-0 pointer-events-none transition-transform duration-300 group-hover:-translate-x-1 group-hover:-translate-y-1"
+        className="absolute inset-0 pointer-events-none transition-transform duration-300 group-hover:-translate-x-1.5 group-hover:-translate-y-1.5"
         style={{ 
           color: 'transparent',
           textShadow: shadow,
@@ -58,7 +58,7 @@ const Text3D = ({
       </span>
       {/* Foreground Text Layer */}
       <span 
-        className={`relative z-10 block transition-transform duration-300 group-hover:-translate-x-1 group-hover:-translate-y-1 ${
+        className={`relative z-10 block transition-transform duration-300 group-hover:-translate-x-1.5 group-hover:-translate-y-1.5 ${
           gradient ? `bg-clip-text text-transparent bg-gradient-to-r ${gradient}` : color
         }`}
       >
@@ -318,7 +318,7 @@ const LoaderOverlay = () => {
           transition={{ duration: 0.6 }}
           className="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-[#f8fafc]"
         >
-          <Text3D depth={6} className="text-4xl md:text-5xl font-extrabold tracking-tighter mb-4 animate-pulse" gradient="from-cyan-400 via-pink-500 to-blue-600">
+          <Text3D depth={8} className="text-4xl md:text-5xl font-extrabold tracking-tighter mb-4 animate-pulse" gradient="from-cyan-400 via-pink-500 to-blue-600">
             ISHAN
           </Text3D>
           <div className="w-56 h-1.5 bg-slate-200 rounded-full overflow-hidden shadow-inner">
@@ -395,10 +395,10 @@ const Nav = () => {
         className="fixed top-0 left-0 right-0 z-50 p-4 md:px-8 md:py-5 flex justify-between items-center backdrop-blur-xl border-b shadow-lg bg-white/75 border-black/5 shadow-slate-200/40"
       >
         <a href="#" className="flex items-center gap-2">
-          <Text3D depth={2} className="text-xl md:text-2xl font-black tracking-tighter" gradient="from-cyan-400 via-pink-500 to-blue-600">
+          <Text3D depth={3} className="text-xl md:text-2xl font-black tracking-tighter" gradient="from-cyan-400 via-pink-500 to-blue-600">
             ISHAN
           </Text3D>
-          <span className="hidden sm:inline-block px-2 py-0.5 rounded-full text-[10px] font-bold bg-pink-500/10 text-pink-600 border border-pink-500/20">
+          <span className="hidden sm:inline-block px-2 py-0.5 rounded-full text-[10px] font-bold bg-pink-500/10 text-pink-600 border border-pink-500/20 shadow-sm">
             PORTFOLIO 3D
           </span>
         </a>
@@ -407,7 +407,7 @@ const Nav = () => {
           {links.map((item) => (
             <li key={item}>
               <a href={`#${item.toLowerCase()}`} className="relative group block">
-                <Text3D depth={1} color="text-slate-700" shadowColor="#e2e8f0" className="transition-colors group-hover:text-pink-500">
+                <Text3D depth={2} color="text-slate-700" shadowColor="#e2e8f0" className="transition-colors group-hover:text-pink-500">
                   {item}
                 </Text3D>
               </a>
@@ -420,7 +420,7 @@ const Nav = () => {
             href="https://play.google.com/store/apps/dev?id=4926136840256493221"
             target="_blank"
             rel="noreferrer"
-            whileHover={{ y: -2, boxShadow: '0 8px 15px -3px rgba(236, 72, 153, 0.4)' }}
+            whileHover={{ y: -3, boxShadow: '0 12px 20px -3px rgba(236, 72, 153, 0.5)' }}
             whileTap={{ y: 0, boxShadow: '0 2px 5px -1px rgba(236, 72, 153, 0.4)' }}
             className="flex items-center gap-2 px-5 py-2.5 rounded-full text-xs font-bold text-white bg-gradient-to-r from-cyan-500 to-pink-500 shadow-md transition-all"
           >
@@ -452,9 +452,9 @@ const Nav = () => {
               </a>
             ))}
             <div className="mt-auto pb-12 flex gap-4">
-              <a href="https://github.com/ishanmall" className="p-3 bg-slate-100 rounded-full text-slate-700"><Code2 size={20} /></a>
-              <a href="https://www.linkedin.com/in/ishan-mall-4b20ab296/" className="p-3 bg-slate-100 rounded-full text-slate-700"><Briefcase size={20} /></a>
-              <a href="https://play.google.com/store/apps/dev?id=4926136840256493221" className="p-3 bg-pink-500/10 text-pink-600 rounded-full"><Play size={20} /></a>
+              <a href="https://github.com/ishanmall" className="p-3 bg-slate-100 rounded-full text-slate-700 shadow-sm"><Code2 size={20} /></a>
+              <a href="https://www.linkedin.com/in/ishan-mall-4b20ab296/" className="p-3 bg-slate-100 rounded-full text-slate-700 shadow-sm"><Briefcase size={20} /></a>
+              <a href="https://play.google.com/store/apps/dev?id=4926136840256493221" className="p-3 bg-pink-500/10 text-pink-600 rounded-full shadow-sm"><Play size={20} /></a>
             </div>
           </motion.div>
         )}
@@ -477,7 +477,7 @@ const Hero = ({ rotateX, rotateY, isMobile }) => (
           transition={{ duration: 0.8, delay: 0.2, type: 'spring', stiffness: 100 }}
           whileHover={!isMobile ? { y: -4, boxShadow: '0px 10px 20px -5px rgba(236, 72, 153, 0.3)' } : {}}
         >
-          <div className="relative inline-flex items-center gap-3 px-5 py-2.5 rounded-full backdrop-blur-xl border border-pink-500/20 bg-white/90 text-pink-600 shadow-sm transition-all">
+          <div className="relative inline-flex items-center gap-3 px-5 py-2.5 rounded-full backdrop-blur-xl border border-pink-500/20 bg-white/90 text-pink-600 shadow-sm transition-all hover:shadow-md">
             <span className="text-xs md:text-sm font-bold uppercase tracking-wider">Kotlin & Jetpack Compose</span>
             <span className="w-2 h-2 rounded-full animate-pulse bg-cyan-500 shadow-[0_0_8px_rgba(6,182,212,0.8)]" />
             <span className="hidden md:block text-xs md:text-sm uppercase tracking-wider text-slate-700">Production Native Engineer</span>
@@ -487,19 +487,19 @@ const Hero = ({ rotateX, rotateY, isMobile }) => (
 
       <h1 className="text-[14vw] md:text-[9.5vw] leading-[0.88] tracking-tighter uppercase font-black flex flex-col items-start relative select-none">
         <motion.div initial={{ rotateX: 60, opacity: 0, y: 80 }} animate={{ rotateX: 0, opacity: 1, y: 0 }} transition={{ duration: 1, delay: 0.25 }}>
-          <Text3D depth={isMobile ? 3 : 6} isMobile={isMobile} shadowColor="#94a3b8" color="text-slate-900">
+          <Text3D depth={isMobile ? 4 : 8} isMobile={isMobile} shadowColor="#94a3b8" color="text-slate-900">
             ANDROID
           </Text3D>
         </motion.div>
 
         <motion.div initial={{ rotateX: 60, opacity: 0, y: 80 }} animate={{ rotateX: 0, opacity: 1, y: 0 }} transition={{ duration: 1, delay: 0.35 }}>
-          <Text3D depth={isMobile ? 3 : 6} isMobile={isMobile} shadowColor="#c084fc" gradient="from-pink-500 via-purple-500 to-indigo-600">
+          <Text3D depth={isMobile ? 4 : 8} isMobile={isMobile} shadowColor="#c084fc" gradient="from-pink-500 via-purple-500 to-indigo-600">
             APP
           </Text3D>
         </motion.div>
 
         <motion.div initial={{ rotateX: 60, opacity: 0, y: 80 }} animate={{ rotateX: 0, opacity: 1, y: 0 }} transition={{ duration: 1, delay: 0.45 }}>
-          <Text3D depth={isMobile ? 3 : 6} isMobile={isMobile} shadowColor="#67e8f9" gradient="from-cyan-400 via-blue-500 to-pink-500">
+          <Text3D depth={isMobile ? 4 : 8} isMobile={isMobile} shadowColor="#67e8f9" gradient="from-cyan-400 via-blue-500 to-pink-500">
             DEVELOPER
           </Text3D>
         </motion.div>
@@ -507,7 +507,7 @@ const Hero = ({ rotateX, rotateY, isMobile }) => (
 
       <motion.p 
         initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.8 }}
-        className="mt-10 max-w-xl text-slate-600 font-semibold text-sm md:text-base leading-relaxed backdrop-blur-sm bg-white/40 p-4 rounded-2xl border border-white/60 shadow-sm"
+        className="mt-10 max-w-xl text-slate-600 font-semibold text-sm md:text-base leading-relaxed backdrop-blur-sm bg-white/40 p-4 rounded-2xl border border-white/60 shadow-md"
       >
         Crafting high-throughput, offline-first mobile experiences powered by reactive state engines, strict clean architecture, and modern Three.js interfaces.
       </motion.p>
@@ -552,14 +552,14 @@ const ProfileAndExperience = ({ rotateX, rotateY, isMobile }) => {
             whileInView={{ rotateY: isMobile ? 0 : 5, opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-100px' }}
             transition={{ duration: 0.8 }}
-            whileHover={!isMobile ? { scale: 1.02, rotateY: 8, rotateX: 4, boxShadow: '20px 20px 40px -10px rgba(0,0,0,0.15)' } : {}}
+            whileHover={!isMobile ? { scale: 1.02, rotateY: 8, rotateX: 4, y: -5, boxShadow: '25px 25px 50px -12px rgba(0,0,0,0.25)' } : {}}
             className="w-full max-w-sm mx-auto lg:mx-0 rounded-3xl overflow-hidden border shadow-xl backdrop-blur-xl p-2.5 bg-white/80 border-black/5 sticky top-32 transition-all duration-300"
           >
             <div className="rounded-2xl overflow-hidden aspect-[4/5] relative bg-slate-200">
               <img src="/isha.ndisha_1785611777_3954320607764516452_77465641188.webp" alt="Ishan Mall" loading="lazy" className="absolute inset-0 w-full h-full object-cover object-center z-0" />
               <div className="absolute inset-0 bg-gradient-to-t from-slate-950/95 via-slate-900/30 to-transparent z-10" />
               <div className="absolute bottom-0 left-0 p-5 md:p-6 w-full z-20">
-                <Text3D depth={2} className="text-2xl md:text-3xl font-black mb-3" color="text-white" shadowColor="#1e293b">
+                <Text3D depth={3} className="text-2xl md:text-3xl font-black mb-3" color="text-white" shadowColor="#1e293b">
                   Ishan Mall
                 </Text3D>
                 <div className="space-y-2 mt-2">
@@ -573,20 +573,23 @@ const ProfileAndExperience = ({ rotateX, rotateY, isMobile }) => {
         </div>
 
         <div className="lg:col-span-8 order-2 space-y-10 lg:pl-4">
-          <div className="p-6 md:p-8 rounded-3xl border shadow-xl backdrop-blur-xl bg-gradient-to-br from-blue-50/90 to-purple-50/90 border-black/5 text-slate-800">
+          <motion.div 
+            whileHover={!isMobile ? { y: -4, boxShadow: '0px 20px 40px -10px rgba(0,0,0,0.15)' } : {}}
+            className="p-6 md:p-8 rounded-3xl border shadow-xl backdrop-blur-xl bg-gradient-to-br from-blue-50/90 to-purple-50/90 border-black/5 text-slate-800 transition-all duration-300"
+          >
             <div className="mb-4">
-              <Text3D depth={2} className="text-2xl font-black tracking-tight" gradient="from-slate-900 via-blue-900 to-slate-800" shadowColor="#93c5fd">
+              <Text3D depth={3} className="text-2xl font-black tracking-tight" gradient="from-slate-900 via-blue-900 to-slate-800" shadowColor="#93c5fd">
                 Professional Summary
               </Text3D>
             </div>
             <p className="text-sm md:text-base font-medium leading-relaxed text-slate-700">
               Mobile application developer focused on building reliable Android applications with Kotlin and Jetpack Compose. Experienced in offline-first development, MVVM architecture, Room, Hilt, Coroutines, Firebase, structured content navigation, and media handling. Uses Android Studio, Git, Gradle, and Google Play Console throughout development, testing, release, and maintenance.
             </p>
-          </div>
+          </motion.div>
 
           <div className="space-y-6">
             <div className="flex items-center gap-3">
-              <Text3D depth={2} className="text-2xl md:text-3xl font-black tracking-tight" color="text-slate-900" shadowColor="#cbd5e1">
+              <Text3D depth={4} className="text-2xl md:text-4xl font-black tracking-tight" color="text-slate-900" shadowColor="#cbd5e1">
                 Work Milestones
               </Text3D>
             </div>
@@ -594,12 +597,12 @@ const ProfileAndExperience = ({ rotateX, rotateY, isMobile }) => {
             {experiences.map((exp, i) => (
               <motion.div
                 key={i}
-                whileHover={!isMobile ? { y: -4, boxShadow: '0px 15px 30px -5px rgba(0,0,0,0.1)' } : {}}
+                whileHover={!isMobile ? { y: -6, boxShadow: '0px 20px 40px -10px rgba(0,0,0,0.15)' } : {}}
                 className="p-6 md:p-8 rounded-3xl border shadow-xl backdrop-blur-xl bg-white/85 border-black/5 transition-all duration-300"
               >
                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-2 mb-2">
-                  <Text3D depth={1} color="text-slate-900" shadowColor="#e2e8f0" className="text-xl md:text-2xl font-black">{exp.role}</Text3D>
-                  <span className="text-xs font-mono font-bold text-cyan-600 bg-cyan-500/10 px-3 py-1 rounded-full w-fit">
+                  <Text3D depth={2} color="text-slate-900" shadowColor="#e2e8f0" className="text-xl md:text-2xl font-black">{exp.role}</Text3D>
+                  <span className="text-xs font-mono font-bold text-cyan-600 bg-cyan-500/10 px-3 py-1 rounded-full w-fit shadow-sm">
                     {exp.period}
                   </span>
                 </div>
@@ -664,7 +667,7 @@ const Projects = ({ rotateX, rotateY, isMobile }) => {
         className="max-w-7xl mx-auto px-6 md:px-10 pointer-events-auto will-change-transform"
       >
         <div className="mb-14 text-center md:text-left">
-          <Text3D depth={4} className="text-4xl md:text-5xl font-black tracking-tight" color="text-slate-900" shadowColor="#cbd5e1">
+          <Text3D depth={6} className="text-4xl md:text-5xl font-black tracking-tight" color="text-slate-900" shadowColor="#cbd5e1">
             Featured Work
           </Text3D>
           <p className="mt-3 text-sm md:text-base font-bold text-slate-500">
@@ -681,20 +684,20 @@ const Projects = ({ rotateX, rotateY, isMobile }) => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-50px' }}
               transition={{ duration: 0.5, delay: isMobile ? 0 : idx * 0.1 }}
-              whileHover={!isMobile ? { y: -6, boxShadow: '0px 20px 30px -10px rgba(0,0,0,0.1)' } : {}}
-              className="p-6 md:p-8 rounded-3xl border shadow-md backdrop-blur-xl bg-white/75 border-black/5 flex flex-col h-full transition-all duration-300"
+              whileHover={!isMobile ? { y: -8, boxShadow: '0px 25px 40px -10px rgba(0,0,0,0.15)' } : {}}
+              className="p-6 md:p-8 rounded-3xl border shadow-lg backdrop-blur-xl bg-white/80 border-black/5 flex flex-col h-full transition-all duration-300"
             >
               <div className="p-3 bg-slate-50 rounded-2xl w-fit mb-4 border border-slate-100 shadow-sm">
                 {project.icon}
               </div>
               <div className="mb-1">
-                <Text3D depth={2} className="text-xl font-black" color="text-slate-900" shadowColor="#cbd5e1">
+                <Text3D depth={3} className="text-xl font-black" color="text-slate-900" shadowColor="#cbd5e1">
                   {project.title}
                 </Text3D>
               </div>
               <p className="text-xs font-mono font-bold text-slate-400 mb-4">{project.date}</p>
               <p className="text-sm font-medium text-slate-600 mb-6 flex-1">{project.desc}</p>
-              <div className="space-y-1 mb-4">
+              <div className="space-y-1 mb-4 mt-auto">
                 {project.features.map((feat, fi) => (
                   <div key={fi} className="text-xs font-semibold text-slate-500 flex items-center gap-1.5">
                     <CheckCircle2 size={12} className="text-cyan-500" /> {feat}
@@ -710,10 +713,11 @@ const Projects = ({ rotateX, rotateY, isMobile }) => {
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true, margin: '-50px' }}
           transition={{ duration: 0.6 }}
-          className="p-8 md:p-12 rounded-[2rem] border shadow-xl flex flex-col md:flex-row items-center justify-between text-center md:text-left backdrop-blur-xl bg-gradient-to-r from-white/95 to-white/70 border-black/5"
+          whileHover={!isMobile ? { y: -4, boxShadow: '0px 25px 50px -12px rgba(0,0,0,0.15)' } : {}}
+          className="p-8 md:p-12 rounded-[2rem] border shadow-xl flex flex-col md:flex-row items-center justify-between text-center md:text-left backdrop-blur-xl bg-gradient-to-r from-white/95 to-white/70 border-black/5 transition-all duration-300"
         >
           <div className="mb-6 md:mb-0">
-            <Text3D depth={3} className="text-2xl md:text-3xl font-black mb-2" gradient="from-cyan-500 via-pink-500 to-blue-500" shadowColor="#bae6fd">
+            <Text3D depth={4} className="text-2xl md:text-3xl font-black mb-2" gradient="from-cyan-500 via-pink-500 to-blue-500" shadowColor="#bae6fd">
               Explore My Releases
             </Text3D>
             <p className="text-sm md:text-base font-bold text-slate-600 max-w-lg">
@@ -759,7 +763,7 @@ const WebsitesSection = ({ rotateX, rotateY, isMobile }) => {
         className="max-w-7xl mx-auto px-6 md:px-10 pointer-events-auto will-change-transform"
       >
         <div className="mb-10 text-center md:text-left">
-          <Text3D depth={4} className="text-3xl md:text-5xl font-black tracking-tight" color="text-slate-900" shadowColor="#cbd5e1">
+          <Text3D depth={6} className="text-3xl md:text-5xl font-black tracking-tight" color="text-slate-900" shadowColor="#cbd5e1">
             Websites
           </Text3D>
           <p className="mt-3 text-sm md:text-base font-bold text-slate-500">
@@ -778,8 +782,8 @@ const WebsitesSection = ({ rotateX, rotateY, isMobile }) => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-50px' }}
               transition={{ duration: 0.5, delay: isMobile ? 0 : idx * 0.1 }}
-              whileHover={!isMobile ? { y: -6, boxShadow: '0px 20px 30px -10px rgba(0,0,0,0.1)' } : {}}
-              className="p-6 md:p-8 rounded-3xl border shadow-md backdrop-blur-xl bg-white/75 border-black/5 flex flex-col h-full transition-all duration-300 group cursor-pointer"
+              whileHover={!isMobile ? { y: -8, boxShadow: '0px 25px 40px -10px rgba(0,0,0,0.15)' } : {}}
+              className="p-6 md:p-8 rounded-3xl border shadow-lg backdrop-blur-xl bg-white/80 border-black/5 flex flex-col h-full transition-all duration-300 group cursor-pointer"
             >
               <div className="flex justify-between items-start mb-4">
                 <div className="p-3 bg-slate-50 rounded-2xl border border-slate-100 shadow-sm group-hover:scale-110 transition-transform">
@@ -788,7 +792,7 @@ const WebsitesSection = ({ rotateX, rotateY, isMobile }) => {
                 <ArrowUpRight className="text-slate-400 group-hover:text-pink-500 transition-colors" />
               </div>
               <div className="mb-1">
-                <Text3D depth={2} className="text-xl font-black" color="text-slate-900" shadowColor="#cbd5e1">
+                <Text3D depth={3} className="text-xl font-black" color="text-slate-900" shadowColor="#cbd5e1">
                   {web.title}
                 </Text3D>
               </div>
@@ -823,7 +827,7 @@ const ArsenalSection = ({ rotateX, rotateY, isMobile }) => {
         className="max-w-7xl mx-auto pointer-events-auto will-change-transform"
       >
         <div className="mb-10 text-center md:text-left">
-          <Text3D depth={4} className="text-3xl md:text-5xl font-black tracking-tight" color="text-slate-900" shadowColor="#cbd5e1">
+          <Text3D depth={6} className="text-3xl md:text-5xl font-black tracking-tight" color="text-slate-900" shadowColor="#cbd5e1">
             Technical Arsenal
           </Text3D>
           <p className="mt-2 text-sm md:text-base font-bold text-slate-500">
@@ -835,7 +839,7 @@ const ArsenalSection = ({ rotateX, rotateY, isMobile }) => {
               <motion.button
                 key={cat}
                 onClick={() => setActiveCategory(cat)}
-                whileHover={{ y: -2, boxShadow: '0 8px 15px -3px rgba(0,0,0,0.1)' }}
+                whileHover={{ y: -3, boxShadow: '0 12px 20px -3px rgba(0,0,0,0.15)' }}
                 whileTap={{ y: 0, boxShadow: 'none' }}
                 className={`px-4 py-2 rounded-full text-xs font-bold transition-all border ${
                   activeCategory === cat
@@ -858,19 +862,19 @@ const ArsenalSection = ({ rotateX, rotateY, isMobile }) => {
                 initial={{ opacity: 0, y: 15 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                whileHover={!isMobile ? { y: -4, boxShadow: '0 15px 30px -5px rgba(0,0,0,0.1)' } : {}}
-                className="p-6 rounded-3xl border shadow-lg backdrop-blur-xl bg-white/80 border-slate-200/80 flex flex-col justify-between transition-all"
+                whileHover={!isMobile ? { y: -6, boxShadow: '0 25px 40px -10px rgba(0,0,0,0.15)' } : {}}
+                className="p-6 rounded-3xl border shadow-lg backdrop-blur-xl bg-white/85 border-slate-200/80 flex flex-col justify-between transition-all duration-300"
               >
                 <div>
                   <div className="flex items-center gap-2 mb-4">
                     <Terminal size={18} className="text-pink-500" />
-                    <Text3D depth={1} color="text-slate-800" shadowColor="#e2e8f0" className="text-base font-black">{cat}</Text3D>
+                    <Text3D depth={2} color="text-slate-800" shadowColor="#e2e8f0" className="text-base font-black">{cat}</Text3D>
                   </div>
                   <div className="flex flex-wrap gap-2">
                     {skills.map((skill) => (
                       <span
                         key={skill}
-                        className="px-3 py-1.5 border rounded-xl text-xs font-bold border-slate-200 bg-white text-slate-700 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all cursor-default"
+                        className="px-3 py-1.5 border rounded-xl text-xs font-bold border-slate-200 bg-white text-slate-700 shadow-sm hover:shadow-md hover:-translate-y-1 transition-all cursor-default"
                       >
                         {skill}
                       </span>
@@ -920,7 +924,7 @@ const CertificationsSection = ({ rotateX, rotateY, isMobile }) => {
         className="max-w-7xl mx-auto pointer-events-auto will-change-transform"
       >
         <div className="mb-12 text-center md:text-left">
-          <Text3D depth={4} className="text-3xl md:text-5xl font-black tracking-tight" color="text-slate-900" shadowColor="#cbd5e1">
+          <Text3D depth={6} className="text-3xl md:text-5xl font-black tracking-tight" color="text-slate-900" shadowColor="#cbd5e1">
             Google Credentials
           </Text3D>
           <p className="mt-2 text-sm md:text-base font-bold text-slate-500">
@@ -936,8 +940,8 @@ const CertificationsSection = ({ rotateX, rotateY, isMobile }) => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-50px' }}
               transition={{ duration: 0.4, delay: isMobile ? 0 : (i % 4) * 0.05 }}
-              whileHover={!isMobile ? { y: -2, boxShadow: '0px 10px 20px -5px rgba(0,0,0,0.1)' } : {}}
-              className="p-4 border rounded-2xl shadow-sm relative group backdrop-blur-xl border-slate-200 bg-white/70 hover:bg-white/95 transition-all duration-300 flex items-center gap-3"
+              whileHover={!isMobile ? { y: -4, boxShadow: '0px 15px 30px -5px rgba(0,0,0,0.15)' } : {}}
+              className="p-4 border rounded-2xl shadow-md relative group backdrop-blur-xl border-slate-200 bg-white/80 hover:bg-white transition-all duration-300 flex items-center gap-3"
             >
               <Award size={20} className="text-pink-500 shrink-0" />
               <span className="text-sm font-bold text-slate-800 leading-tight">
@@ -952,7 +956,7 @@ const CertificationsSection = ({ rotateX, rotateY, isMobile }) => {
 };
 
 // ==========================================
-// NEW TRAINING & CERTIFICATIONS SECTION
+// TRAINING & CERTIFICATIONS SECTION
 // ==========================================
 const TrainingCertificationsSection = ({ rotateX, rotateY, isMobile }) => {
   const trainingData = [
@@ -1012,7 +1016,7 @@ const TrainingCertificationsSection = ({ rotateX, rotateY, isMobile }) => {
         className="max-w-7xl mx-auto pointer-events-auto will-change-transform"
       >
         <div className="mb-12 text-center md:text-left">
-          <Text3D depth={4} className="text-3xl md:text-5xl font-black tracking-tight" color="text-slate-900" shadowColor="#cbd5e1">
+          <Text3D depth={6} className="text-3xl md:text-5xl font-black tracking-tight" color="text-slate-900" shadowColor="#cbd5e1">
             Training & Certifications
           </Text3D>
           <p className="mt-2 text-sm md:text-base font-bold text-slate-500">
@@ -1028,18 +1032,18 @@ const TrainingCertificationsSection = ({ rotateX, rotateY, isMobile }) => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-50px' }}
               transition={{ duration: 0.5, delay: isMobile ? 0 : idx * 0.1 }}
-              whileHover={!isMobile ? { y: -6, boxShadow: '0px 20px 30px -10px rgba(0,0,0,0.1)' } : {}}
-              className="p-6 md:p-8 rounded-3xl border shadow-md backdrop-blur-xl bg-white/75 border-black/5 flex flex-col h-full transition-all duration-300"
+              whileHover={!isMobile ? { y: -8, boxShadow: '0px 25px 40px -10px rgba(0,0,0,0.15)' } : {}}
+              className="p-6 md:p-8 rounded-3xl border shadow-lg backdrop-blur-xl bg-white/80 border-black/5 flex flex-col h-full transition-all duration-300"
             >
               <div className="p-3 bg-slate-50 rounded-2xl w-fit mb-4 border border-slate-100 shadow-sm">
                 {category.icon}
               </div>
-              <div className="mb-4">
-                <Text3D depth={1} className="text-xl font-black" color="text-slate-900" shadowColor="#cbd5e1">
+              <div className="mb-6">
+                <Text3D depth={3} className="text-xl font-black" color="text-slate-900" shadowColor="#cbd5e1">
                   {category.org}
                 </Text3D>
               </div>
-              <ul className="space-y-3 mt-auto">
+              <ul className="space-y-3">
                 {category.courses.map((course, cIdx) => (
                   <li key={cIdx} className="text-sm font-medium text-slate-600 flex items-start gap-2">
                     <span className="text-pink-500 font-black mt-0.5 shrink-0">•</span>
@@ -1075,7 +1079,7 @@ const Footer = ({ rotateX, rotateY, isMobile }) => {
       >
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 mb-16">
           <div className="lg:col-span-7 space-y-6">
-            <Text3D depth={5} className="text-4xl md:text-6xl font-black tracking-tighter" color="text-slate-900" shadowColor="#cbd5e1">
+            <Text3D depth={6} className="text-4xl md:text-6xl font-black tracking-tighter" color="text-slate-900" shadowColor="#cbd5e1">
               Let's build something exceptional.
             </Text3D>
             <p className="text-sm md:text-base text-slate-600 font-medium max-w-lg leading-relaxed">
@@ -1084,12 +1088,12 @@ const Footer = ({ rotateX, rotateY, isMobile }) => {
 
             <div className="flex flex-col gap-3">
               <motion.a
-                whileHover={!isMobile ? { x: 4 } : {}}
+                whileHover={!isMobile ? { x: 6 } : {}}
                 href="mailto:ishanmall789@gmail.com"
                 className="inline-flex items-center gap-3 text-xl md:text-2xl font-bold transition-colors text-slate-900 hover:text-pink-600 w-fit group"
               >
                 <Mail className="text-pink-500" /> 
-                <Text3D depth={1} color="currentColor" shadowColor="#e2e8f0">ishanmall789@gmail.com</Text3D> 
+                <Text3D depth={2} color="currentColor" shadowColor="#e2e8f0">ishanmall789@gmail.com</Text3D> 
                 <ArrowUpRight size={22} className="text-pink-500 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
               </motion.a>
             </div>
@@ -1097,7 +1101,7 @@ const Footer = ({ rotateX, rotateY, isMobile }) => {
 
           <div className="lg:col-span-5">
             <motion.div 
-               whileHover={!isMobile ? { y: -4, boxShadow: '0 20px 40px -10px rgba(0,0,0,0.1)' } : {}} 
+               whileHover={!isMobile ? { y: -6, boxShadow: '0 25px 50px -12px rgba(0,0,0,0.15)' } : {}} 
                className="p-6 md:p-8 rounded-3xl border shadow-xl backdrop-blur-xl bg-white/90 border-slate-200 transition-all duration-300"
             >
               <h3 className="text-lg font-black text-slate-900 mb-4 flex items-center gap-2">
@@ -1124,9 +1128,9 @@ const Footer = ({ rotateX, rotateY, isMobile }) => {
                   
                   <motion.button
                     type="submit"
-                    whileHover={{ y: -2, boxShadow: '0 8px 15px -3px rgba(236, 72, 153, 0.4)' }}
+                    whileHover={{ y: -3, boxShadow: '0 12px 20px -3px rgba(236, 72, 153, 0.5)' }}
                     whileTap={{ y: 0, boxShadow: '0 2px 5px -1px rgba(236, 72, 153, 0.4)' }}
-                    className="w-full py-3 rounded-xl font-bold text-white bg-gradient-to-r from-cyan-500 via-pink-500 to-blue-500 shadow-md text-sm transition-all"
+                    className="w-full py-3 rounded-xl font-bold text-white bg-gradient-to-r from-cyan-500 via-pink-500 to-blue-500 shadow-lg text-sm transition-all"
                   >
                     Submit Project Request
                   </motion.button>
@@ -1148,9 +1152,9 @@ const Footer = ({ rotateX, rotateY, isMobile }) => {
             ].map((social) => (
               <motion.a
                 key={social.label} href={social.url} target="_blank" rel="noreferrer"
-                whileHover={{ y: -2, boxShadow: '0 4px 6px -1px rgba(0,0,0,0.1)' }}
+                whileHover={{ y: -3, boxShadow: '0 6px 10px -2px rgba(0,0,0,0.15)' }}
                 whileTap={{ y: 0, boxShadow: 'none' }}
-                className="flex items-center gap-2 px-4 py-2 rounded-full border font-bold bg-white/90 border-slate-200 text-slate-700 text-xs shadow-sm transition-all"
+                className="flex items-center gap-2 px-4 py-2 rounded-full border font-bold bg-white/90 border-slate-200 text-slate-700 text-xs shadow-md transition-all"
               >
                 <social.icon size={16} /> {social.label}
               </motion.a>
@@ -1175,8 +1179,8 @@ export default function App() {
   const smoothX = useSpring(mouseX, { stiffness: 140, damping: 24 });
   const smoothY = useSpring(mouseY, { stiffness: 140, damping: 24 });
 
-  const rotateX = useTransform(smoothY, [-0.5, 0.5], [4, -4]);
-  const rotateY = useTransform(smoothX, [-0.5, 0.5], [-4, 4]);
+  const rotateX = useTransform(smoothY, [-0.5, 0.5], [5, -5]); // Increased global tilt
+  const rotateY = useTransform(smoothX, [-0.5, 0.5], [-5, 5]); // Increased global tilt
 
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth < 768);
