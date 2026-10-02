@@ -754,11 +754,17 @@ const WebsitesSection = ({ rotateX, rotateY, isMobile }) => {
       desc: 'Immersive interactive portfolio built with React Three Fiber, Framer Motion, and TailwindCSS showcasing 3D experiences on the web.',
       icon: <Code2 size={24} className="text-pink-500" />
     },
-      {
+    {
       title: 'Future Prediction Prank',
       url: 'https://gaystiny-a5016.web.app/',
-      desc: 'Immersive interactive prank built with React ',
+      desc: 'Immersive interactive prank built with React.',
       icon: <Code2 size={24} className="text-pink-500" />
+    },
+    {
+      title: 'Cosmic Codex',
+      url: 'https://cosmic-codex.web.app/',
+      desc: 'Interactive astrophysics and black-hole simulation platform featuring relativistic ray tracing, Kerr spacetime, accretion disks, and scientific visualization.',
+      icon: <Globe size={24} className="text-purple-500" />
     }
   ];
 
