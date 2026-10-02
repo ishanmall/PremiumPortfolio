@@ -762,7 +762,7 @@ const WebsitesSection = ({ rotateX, rotateY, isMobile }) => {
     },
     {
       title: 'Cosmic Codex',
-      url: 'https://cosmic-codex.web.app/',
+      url: 'https://cosmic-codex-14559.web.app/',
       desc: 'Interactive astrophysics and black-hole simulation platform featuring relativistic ray tracing, Kerr spacetime, accretion disks, and scientific visualization.',
       icon: <Globe size={24} className="text-purple-500" />
     }
