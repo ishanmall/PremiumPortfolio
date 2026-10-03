@@ -414,15 +414,47 @@ const UnifiedDatabase = ({ rotateX, rotateY, isMobile }) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [activeFilter, setActiveFilter] = useState('ALL');
   const filters = ['ALL', 'Websites', 'Android'];
-  const allItems = [
-    { title: 'GalleryBox', type: 'App', category: 'Android', desc: t('Large-scale multi-domain multimedia platform combining Gallery, Stories, Trash lifecycles, Duo Music Player, Radio, and Video processing tools.', 'गैलरी, स्टोरीज़, ट्रैश लाइफ़साइकिल, डुओ म्यूज़िक प्लेयर, रेडियो और वीडियो प्रोसेसिंग टूल के संयोजन वाला बड़े पैमाने का मल्टी-डोमेन मल्टीमीडिया प्लेटफॉर्म।'), tags: ['Android'], icon: <Camera size={24} className="text-pink-500" />, url: 'https://play.google.com/store/apps/details?id=com.gallerybox' },
-    { title: 'Ananta Brahmanda', type: 'App', category: 'Android', desc: t('Spiritual and cosmic knowledge platform combining Vedic ephemeris with exact alarms, notifications, and persistent location background services.', 'सटीक अलार्म, सूचनाओं और स्थान पृष्ठभूमि सेवाओं के साथ वैदिक पंचांग के संयोजन वाला आध्यात्मिक और ब्रह्मांडीय ज्ञान मंच।'), tags: ['Android'], icon: <Globe size={24} className="text-purple-500" />, url: 'https://play.google.com/store/apps/details?id=com.brahmanda' },
-    { title: 'ResumeMakers', type: 'App', category: 'Android', desc: t('Comprehensive offline Android resume creator utilizing Apache POI for Excel and document processing, local DB, and FileProvider export infrastructure.', 'एक्सेल और दस्तावेज़ प्रसंस्करण के लिए अपाचे POI का उपयोग करने वाला व्यापक ऑफ़लाइन एंड्रॉइड बायोडाटा निर्माता।'), tags: ['Android'], icon: <Layers size={24} className="text-blue-500" />, url: 'https://play.google.com/store/apps/details?id=com.ishanmall.resumemaker' },
-    { title: 'Ananta Gita', type: 'App', category: 'Android', desc: t('Deeply immersive multilingual scripture reader covering the complete 18 Adhyayas. Translates Sanskrit source text into Hindi and English.', 'संपूर्ण 18 अध्यायों को कवर करने वाला गहराई से इमर्सिव बहुभाषी शास्त्र पाठक। संस्कृत को हिंदी और अंग्रेजी में अनुवाद करता है।'), tags: ['Android'], icon: <BookOpen size={24} className="text-orange-500" />, url: 'https://play.google.com/store/apps/details?id=com.anantagita' },
-    { title: 'Cosmic Codex', type: 'Web3D', category: 'Websites', desc: t('Extensible astrophysical simulation suite featuring multiple cosmic environments (Black Holes, Neutron Stars) built on React Three Fiber.', 'रिएक्ट थ्री फाइबर पर निर्मित कई ब्रह्मांडीय वातावरण (ब्लैक होल, न्यूट्रॉन स्टार) की विशेषता वाला खगोल भौतिकी सिमुलेशन सुइट।'), tags: ['Websites'], icon: <Orbit size={24} className="text-indigo-500" />, url: 'https://cosmic-codex-14559.web.app/' },
-    { title: 'Premium Portfolio 3D', type: 'Web3D', category: 'Websites', desc: t('Immersive interactive portfolio experience featuring a scroll-driven racing-car rig, dynamic particles, physics velocity, and bloom.', 'स्क्रॉल-संचालित रेसिंग-कार, गतिशील कणों और भौतिकी वेग की विशेषता वाला इमर्सिव इंटरैक्टिव पोर्टफोलियो अनुभव।'), tags: ['Websites'], icon: <MonitorSmartphone size={24} className="text-pink-500" />, url: 'https://portfolio-b1973.web.app/' },
-    { title: 'Gaystiny', type: 'Prank', category: 'Websites', desc: t('Interactive prank and entertainment website designed as a humorous personality-style questionnaire. Users answer a series of playful questions, preferences, scenarios, and lifestyle prompts before receiving a humorous fictional result. Built as an engaging interactive web experience with animated transitions, loading sequences, dynamic form states, and a restart flow.', 'एक इंटरैक्टिव प्रैंक और मनोरंजन वेबसाइट, जिसे हास्यपूर्ण personality-style questionnaire के रूप में बनाया गया है। उपयोगकर्ता विभिन्न मज़ेदार सवालों, पसंद-नापसंद, परिस्थितियों और lifestyle prompts के उत्तर देते हैं और अंत में एक हास्यपूर्ण काल्पनिक परिणाम प्राप्त करते हैं। वेबसाइट में animated transitions, loading sequences, dynamic form states और restart flow के साथ एक engaging interactive web experience बनाया गया है।'), tags: ['Websites', 'Prank', 'Entertainment'], icon: <SmilePlus size={24} className="text-yellow-500" />, url: 'https://gaystiny-a5016.web.app/' },
-    { title: 'Mandir Dharshan', type: 'Web', category: 'Websites', desc: t('Large-scale visual temple knowledge catalogue heavily driven by structured local data, featuring custom location searches and dark mode.', 'कस्टम स्थान खोजों और डार्क मोड की विशेषता वाला संरचित स्थानीय डेटा द्वारा संचालित बड़े पैमाने का दृश्य मंदिर ज्ञान कैटलॉग।'), tags: ['Websites'], icon: <Globe size={24} className="text-orange-500" />, url: 'https://mandir-dharshan.web.app/' }
+const allItems = [
+    { 
+      title: 'GalleryBox', type: 'App', category: 'Android', 
+      desc: t('Large-scale multi-domain multimedia platform combining Gallery, Stories, Trash lifecycles, Duo Music Player, Radio, and Video processing tools.', 'गैलरी, स्टोरीज़, ट्रैश लाइफ़साइकिल, डुओ म्यूज़िक प्लेयर, रेडियो और वीडियो प्रोसेसिंग टूल के संयोजन वाला बड़े पैमाने का मल्टी-डोमेन मल्टीमीडिया प्लेटफॉर्म।'), 
+      tags: ['Android'], icon: <Camera size={24} className="text-pink-500" />, url: 'https://play.google.com/store/apps/details?id=com.gallerybox' 
+    },
+    { 
+      title: 'Ananta Brahmanda', type: 'App', category: 'Android', 
+      desc: t('Spiritual and cosmic knowledge platform combining Vedic ephemeris with exact alarms, notifications, and persistent location background services.', 'सटीक अलार्म, सूचनाओं और स्थान पृष्ठभूमि सेवाओं के साथ वैदिक पंचांग के संयोजन वाला आध्यात्मिक और ब्रह्मांडीय ज्ञान मंच।'), 
+      tags: ['Android'], icon: <Globe size={24} className="text-purple-500" />, url: 'https://play.google.com/store/apps/details?id=com.brahmanda' 
+    },
+    { 
+      title: 'ResumeMakers', type: 'App', category: 'Android', 
+      desc: t('Comprehensive offline Android resume creator utilizing Apache POI for Excel and document processing, local DB, and FileProvider export infrastructure.', 'एक्सेल और दस्तावेज़ प्रसंस्करण के लिए अपाचे POI का उपयोग करने वाला व्यापक ऑफ़लाइन एंड्रॉइड बायोडाटा निर्माता।'), 
+      tags: ['Android'], icon: <Layers size={24} className="text-blue-500" />, url: 'https://play.google.com/store/apps/details?id=com.ishanmall.resumemaker' 
+    },
+    { 
+      title: 'Ananta Gita', type: 'App', category: 'Android', 
+      desc: t('Deeply immersive multilingual scripture reader covering the complete 18 Adhyayas. Translates Sanskrit source text into Hindi and English.', 'संपूर्ण 18 अध्यायों को कवर करने वाला गहराई से इमर्सिव बहुभाषी शास्त्र पाठक। संस्कृत को हिंदी और अंग्रेजी में अनुवाद करता है।'), 
+      tags: ['Android'], icon: <BookOpen size={24} className="text-orange-500" />, url: 'https://play.google.com/store/apps/details?id=com.anantagita' 
+    },
+    { 
+      title: 'Cosmic Codex', type: 'Web3D', category: 'Websites', 
+      desc: t('Extensible astrophysical simulation suite featuring multiple cosmic environments (Black Holes, Neutron Stars) built on React Three Fiber.', 'रिएक्ट थ्री फाइबर पर निर्मित कई ब्रह्मांडीय वातावरण (ब्लैक होल, न्यूट्रॉन स्टार) की विशेषता वाला खगोल भौतिकी सिमुलेशन सुइट।'), 
+      tags: ['Websites'], icon: <Orbit size={24} className="text-indigo-500" />, url: 'https://cosmic-codex-14559.web.app/' 
+    },
+    { 
+      title: 'Premium Portfolio 3D', type: 'Web3D', category: 'Websites', 
+      desc: t('Immersive interactive portfolio experience featuring a scroll-driven racing-car rig, dynamic particles, physics velocity, and bloom.', 'स्क्रॉल-संचालित रेसिंग-कार, गतिशील कणों और भौतिकी वेग की विशेषता वाला इमर्सिव इंटरैक्टिव पोर्टफोलियो अनुभव।'), 
+      tags: ['Websites'], icon: <MonitorSmartphone size={24} className="text-pink-500" />, url: 'https://portfolio-b1973.web.app/' 
+    },
+    { 
+      title: 'Gaystiny', type: 'Prank', category: 'Websites', 
+      desc: t('A humorous interactive prank questionnaire with animated transitions, dynamic form states, and playful fictional results.', 'हास्यपूर्ण काल्पनिक परिणामों और एनिमेटेड ट्रांज़िशन के साथ एक इंटरैक्टिव प्रैंक प्रश्नावली वेबसाइट।'), 
+      tags: ['Websites', 'Prank', 'Entertainment'], icon: <SmilePlus size={24} className="text-yellow-500" />, url: 'https://gaystiny-a5016.web.app/' 
+    },
+    { 
+      title: 'Mandir Dharshan', type: 'Web', category: 'Websites', 
+      desc: t('Large-scale visual temple knowledge catalogue heavily driven by structured local data, featuring custom location searches and dark mode.', 'कस्टम स्थान खोजों और डार्क मोड की विशेषता वाला संरचित स्थानीय डेटा द्वारा संचालित बड़े पैमाने का दृश्य मंदिर ज्ञान कैटलॉग।'), 
+      tags: ['Websites'], icon: <Globe size={24} className="text-orange-500" />, url: 'https://mandir-dharshan.web.app/' 
+    }
   ];
   const filteredItems = allItems.filter(item => {
     const filterMatch = activeFilter === 'ALL' || item.category === activeFilter || item.tags.includes(activeFilter);
@@ -636,40 +668,89 @@ const CertificationsSection = ({ rotateX, rotateY, isMobile }) => {
     </section>
   );
 };
-
 const TrainingCertificationsSection = ({ rotateX, rotateY, isMobile }) => {
   const { t } = React.useContext(TranslationContext);
   const trainingData = [
-    { org: 'NASA', courses: [ 'Fundamentals of Remote Sensing — Module 1: Why Earth Observations?; Module 2: What is Remote Sensing?; Module 3: How Does Remote Sensing Work?; Module 4: How Can I Use Remote Sensing Data?', 'Fundamentals of Remote Sensing for Air Quality Application — Module 1: Why Use Remote Sensing for Air Quality?; Module 2: What Determines Air Quality?; Module 3: How Do We Measure Air Quality with Remote Sensors?; Module 4: How Can We Use Remote Sensing Data for Air Quality Applications?; Knowledge Check and Survey', 'Hyperspectral Data for Land and Coastal Systems — Module 1: Overview of Hyperspectral Data; Module 2: Hyperspectral Data for Land Management; Module 3: Hyperspectral Data for Coastal and Ocean Systems', 'Sustainable Earth Science Applications — Modules 1–3: Earth Observations Applications Pathway from Concept to User Adoption; Partner and End-User Collaboration; Communication Strategies; EO Application Project Management; Community and Societal Benefits; User Impact Evaluation', 'NASA Open Science 101 — Open Science Principles, Practices, Collaboration, Transparency, Reproducibility, Data Sharing and Open Research Workflows' ], icon: <Rocket size={24} className="text-blue-500" /> },
-    { org: 'ISRO / IIRS', courses: [ 'Aerosols: Measurement, Retrieval and Impacts — Physics & Optics, Aerosol Forcing, Boundary Layer Dynamics, Aerosol Chemistry, Health Impacts, Ground-Based Instrumentation, Remote Sensing Retrieval, Aerosol Modelling, WRF-Chem, CMAQ, GEOS-Chem, AI/ML-based Retrieval, Satellite/AERONET/Reanalysis Data and iAOD Visualization', 'AI/ML for Geodata Analysis — GIS Data Analytics, Data Collection, Data Cleaning, Exploratory Data Analysis, Data Visualization, Statistics, Digital Image Processing, Image Enhancement, Image Restoration, Image Transforms, Image Segmentation, Object Detection, Foundation Models for Geodata, Spatial Data Science, Python Image Processing, Geometric Transformations, Image Filtering, Machine Learning, ANN, Deep Learning, CNN, RNN, Image Classification, Instance & Semantic Segmentation, GeoAI, Agriculture Analytics, Smart Governance, Generative AI, LLMs and NLP for Geodata', 'Climate Change Induced Disasters — Geospatial Technology Applications for Cryospheric Hazards, Forest Fires, Heatwaves, Droughts and Hydrological Hazards', 'Earth Observations & Tropical Cyclone Monitoring and Forecasting — Tropical Cyclone Genesis, Structure & Life Cycle, Numerical Weather Prediction Models, Multi-Sensor Earth Observation Satellites, Cyclone Monitoring, Data Assimilation, AI/ML Forecasting, Next-Generation AI for Extreme Weather Prediction, Cyclone-Induced Inundation, Hazard Mitigation and Operational Monitoring Products' ], icon: <Globe size={24} className="text-orange-500" /> },
-    { org: 'Android App Development', courses: [ 'Android App Development — Native Android application development, Kotlin, Jetpack development, Android UI, app interactivity, additional screens, internet connectivity, Firebase integration, Google Play Store publishing, AI-assisted Android development and final project development.', 'Android App Development with AI — Jumpstart Your Android Adventure; Kotlin Bootcamp; Kickstarting Android App Development: Kotlin and Jetpack Compose; Levelling Up Kotlin Skills; Making an Android App Interactive; Adding Additional Screens to our Android App; Connecting Our App to the Internet; Introduction to BaaS and Firebase; Listing Apps in Google Play Store; Future of Android Development: Artificial Intelligence & Kotlin Multiplatform; The Final Project; Final Test.' ], icon: <Smartphone size={24} className="text-green-500" /> },
-    { org: 'AI / AI Training', courses: [ 'YUVA AI for ALL — NASSCOM FutureSkills Prime: The Future of AI, AI Ethics and Responsible AI, AI Capability to Think and Plan, AI to Learn and Create, and the Technology Behind AI', 'YUVA Artificial Intelligence (AI) — TCS iON: The Future of AI, AI Ethics and Responsible AI, AI Capability to Think and Plan, AI to Learn and Create, and the Technology Behind AI' ], icon: <BrainCircuit size={24} className="text-purple-500" /> },
-    { org: 'Other', courses: [ 'Operating Systems Basics — Cisco Networking Academy: Android, Linux, Mobile Network Connectivity, Operating System Security, Windows, iOS', 'Visit Bharat Online Pledge; Recognition; VBYLD 2026', 'TATA Crucible Campus Quiz 2025', 'Puzzler\'s Pursuit — IIM Rohtak' ], icon: <Award size={24} className="text-pink-500" /> }
+    { 
+      org: t('NASA', 'नासा'), 
+      courses: [ 
+        t('Fundamentals of Remote Sensing — Module 1: Why Earth Observations?; Module 2: What is Remote Sensing?; Module 3: How Does Remote Sensing Work?; Module 4: How Can I Use Remote Sensing Data?', 'रिमोट सेंसिंग के मूल सिद्धांत — मॉड्यूल 1: पृथ्वी अवलोकन क्यों?; मॉड्यूल 2: रिमोट सेंसिंग क्या है?; मॉड्यूल 3: रिमोट सेंसिंग कैसे काम करता है?; मॉड्यूल 4: मैं रिमोट सेंसिंग डेटा का उपयोग कैसे कर सकता हूं?'), 
+        t('Fundamentals of Remote Sensing for Air Quality Application — Module 1: Why Use Remote Sensing for Air Quality?; Module 2: What Determines Air Quality?; Module 3: How Do We Measure Air Quality with Remote Sensors?; Module 4: How Can We Use Remote Sensing Data for Air Quality Applications?; Knowledge Check and Survey', 'वायु गुणवत्ता अनुप्रयोग के लिए रिमोट सेंसिंग के मूल सिद्धांत — मॉड्यूल 1: वायु गुणवत्ता के लिए रिमोट सेंसिंग का उपयोग क्यों करें?; मॉड्यूल 2: वायु गुणवत्ता क्या निर्धारित करती है?; मॉड्यूल 3: हम रिमोट सेंसर से वायु गुणवत्ता कैसे मापते हैं?; मॉड्यूल 4: हम वायु गुणवत्ता अनुप्रयोगों के लिए रिमोट सेंसिंग डेटा का उपयोग कैसे कर सकते हैं?; ज्ञान की जांच और सर्वेक्षण'), 
+        t('Hyperspectral Data for Land and Coastal Systems — Module 1: Overview of Hyperspectral Data; Module 2: Hyperspectral Data for Land Management; Module 3: Hyperspectral Data for Coastal and Ocean Systems', 'भूमि और तटीय प्रणालियों के लिए हाइपरस्पेक्ट्रल डेटा — मॉड्यूल 1: हाइपरस्पेक्ट्रल डेटा का अवलोकन; मॉड्यूल 2: भूमि प्रबंधन के लिए हाइपरस्पेक्ट्रल डेटा; मॉड्यूल 3: तटीय और महासागर प्रणालियों के लिए हाइपरस्पेक्ट्रल डेटा'), 
+        t('Sustainable Earth Science Applications — Modules 1–3: Earth Observations Applications Pathway from Concept to User Adoption; Partner and End-User Collaboration; Communication Strategies; EO Application Project Management; Community and Societal Benefits; User Impact Evaluation', 'सतत पृथ्वी विज्ञान अनुप्रयोग — मॉड्यूल 1-3: अवधारणा से उपयोगकर्ता अपनाने तक पृथ्वी अवलोकन अनुप्रयोग मार्ग; भागीदार और अंतिम-उपयोगकर्ता सहयोग; संचार रणनीतियां; ईओ अनुप्रयोग परियोजना प्रबंधन; सामुदायिक और सामाजिक लाभ; उपयोगकर्ता प्रभाव मूल्यांकन'), 
+        t('NASA Open Science 101 — Open Science Principles, Practices, Collaboration, Transparency, Reproducibility, Data Sharing and Open Research Workflows', 'नासा ओपन साइंस 101 — ओपन साइंस सिद्धांत, प्रथाएं, सहयोग, पारदर्शिता, प्रतिलिपि प्रस्तुत करने योग्यता, डेटा साझाकरण और ओपन रिसर्च वर्कफ़्लो') 
+      ], 
+      icon: <Rocket size={24} className="text-blue-500" /> 
+    },
+    { 
+      org: t('ISRO / IIRS', 'इसरो / आईआईआरएस'), 
+      courses: [ 
+        t('Aerosols: Measurement, Retrieval and Impacts — Physics & Optics, Aerosol Forcing, Boundary Layer Dynamics, Aerosol Chemistry, Health Impacts, Ground-Based Instrumentation, Remote Sensing Retrieval, Aerosol Modelling, WRF-Chem, CMAQ, GEOS-Chem, AI/ML-based Retrieval, Satellite/AERONET/Reanalysis Data and iAOD Visualization', 'एरोसोल: मापन, पुनर्प्राप्ति और प्रभाव — भौतिकी और प्रकाशिकी, एरोसोल फोर्सिंग, सीमा परत गतिशीलता, एरोसोल रसायन विज्ञान, स्वास्थ्य प्रभाव, ग्राउंड-आधारित उपकरण, रिमोट सेंसिंग पुनर्प्राप्ति, एरोसोल मॉडलिंग, WRF-Chem, CMAQ, GEOS-Chem, AI/ML-आधारित पुनर्प्राप्ति, सैटेलाइट/AERONET/पुनर्विश्लेषण डेटा और iAOD विज़ुअलाइज़ेशन'), 
+        t('AI/ML for Geodata Analysis — GIS Data Analytics, Data Collection, Data Cleaning, Exploratory Data Analysis, Data Visualization, Statistics, Digital Image Processing, Image Enhancement, Image Restoration, Image Transforms, Image Segmentation, Object Detection, Foundation Models for Geodata, Spatial Data Science, Python Image Processing, Geometric Transformations, Image Filtering, Machine Learning, ANN, Deep Learning, CNN, RNN, Image Classification, Instance & Semantic Segmentation, GeoAI, Agriculture Analytics, Smart Governance, Generative AI, LLMs and NLP for Geodata', 'जियोडेटा विश्लेषण के लिए एआई/एमएल — जीआईएस डेटा एनालिटिक्स, डेटा संग्रह, डेटा क्लीनिंग, एक्सप्लोरेटरी डेटा एनालिसिस, डेटा विज़ुअलाइज़ेशन, सांख्यिकी, डिजिटल इमेज प्रोसेसिंग, इमेज एन्हांसमेंट, इमेज रिस्टोरेशन, इमेज ट्रांसफॉर्म्स, इमेज सेगमेंटेशन, ऑब्जेक्ट डिटेक्शन, जियोडेटा के लिए फाउंडेशन मॉडल, स्थानिक डेटा साइंस, पायथन इमेज प्रोसेसिंग, ज्यामितीय ट्रांसफॉर्मेशन, इमेज फ़िल्टरिंग, मशीन लर्निंग, एएनएन, डीप लर्निंग, सीएनएन, आरएनएन, इमेज क्लासिफिकेशन, इंस्टेंस और सिमेंटिक सेगमेंटेशन, जियोएआई, कृषि एनालिटिक्स, स्मार्ट गवर्नेंस, जनरेटिव एआई, एलएलएम और जियोडेटा के लिए एनएलपी'), 
+        t('Climate Change Induced Disasters — Geospatial Technology Applications for Cryospheric Hazards, Forest Fires, Heatwaves, Droughts and Hydrological Hazards', 'जलवायु परिवर्तन से प्रेरित आपदाएं — क्रायोस्फेरिक खतरों, जंगल की आग, हीटवेव, सूखे और हाइड्रोलॉजिकल खतरों के लिए भू-स्थानिक प्रौद्योगिकी अनुप्रयोग'), 
+        t('Earth Observations & Tropical Cyclone Monitoring and Forecasting — Tropical Cyclone Genesis, Structure & Life Cycle, Numerical Weather Prediction Models, Multi-Sensor Earth Observation Satellites, Cyclone Monitoring, Data Assimilation, AI/ML Forecasting, Next-Generation AI for Extreme Weather Prediction, Cyclone-Induced Inundation, Hazard Mitigation and Operational Monitoring Products', 'पृथ्वी अवलोकन और उष्णकटिबंधीय चक्रवात निगरानी और पूर्वानुमान — उष्णकटिबंधीय चक्रवात उत्पत्ति, संरचना और जीवन चक्र, संख्यात्मक मौसम पूर्वानुमान मॉडल, मल्टी-सेंसर पृथ्वी अवलोकन उपग्रह, चक्रवात निगरानी, डेटा आत्मसात, एआई/एमएल पूर्वानुमान, चरम मौसम पूर्वानुमान के लिए अगली पीढ़ी का एआई, चक्रवात-प्रेरित जलप्लावन, खतरे को कम करना और परिचालन निगरानी उत्पाद') 
+      ], 
+      icon: <Globe size={24} className="text-orange-500" /> 
+    },
+    { 
+      org: t('Android App Development', 'एंड्रॉइड ऐप डेवलपमेंट'), 
+      courses: [ 
+        t('Android App Development — Native Android application development, Kotlin, Jetpack development, Android UI, app interactivity, additional screens, internet connectivity, Firebase integration, Google Play Store publishing, AI-assisted Android development and final project development.', 'एंड्रॉइड ऐप डेवलपमेंट — नेटिव एंड्रॉइड एप्लिकेशन डेवलपमेंट, कोटलिन, जेटपैक डेवलपमेंट, एंड्रॉइड यूआई, ऐप इंटरैक्टिविटी, अतिरिक्त स्क्रीन, इंटरनेट कनेक्टिविटी, फायरबेस एकीकरण, गूगल प्ले स्टोर पब्लिशिंग, एआई-असिस्टेड एंड्रॉइड डेवलपमेंट और अंतिम प्रोजेक्ट डेवलपमेंट।'), 
+        t('Android App Development with AI — Jumpstart Your Android Adventure; Kotlin Bootcamp; Kickstarting Android App Development: Kotlin and Jetpack Compose; Levelling Up Kotlin Skills; Making an Android App Interactive; Adding Additional Screens to our Android App; Connecting Our App to the Internet; Introduction to BaaS and Firebase; Listing Apps in Google Play Store; Future of Android Development: Artificial Intelligence & Kotlin Multiplatform; The Final Project; Final Test.', 'एआई के साथ एंड्रॉइड ऐप डेवलपमेंट — अपने एंड्रॉइड एडवेंचर को जंपस्टार्ट करें; कोटलिन बूटकैंप; एंड्रॉइड ऐप डेवलपमेंट की शुरुआत: कोटलिन और जेटपैक कंपोज़; कोटलिन कौशल को बढ़ाना; एंड्रॉइड ऐप को इंटरैक्टिव बनाना; हमारे एंड्रॉइड ऐप में अतिरिक्त स्क्रीन जोड़ना; हमारे ऐप को इंटरनेट से जोड़ना; BaaS और फायरबेस का परिचय; गूगल प्ले स्टोर में ऐप्स सूचीबद्ध करना; एंड्रॉइड डेवलपमेंट का भविष्य: आर्टिफिशियल इंटेलिजेंस और कोटलिन मल्टीप्लेटफ़ॉर्म; अंतिम प्रोजेक्ट; अंतिम टेस्ट।') 
+      ], 
+      icon: <Smartphone size={24} className="text-green-500" /> 
+    },
+    { 
+      org: t('AI / AI Training', 'एआई / एआई प्रशिक्षण'), 
+      courses: [ 
+        t('YUVA AI for ALL — NASSCOM FutureSkills Prime: The Future of AI, AI Ethics and Responsible AI, AI Capability to Think and Plan, AI to Learn and Create, and the Technology Behind AI', 'सभी के लिए युवा एआई — नैसकॉम फ्यूचरस्किल्स प्राइम: एआई का भविष्य, एआई नैतिकता और जिम्मेदार एआई, सोचने और योजना बनाने की एआई क्षमता, सीखने और बनाने के लिए एआई, और एआई के पीछे की तकनीक'), 
+        t('YUVA Artificial Intelligence (AI) — TCS iON: The Future of AI, AI Ethics and Responsible AI, AI Capability to Think and Plan, AI to Learn and Create, and the Technology Behind AI', 'युवा आर्टिफिशियल इंटेलिजेंस (एआई) — टीसीएस आईओएन: एआई का भविष्य, एआई नैतिकता और जिम्मेदार एआई, सोचने और योजना बनाने की एआई क्षमता, सीखने और बनाने के लिए एआई, और एआई के पीछे की तकनीक') 
+      ], 
+      icon: <BrainCircuit size={24} className="text-purple-500" /> 
+    },
+    { 
+      org: t('Other', 'अन्य'), 
+      courses: [ 
+        t('Operating Systems Basics — Cisco Networking Academy: Android, Linux, Mobile Network Connectivity, Operating System Security, Windows, iOS', 'ऑपरेटिंग सिस्टम बेसिक्स — सिस्को नेटवर्किंग अकादमी: एंड्रॉइड, लिनक्स, मोबाइल नेटवर्क कनेक्टिविटी, ऑपरेटिंग सिस्टम सुरक्षा, विंडोज, आईओएस'), 
+        t('Visit Bharat Online Pledge; Recognition; VBYLD 2026', 'विजिट भारत ऑनलाइन प्रतिज्ञा; मान्यता; VBYLD 2026'), 
+        t('TATA Crucible Campus Quiz 2025', 'टाटा क्रूसिबल कैंपस क्विज़ 2025'), 
+        t("Puzzler's Pursuit — IIM Rohtak", 'पज़लर्स परस्यूट — आईआईएम रोहतक') 
+      ], 
+      icon: <Award size={24} className="text-pink-500" /> 
+    }
   ];
 
   return (
     <section id="training" className="py-20 md:py-32 px-6 md:px-10 relative z-10 pointer-events-none perspective-[1200px]">
       <motion.div style={{ rotateX: isMobile ? 0 : rotateX, rotateY: isMobile ? 0 : rotateY, transformStyle: 'preserve-3d' }} className="max-w-7xl mx-auto pointer-events-auto will-change-transform">
-        <div className="mb-12 text-center md:text-left">
+        <div className="mb-14 text-center md:text-left">
           <Text3D depth={6} className="tts-card text-3xl md:text-5xl font-black tracking-tight cursor-pointer" color="text-slate-900" shadowColor="#cbd5e1">{t('Training & Certifications', 'प्रशिक्षण और प्रमाणपत्र')}</Text3D>
-          <p className="mt-2 text-sm md:text-base font-bold text-slate-500">{t('Professional development, specialized training, and foundational knowledge.', 'व्यावसायिक विकास, विशेष प्रशिक्षण और मूलभूत ज्ञान।')}</p>
+          <p className="mt-3 text-sm md:text-base font-bold text-slate-500">{t('Professional development, specialized training, and foundational knowledge.', 'व्यावसायिक विकास, विशेष प्रशिक्षण और मूलभूत ज्ञान।')}</p>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+
+        <div className="space-y-12 md:space-y-16">
           {trainingData.map((category, idx) => (
-            <motion.div key={idx} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: '-50px' }} transition={{ duration: 0.5, delay: isMobile ? 0 : idx * 0.1 }} onClick={playUISound} whileHover={!isMobile ? { y: -8, boxShadow: '0px 25px 40px -10px rgba(0,0,0,0.15)' } : {}} className="tts-card p-6 md:p-8 rounded-3xl border shadow-lg backdrop-blur-xl bg-white/80 border-black/5 flex flex-col h-full transition-all duration-300 cursor-pointer active:scale-[0.98]">
-              <div className="p-3 bg-slate-50 rounded-2xl w-fit mb-4 border border-slate-100 shadow-sm">{category.icon}</div>
-              <div className="mb-6"><Text3D depth={3} className="text-xl font-black" color="text-slate-900" shadowColor="#cbd5e1" interactive={false}>{category.org}</Text3D></div>
-              <ul className="space-y-3">
-                {category.courses.map((course, cIdx) => <li key={cIdx} className="text-sm font-medium text-slate-600 flex items-start gap-2"><span className="text-pink-500 font-black mt-0.5 shrink-0">•</span><span className="leading-tight">{course}</span></li>)}
-              </ul>
-            </motion.div>
+            <div key={idx} className="flex flex-col gap-6">
+              <motion.div initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true, margin: '-50px' }} transition={{ duration: 0.5, delay: isMobile ? 0 : 0.1 }} onClick={playUISound} className="tts-card inline-flex items-center gap-4 p-4 md:p-5 rounded-[1.5rem] border shadow-md backdrop-blur-xl bg-white/90 border-slate-200 self-start cursor-pointer active:scale-95 transition-transform relative z-10">
+                <div className="p-3 bg-slate-50 rounded-xl border border-slate-100 shadow-sm shrink-0">{category.icon}</div>
+                <Text3D depth={3} className="text-2xl md:text-3xl font-black pr-2" color="text-slate-900" shadowColor="#cbd5e1" interactive={false}>{category.org}</Text3D>
+              </motion.div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5 pl-2 md:pl-8 border-l-2 border-slate-200 ml-6 md:ml-10">
+                {category.courses.map((course, cIdx) => (
+                  <motion.div key={cIdx} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: '-50px' }} transition={{ duration: 0.4, delay: isMobile ? 0 : cIdx * 0.1 }} onClick={playUISound} whileHover={!isMobile ? { y: -4, boxShadow: '0px 15px 30px -5px rgba(0,0,0,0.1)' } : {}} className="tts-card p-5 md:p-6 border rounded-3xl shadow-sm relative group backdrop-blur-xl border-slate-200 bg-white/70 hover:bg-white transition-all duration-300 flex flex-col justify-start cursor-pointer active:scale-[0.98]">
+                    <span className="text-pink-500 font-black mb-3 text-lg leading-none opacity-80">✦</span>
+                    <p className="text-sm font-medium text-slate-700 leading-relaxed">{course}</p>
+                  </motion.div>
+                ))}
+              </div>
+            </div>
           ))}
         </div>
       </motion.div>
     </section>
   );
 };
-
 const Footer = ({ rotateX, rotateY, isMobile }) => {
   const { t } = React.useContext(TranslationContext);
   const [submitted, setSubmitted] = useState(false);
