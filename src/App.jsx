@@ -680,7 +680,7 @@ const TrainingCertificationsSection = ({ rotateX, rotateY, isMobile }) => {
         t('Sustainable Earth Science Applications — Modules 1–3: Earth Observations Applications Pathway from Concept to User Adoption; Partner and End-User Collaboration; Communication Strategies; EO Application Project Management; Community and Societal Benefits; User Impact Evaluation', 'सतत पृथ्वी विज्ञान अनुप्रयोग — मॉड्यूल 1-3: अवधारणा से उपयोगकर्ता अपनाने तक पृथ्वी अवलोकन अनुप्रयोग मार्ग; भागीदार और अंतिम-उपयोगकर्ता सहयोग; संचार रणनीतियां; ईओ अनुप्रयोग परियोजना प्रबंधन; सामुदायिक और सामाजिक लाभ; उपयोगकर्ता प्रभाव मूल्यांकन'), 
         t('NASA Open Science 101 — Open Science Principles, Practices, Collaboration, Transparency, Reproducibility, Data Sharing and Open Research Workflows', 'नासा ओपन साइंस 101 — ओपन साइंस सिद्धांत, प्रथाएं, सहयोग, पारदर्शिता, प्रतिलिपि प्रस्तुत करने योग्यता, डेटा साझाकरण और ओपन रिसर्च वर्कफ़्लो') 
       ], 
-      icon: <Rocket size={24} className="text-blue-500" /> 
+      icon: <Rocket size={20} className="text-blue-500" /> 
     },
     { 
       org: t('ISRO / IIRS', 'इसरो / आईआईआरएस'), 
@@ -690,7 +690,7 @@ const TrainingCertificationsSection = ({ rotateX, rotateY, isMobile }) => {
         t('Climate Change Induced Disasters — Geospatial Technology Applications for Cryospheric Hazards, Forest Fires, Heatwaves, Droughts and Hydrological Hazards', 'जलवायु परिवर्तन से प्रेरित आपदाएं — क्रायोस्फेरिक खतरों, जंगल की आग, हीटवेव, सूखे और हाइड्रोलॉजिकल खतरों के लिए भू-स्थानिक प्रौद्योगिकी अनुप्रयोग'), 
         t('Earth Observations & Tropical Cyclone Monitoring and Forecasting — Tropical Cyclone Genesis, Structure & Life Cycle, Numerical Weather Prediction Models, Multi-Sensor Earth Observation Satellites, Cyclone Monitoring, Data Assimilation, AI/ML Forecasting, Next-Generation AI for Extreme Weather Prediction, Cyclone-Induced Inundation, Hazard Mitigation and Operational Monitoring Products', 'पृथ्वी अवलोकन और उष्णकटिबंधीय चक्रवात निगरानी और पूर्वानुमान — उष्णकटिबंधीय चक्रवात उत्पत्ति, संरचना और जीवन चक्र, संख्यात्मक मौसम पूर्वानुमान मॉडल, मल्टी-सेंसर पृथ्वी अवलोकन उपग्रह, चक्रवात निगरानी, डेटा आत्मसात, एआई/एमएल पूर्वानुमान, चरम मौसम पूर्वानुमान के लिए अगली पीढ़ी का एआई, चक्रवात-प्रेरित जलप्लावन, खतरे को कम करना और परिचालन निगरानी उत्पाद') 
       ], 
-      icon: <Globe size={24} className="text-orange-500" /> 
+      icon: <Globe size={20} className="text-orange-500" /> 
     },
     { 
       org: t('Android App Development', 'एंड्रॉइड ऐप डेवलपमेंट'), 
@@ -698,7 +698,7 @@ const TrainingCertificationsSection = ({ rotateX, rotateY, isMobile }) => {
         t('Android App Development — Native Android application development, Kotlin, Jetpack development, Android UI, app interactivity, additional screens, internet connectivity, Firebase integration, Google Play Store publishing, AI-assisted Android development and final project development.', 'एंड्रॉइड ऐप डेवलपमेंट — नेटिव एंड्रॉइड एप्लिकेशन डेवलपमेंट, कोटलिन, जेटपैक डेवलपमेंट, एंड्रॉइड यूआई, ऐप इंटरैक्टिविटी, अतिरिक्त स्क्रीन, इंटरनेट कनेक्टिविटी, फायरबेस एकीकरण, गूगल प्ले स्टोर पब्लिशिंग, एआई-असिस्टेड एंड्रॉइड डेवलपमेंट और अंतिम प्रोजेक्ट डेवलपमेंट।'), 
         t('Android App Development with AI — Jumpstart Your Android Adventure; Kotlin Bootcamp; Kickstarting Android App Development: Kotlin and Jetpack Compose; Levelling Up Kotlin Skills; Making an Android App Interactive; Adding Additional Screens to our Android App; Connecting Our App to the Internet; Introduction to BaaS and Firebase; Listing Apps in Google Play Store; Future of Android Development: Artificial Intelligence & Kotlin Multiplatform; The Final Project; Final Test.', 'एआई के साथ एंड्रॉइड ऐप डेवलपमेंट — अपने एंड्रॉइड एडवेंचर को जंपस्टार्ट करें; कोटलिन बूटकैंप; एंड्रॉइड ऐप डेवलपमेंट की शुरुआत: कोटलिन और जेटपैक कंपोज़; कोटलिन कौशल को बढ़ाना; एंड्रॉइड ऐप को इंटरैक्टिव बनाना; हमारे एंड्रॉइड ऐप में अतिरिक्त स्क्रीन जोड़ना; हमारे ऐप को इंटरनेट से जोड़ना; BaaS और फायरबेस का परिचय; गूगल प्ले स्टोर में ऐप्स सूचीबद्ध करना; एंड्रॉइड डेवलपमेंट का भविष्य: आर्टिफिशियल इंटेलिजेंस और कोटलिन मल्टीप्लेटफ़ॉर्म; अंतिम प्रोजेक्ट; अंतिम टेस्ट।') 
       ], 
-      icon: <Smartphone size={24} className="text-green-500" /> 
+      icon: <Smartphone size={20} className="text-green-500" /> 
     },
     { 
       org: t('AI / AI Training', 'एआई / एआई प्रशिक्षण'), 
@@ -706,7 +706,7 @@ const TrainingCertificationsSection = ({ rotateX, rotateY, isMobile }) => {
         t('YUVA AI for ALL — NASSCOM FutureSkills Prime: The Future of AI, AI Ethics and Responsible AI, AI Capability to Think and Plan, AI to Learn and Create, and the Technology Behind AI', 'सभी के लिए युवा एआई — नैसकॉम फ्यूचरस्किल्स प्राइम: एआई का भविष्य, एआई नैतिकता और जिम्मेदार एआई, सोचने और योजना बनाने की एआई क्षमता, सीखने और बनाने के लिए एआई, और एआई के पीछे की तकनीक'), 
         t('YUVA Artificial Intelligence (AI) — TCS iON: The Future of AI, AI Ethics and Responsible AI, AI Capability to Think and Plan, AI to Learn and Create, and the Technology Behind AI', 'युवा आर्टिफिशियल इंटेलिजेंस (एआई) — टीसीएस आईओएन: एआई का भविष्य, एआई नैतिकता और जिम्मेदार एआई, सोचने और योजना बनाने की एआई क्षमता, सीखने और बनाने के लिए एआई, और एआई के पीछे की तकनीक') 
       ], 
-      icon: <BrainCircuit size={24} className="text-purple-500" /> 
+      icon: <BrainCircuit size={20} className="text-purple-500" /> 
     },
     { 
       org: t('Other', 'अन्य'), 
@@ -716,34 +716,40 @@ const TrainingCertificationsSection = ({ rotateX, rotateY, isMobile }) => {
         t('TATA Crucible Campus Quiz 2025', 'टाटा क्रूसिबल कैंपस क्विज़ 2025'), 
         t("Puzzler's Pursuit — IIM Rohtak", 'पज़लर्स परस्यूट — आईआईएम रोहतक') 
       ], 
-      icon: <Award size={24} className="text-pink-500" /> 
+      icon: <Award size={20} className="text-pink-500" /> 
     }
   ];
 
   return (
     <section id="training" className="py-20 md:py-32 px-6 md:px-10 relative z-10 pointer-events-none perspective-[1200px]">
       <motion.div style={{ rotateX: isMobile ? 0 : rotateX, rotateY: isMobile ? 0 : rotateY, transformStyle: 'preserve-3d' }} className="max-w-7xl mx-auto pointer-events-auto will-change-transform">
-        <div className="mb-14 text-center md:text-left">
+        <div className="mb-10 text-center md:text-left">
           <Text3D depth={6} className="tts-card text-3xl md:text-5xl font-black tracking-tight cursor-pointer" color="text-slate-900" shadowColor="#cbd5e1">{t('Training & Certifications', 'प्रशिक्षण और प्रमाणपत्र')}</Text3D>
           <p className="mt-3 text-sm md:text-base font-bold text-slate-500">{t('Professional development, specialized training, and foundational knowledge.', 'व्यावसायिक विकास, विशेष प्रशिक्षण और मूलभूत ज्ञान।')}</p>
         </div>
 
-        <div className="space-y-12 md:space-y-16">
+        <div className="space-y-10 md:space-y-12">
           {trainingData.map((category, idx) => (
-            <div key={idx} className="flex flex-col gap-6">
-              <motion.div initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true, margin: '-50px' }} transition={{ duration: 0.5, delay: isMobile ? 0 : 0.1 }} onClick={playUISound} className="tts-card inline-flex items-center gap-4 p-4 md:p-5 rounded-[1.5rem] border shadow-md backdrop-blur-xl bg-white/90 border-slate-200 self-start cursor-pointer active:scale-95 transition-transform relative z-10">
-                <div className="p-3 bg-slate-50 rounded-xl border border-slate-100 shadow-sm shrink-0">{category.icon}</div>
-                <Text3D depth={3} className="text-2xl md:text-3xl font-black pr-2" color="text-slate-900" shadowColor="#cbd5e1" interactive={false}>{category.org}</Text3D>
+            <div key={idx} className="flex flex-col gap-4">
+              
+              {/* Organization Header Card - Compacted */}
+              <motion.div initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true, margin: '-50px' }} transition={{ duration: 0.5, delay: isMobile ? 0 : 0.1 }} onClick={playUISound} className="tts-card inline-flex items-center gap-3 p-3 md:p-4 rounded-2xl border shadow-sm backdrop-blur-xl bg-white/90 border-slate-200 self-start cursor-pointer active:scale-95 transition-transform relative z-10">
+                <div className="p-2.5 bg-slate-50 rounded-xl border border-slate-100 shadow-sm shrink-0">{category.icon}</div>
+                <Text3D depth={2} className="text-lg md:text-xl font-black pr-2" color="text-slate-900" shadowColor="#cbd5e1" interactive={false}>{category.org}</Text3D>
               </motion.div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5 pl-2 md:pl-8 border-l-2 border-slate-200 ml-6 md:ml-10">
+              {/* Individual Topic Cards Grid - Compacted */}
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4 pl-4 md:pl-6 border-l-2 border-slate-200 ml-5 md:ml-7">
                 {category.courses.map((course, cIdx) => (
-                  <motion.div key={cIdx} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: '-50px' }} transition={{ duration: 0.4, delay: isMobile ? 0 : cIdx * 0.1 }} onClick={playUISound} whileHover={!isMobile ? { y: -4, boxShadow: '0px 15px 30px -5px rgba(0,0,0,0.1)' } : {}} className="tts-card p-5 md:p-6 border rounded-3xl shadow-sm relative group backdrop-blur-xl border-slate-200 bg-white/70 hover:bg-white transition-all duration-300 flex flex-col justify-start cursor-pointer active:scale-[0.98]">
-                    <span className="text-pink-500 font-black mb-3 text-lg leading-none opacity-80">✦</span>
-                    <p className="text-sm font-medium text-slate-700 leading-relaxed">{course}</p>
+                  <motion.div key={cIdx} initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: '-50px' }} transition={{ duration: 0.3, delay: isMobile ? 0 : cIdx * 0.05 }} onClick={playUISound} whileHover={!isMobile ? { y: -2, boxShadow: '0px 10px 20px -5px rgba(0,0,0,0.1)' } : {}} className="tts-card p-4 border rounded-2xl shadow-sm relative group backdrop-blur-xl border-slate-200 bg-white/70 hover:bg-white transition-all duration-300 flex flex-col justify-start cursor-pointer active:scale-[0.98]">
+                    <div className="flex items-start gap-2.5">
+                      <span className="text-pink-500 font-black text-sm leading-none opacity-80 mt-0.5 shrink-0">✦</span>
+                      <p className="text-xs md:text-sm font-medium text-slate-700 leading-snug">{course}</p>
+                    </div>
                   </motion.div>
                 ))}
               </div>
+
             </div>
           ))}
         </div>
