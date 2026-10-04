@@ -2,7 +2,7 @@ import React, { useRef, useMemo, Suspense, useEffect, useState } from 'react';
 import { motion, useScroll, useMotionValue, useSpring, useTransform, useReducedMotion, AnimatePresence } from 'framer-motion';
 import { ReactLenis } from 'lenis/react';
 import 'lenis/dist/lenis.css';
-import { ArrowUpRight, Code2, Play, Briefcase, Camera, Tv, Award, GraduationCap, BookOpen, Menu, X, Smartphone, Layers, ShieldCheck, Database, Music, CheckCircle2, Mail, Send, Terminal, Globe, Rocket, BrainCircuit, MonitorSmartphone, Search, Filter, Cpu, Orbit, Wrench, Clock, Settings, Volume2, VolumeX, Languages, SmilePlus } from 'lucide-react';
+import { ArrowUpRight, Code2, Play, Briefcase, Camera, Tv, Award, GraduationCap, BookOpen, Menu, X, Smartphone, Layers, ShieldCheck, Database, Music, CheckCircle2, Mail, Send, Terminal, Globe, Rocket, BrainCircuit, MonitorSmartphone, Search, Filter, Cpu, Orbit, Wrench, Clock, Settings, Volume2, VolumeX, Languages, SmilePlus, Download } from 'lucide-react';
 import * as THREE from 'three';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { useGLTF, Sparkles, Grid, useProgress } from '@react-three/drei';
@@ -35,14 +35,15 @@ const playUISound = () => {
 
 const TranslationContext = React.createContext({ lang: 'en', t: (en, hi) => en });
 
-const Text3D = ({ children, className = '', depth = 6, gradient = null, color = 'text-slate-900', shadowColor = '#cbd5e1', isMobile = false }) => {
-  const activeDepth = isMobile ? Math.max(2, Math.floor(depth / 1.5)) : depth;
+const Text3D = ({ as: Component = 'span', children, className = '', depth = 6, gradient = null, color = 'text-slate-900', shadowColor = '#cbd5e1', isMobile = false }) => {
+  const activeDepth = isMobile ? Math.max(1, Math.floor(depth / 1.5)) : depth;
   const shadow = Array.from({ length: activeDepth }).map((_, i) => `${i + 1}px ${i + 1}px 0px ${shadowColor}`).join(', ');
+  
   return (
-    <span className={`relative inline-block ${className} group cursor-default`}>
-      <span aria-hidden="true" className="absolute inset-0 pointer-events-none transition-transform duration-300 group-hover:-translate-x-1.5 group-hover:-translate-y-1.5" style={{ color: 'transparent', textShadow: shadow, zIndex: -1 }}>{children}</span>
-      <span className={`relative z-10 block transition-transform duration-300 group-hover:-translate-x-1.5 group-hover:-translate-y-1.5 ${gradient ? `bg-clip-text text-transparent bg-gradient-to-r ${gradient}` : color}`}>{children}</span>
-    </span>
+    <Component className={`relative ${Component === 'span' ? 'inline-block' : 'block'} ${className} group cursor-default`}>
+      <span aria-hidden="true" className="absolute inset-0 pointer-events-none transition-transform duration-300 group-hover:-translate-x-1 group-hover:-translate-y-1" style={{ color: 'transparent', textShadow: shadow, zIndex: -1 }}>{children}</span>
+      <span className={`relative z-10 block transition-transform duration-300 group-hover:-translate-x-1 group-hover:-translate-y-1 ${gradient ? `bg-clip-text text-transparent bg-gradient-to-r ${gradient}` : color}`}>{children}</span>
+    </Component>
   );
 };
 
@@ -235,7 +236,7 @@ const LoaderOverlay = () => {
           <div className="w-56 h-1.5 bg-slate-200 rounded-full overflow-hidden shadow-inner">
             <div className="h-full bg-gradient-to-r from-cyan-500 via-pink-500 to-blue-500 transition-all duration-300" style={{ width: `${progress}%` }} />
           </div>
-          <p className="text-xs font-mono font-bold text-slate-500 mt-3 tracking-widest">INITIALIZING ASSETS {Math.round(progress)}%</p>
+          <p className="text-xs font-mono font-bold text-slate-500 mt-3 tracking-widest"><Text3D depth={1} color="text-slate-500">INITIALIZING ASSETS {Math.round(progress)}%</Text3D></p>
         </motion.div>
       )}
     </AnimatePresence>
@@ -270,31 +271,31 @@ const Nav = ({ voiceEnabled, setVoiceEnabled, lang, setLang }) => {
   return (
     <>
       <motion.nav initial={{ y: -20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: 0.8, ease: [0.76, 0, 0.24, 1] }} className="fixed top-0 left-0 right-0 z-50 p-4 md:px-8 md:py-5 flex justify-between items-center backdrop-blur-xl border-b shadow-lg bg-white/75 border-black/5 shadow-slate-200/40">
-        <a href="#" onClick={playUISound} className="flex items-center gap-2">
+        <a href="#" onClick={playUISound} className="flex items-center gap-2 tts-card">
           <Text3D depth={3} className="text-xl md:text-2xl font-black tracking-tighter" gradient="from-cyan-400 via-pink-500 to-blue-600">ISHAN</Text3D>
-          <span className="hidden sm:inline-block px-2 py-0.5 rounded-full text-[10px] font-bold bg-pink-500/10 text-pink-600 border border-pink-500/20 shadow-sm">PORTFOLIO 3D</span>
+          <span className="hidden sm:inline-block px-2 py-0.5 rounded-full text-[10px] font-bold bg-pink-500/10 text-pink-600 border border-pink-500/20 shadow-sm"><Text3D depth={1} color="text-pink-600">PORTFOLIO 3D</Text3D></span>
         </a>
         <ul className="hidden md:flex gap-8 text-sm font-bold text-slate-800">
           {links.map((item) => (
-            <li key={item.en}><a href={`#${item.en.toLowerCase()}`} onClick={playUISound} className="relative group block"><Text3D depth={2} color="text-slate-700" shadowColor="#e2e8f0" className="transition-colors group-hover:text-pink-500">{lang === 'hi' ? item.hi : item.en}</Text3D></a></li>
+            <li key={item.en}><a href={`#${item.en.toLowerCase()}`} onClick={playUISound} className="relative group block tts-card"><Text3D depth={2} color="text-slate-700" shadowColor="#e2e8f0" className="transition-colors group-hover:text-pink-500">{lang === 'hi' ? item.hi : item.en}</Text3D></a></li>
           ))}
         </ul>
         <div className="hidden md:flex items-center gap-3">
-          <button className="no-tts flex items-center gap-2 px-3 py-2 rounded-full text-xs font-bold text-slate-700 bg-white border border-slate-200 shadow-sm transition-all active:scale-95 hover:bg-slate-50" onClick={handleLangToggle}><Languages size={16} className="text-blue-500" /><span>{lang === 'en' ? 'हिंदी' : 'ENG'}</span></button>
-          <button className="no-tts flex items-center gap-2 px-3 py-2 rounded-full text-xs font-bold text-slate-700 bg-white border border-slate-200 shadow-sm transition-all active:scale-95 hover:bg-slate-50" onClick={handleVoiceToggle}>{voiceEnabled ? <Volume2 size={16} className="text-pink-500 animate-pulse" /> : <VolumeX size={16} />}<span>{voiceEnabled ? t('Voice ON', 'आवाज़ चालू') : t('Voice OFF', 'आवाज़ बंद')}</span></button>
-          <motion.a href="https://play.google.com/store/apps/dev?id=4926136840256493221" target="_blank" rel="noreferrer" onClick={playUISound} whileHover={{ y: -3, boxShadow: '0 12px 20px -3px rgba(236, 72, 153, 0.5)' }} whileTap={{ y: 0, boxShadow: '0 2px 5px -1px rgba(236, 72, 153, 0.4)' }} className="flex items-center gap-2 px-5 py-2.5 rounded-full text-xs font-bold text-white bg-gradient-to-r from-cyan-500 to-pink-500 shadow-md transition-all"><Play size={14} fill="currentColor" /> {t('Play Store', 'प्ले स्टोर')}</motion.a>
+          <button className="no-tts flex items-center gap-2 px-3 py-2 rounded-full text-xs font-bold text-slate-700 bg-white border border-slate-200 shadow-sm transition-all active:scale-95 hover:bg-slate-50" onClick={handleLangToggle}><Languages size={16} className="text-blue-500" /><span><Text3D depth={1}>{lang === 'en' ? 'हिंदी' : 'ENG'}</Text3D></span></button>
+          <button className="no-tts flex items-center gap-2 px-3 py-2 rounded-full text-xs font-bold text-slate-700 bg-white border border-slate-200 shadow-sm transition-all active:scale-95 hover:bg-slate-50" onClick={handleVoiceToggle}>{voiceEnabled ? <Volume2 size={16} className="text-pink-500 animate-pulse" /> : <VolumeX size={16} />}<span><Text3D depth={1}>{voiceEnabled ? t('Voice ON', 'आवाज़ चालू') : t('Voice OFF', 'आवाज़ बंद')}</Text3D></span></button>
+          <motion.a href="https://play.google.com/store/apps/dev?id=4926136840256493221" target="_blank" rel="noreferrer" onClick={playUISound} whileHover={{ y: -3, boxShadow: '0 12px 20px -3px rgba(236, 72, 153, 0.5)' }} whileTap={{ y: 0, boxShadow: '0 2px 5px -1px rgba(236, 72, 153, 0.4)' }} className="tts-card flex items-center gap-2 px-5 py-2.5 rounded-full text-xs font-bold text-white bg-gradient-to-r from-cyan-500 to-pink-500 shadow-md transition-all"><Play size={14} fill="currentColor" /> <Text3D depth={1} color="text-white">{t('Play Store', 'प्ले स्टोर')}</Text3D></motion.a>
         </div>
         <div className="md:hidden flex items-center gap-2">
           <button className="no-tts p-2 text-slate-700 bg-slate-100 rounded-full active:scale-95 transition-transform" onClick={handleLangToggle}><Languages size={18} className="text-blue-500" /></button>
           <button className="no-tts p-2 text-slate-700 bg-slate-100 rounded-full active:scale-95 transition-transform" onClick={handleVoiceToggle}>{voiceEnabled ? <Volume2 size={18} className="text-pink-500" /> : <VolumeX size={18} />}</button>
-          <button className="p-2 text-slate-800 active:scale-95 transition-transform" onClick={() => { playUISound(); setIsOpen(!isOpen); }}>{isOpen ? <X size={24} /> : <Menu size={24} />}</button>
+          <button className="p-2 text-slate-800 active:scale-95 transition-transform no-tts" onClick={() => { playUISound(); setIsOpen(!isOpen); }}>{isOpen ? <X size={24} /> : <Menu size={24} />}</button>
         </div>
       </motion.nav>
       <AnimatePresence>
         {isOpen && (
           <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} className="fixed inset-0 z-40 bg-white/95 backdrop-blur-2xl pt-24 px-6 flex flex-col gap-6 md:hidden">
             {links.map((item) => (
-              <a key={item.en} href={`#${item.en.toLowerCase()}`} onClick={() => { playUISound(); setIsOpen(false); }} className="text-3xl font-black text-slate-800 hover:text-pink-500 border-b border-slate-100 pb-4 active:scale-95 transition-transform">{lang === 'hi' ? item.hi : item.en}</a>
+              <a key={item.en} href={`#${item.en.toLowerCase()}`} onClick={() => { playUISound(); setIsOpen(false); }} className="tts-card text-3xl font-black text-slate-800 hover:text-pink-500 border-b border-slate-100 pb-4 active:scale-95 transition-transform"><Text3D depth={2}>{lang === 'hi' ? item.hi : item.en}</Text3D></a>
             ))}
           </motion.div>
         )}
@@ -311,20 +312,20 @@ const Hero = ({ rotateX, rotateY, isMobile }) => {
         <div className="overflow-hidden mb-6">
           <motion.div initial={{ y: '100%', opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: 0.8, delay: 0.2, type: 'spring', stiffness: 100 }} whileHover={!isMobile ? { y: -4, boxShadow: '0px 10px 20px -5px rgba(236, 72, 153, 0.3)' } : {}}>
             <div onClick={playUISound} className="tts-card relative inline-flex items-center gap-3 px-5 py-2.5 rounded-full backdrop-blur-xl border border-pink-500/20 bg-white/90 text-pink-600 shadow-sm transition-all hover:shadow-md cursor-pointer active:scale-95">
-              <span className="text-xs md:text-sm font-bold uppercase tracking-wider">Kotlin / React / WebGL</span>
+              <span className="text-xs md:text-sm font-bold uppercase tracking-wider"><Text3D depth={1} color="text-pink-600">Kotlin / Jetpack Compose</Text3D></span>
               <span className="w-2 h-2 rounded-full animate-pulse bg-cyan-500 shadow-[0_0_8px_rgba(6,182,212,0.8)]" />
-              <span className="hidden md:block text-xs md:text-sm uppercase tracking-wider text-slate-700">{t('Native & Web3D Engineer', 'नेटिव और वेब 3डी इंजीनियर')}</span>
+              <span className="hidden md:block text-xs md:text-sm uppercase tracking-wider text-slate-700"><Text3D depth={1} color="text-slate-700">{t('Android Developer', 'एंड्रॉइड डेवलपर')}</Text3D></span>
             </div>
           </motion.div>
         </div>
         <h1 className="tts-card text-[14vw] md:text-[9.5vw] leading-[0.88] tracking-tighter uppercase font-black flex flex-col items-start relative select-none cursor-pointer">
           <motion.div initial={{ rotateX: 60, opacity: 0, y: 80 }} animate={{ rotateX: 0, opacity: 1, y: 0 }} transition={{ duration: 1, delay: 0.25 }}><Text3D depth={isMobile ? 4 : 8} isMobile={isMobile} shadowColor="#94a3b8" color="text-slate-900">{t('ANDROID', 'एंड्रॉइड')}</Text3D></motion.div>
-          <motion.div initial={{ rotateX: 60, opacity: 0, y: 80 }} animate={{ rotateX: 0, opacity: 1, y: 0 }} transition={{ duration: 1, delay: 0.35 }}><Text3D depth={isMobile ? 4 : 8} isMobile={isMobile} shadowColor="#c084fc" gradient="from-pink-500 via-purple-500 to-indigo-600">{t('& WEB 3D', 'और वेब 3डी')}</Text3D></motion.div>
+          <motion.div initial={{ rotateX: 60, opacity: 0, y: 80 }} animate={{ rotateX: 0, opacity: 1, y: 0 }} transition={{ duration: 1, delay: 0.35 }}><Text3D depth={isMobile ? 4 : 8} isMobile={isMobile} shadowColor="#c084fc" gradient="from-pink-500 via-purple-500 to-indigo-600">{t('DEVELOPER', 'डेवलपर')}</Text3D></motion.div>
           <motion.div initial={{ rotateX: 60, opacity: 0, y: 80 }} animate={{ rotateX: 0, opacity: 1, y: 0 }} transition={{ duration: 1, delay: 0.45 }}><Text3D depth={isMobile ? 4 : 8} isMobile={isMobile} shadowColor="#67e8f9" gradient="from-cyan-400 via-blue-500 to-pink-500">{t('ENGINEER', 'इंजीनियर')}</Text3D></motion.div>
         </h1>
-        <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.8 }} onClick={playUISound} className="tts-card mt-10 max-w-xl text-slate-600 font-semibold text-sm md:text-base leading-relaxed backdrop-blur-sm bg-white/40 p-4 rounded-2xl border border-white/60 shadow-md cursor-pointer">
-          {t('Crafting high-throughput, offline-first mobile experiences powered by reactive state engines, strict clean architecture, and modern immersive Three.js interactive web environments.', 'रिएक्टिव स्टेट इंजन, सख्त क्लीन आर्किटेक्चर और आधुनिक इमर्सिव Three.js वेब वातावरण द्वारा संचालित उच्च-थ्रूपुट, ऑफ़लाइन-फर्स्ट मोबाइल अनुभव तैयार करना।')}
-        </motion.p>
+        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.8 }} onClick={playUISound} className="tts-card mt-10 max-w-xl text-slate-600 font-semibold text-sm md:text-base leading-relaxed backdrop-blur-sm bg-white/40 p-4 rounded-2xl border border-white/60 shadow-md cursor-pointer">
+          <Text3D as="div" depth={1} color="text-slate-600">{t('Crafting high-throughput, offline-first mobile experiences powered by reactive state engines, strict clean architecture, and modern immersive Three.js interactive web environments.', 'रिएक्टिव स्टेट इंजन, सख्त क्लीन आर्किटेक्चर और आधुनिक इमर्सिव Three.js वेब वातावरण द्वारा संचालित उच्च-थ्रूपुट, ऑफ़लाइन-फर्स्ट मोबाइल अनुभव तैयार करना।')}</Text3D>
+        </motion.div>
       </motion.div>
     </section>
   );
@@ -340,7 +341,7 @@ const Statistics = ({ rotateX, rotateY, isMobile }) => {
           {stats.map((stat, idx) => (
             <motion.div key={idx} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: '-50px' }} transition={{ duration: 0.5, delay: idx * 0.05 }} onClick={playUISound} className="tts-card p-4 rounded-2xl border bg-white/80 backdrop-blur-xl border-black/5 shadow-sm text-center flex flex-col justify-center cursor-pointer active:scale-95 transition-transform">
               <Text3D depth={2} className="text-3xl font-black mb-1" gradient="from-pink-500 to-blue-500" shadowColor="#e2e8f0">{stat.value}</Text3D>
-              <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">{stat.label}</span>
+              <span className="text-xs font-bold text-slate-500 uppercase tracking-wider"><Text3D depth={1} color="text-slate-500">{stat.label}</Text3D></span>
             </motion.div>
           ))}
         </div>
@@ -351,58 +352,38 @@ const Statistics = ({ rotateX, rotateY, isMobile }) => {
 
 const ProfileAndExperience = ({ rotateX, rotateY, isMobile }) => {
   const { t } = React.useContext(TranslationContext);
-  const experiences = [{
-    role: t('Lead Android & Web Engineer', 'लीड एंड्रॉइड और वेब इंजीनियर'), type: t('Independent / Studio Work', 'स्वतंत्र / स्टूडियो कार्य'), period: t('Aug 2025 – Present', 'अगस्त 2025 - वर्तमान'),
-    bullets: [
-      t('Engineered and architected 6+ production-grade Android applications using Kotlin, Jetpack Compose, Material 3, MVVM, Hilt, Room, Coroutines, Flow, Paging, WorkManager, and modern Android architecture patterns, with a strong focus on scalable, maintainable, responsive, and offline-first application design.', 'Kotlin, Jetpack Compose, Material 3, MVVM, Hilt, Room, Coroutines, Flow, Paging और WorkManager का उपयोग करके 6+ प्रोडक्शन-ग्रेड Android एप्लिकेशन विकसित और आर्किटेक्ट किए, जिनमें स्केलेबल, मेंटेन करने योग्य, रिस्पॉन्सिव और ऑफलाइन-फर्स्ट आर्किटेक्चर पर विशेष ध्यान दिया गया।'),
-      t('Engineered advanced multimedia applications with Media3/ExoPlayer, MediaStore, Storage Access Framework, Android Media APIs, Media3 Transformer, and background processing, implementing local photo and video management, full-screen playback, search, albums, favorites, trash, hidden media, stories, video processing, audio playback, and media synchronization workflows.', 'Media3/ExoPlayer, MediaStore, Storage Access Framework, Android Media APIs और Media3 Transformer का उपयोग करके एडवांस्ड मल्टीमीडिया एप्लिकेशन विकसित किए, जिनमें फोटो-वीडियो मैनेजमेंट, फुल-स्क्रीन प्लेबैक, सर्च, एल्बम, फेवरेट, ट्रैश, हिडन मीडिया, स्टोरीज, वीडियो प्रोसेसिंग, ऑडियो प्लेबैक और मीडिया सिंक्रोनाइज़ेशन जैसी सुविधाएँ शामिल हैं।'),
-      t('Developed sophisticated audio and background-service systems featuring Media3 playback, queue management, shuffle, repeat, sleep timers, equalizer, bass boost, virtualizer, dual-track audio experiences, radio playback, foreground services, WorkManager, scheduled processing, and persistent background media operations.', 'Media3 आधारित ऑडियो सिस्टम विकसित किए जिनमें क्यू मैनेजमेंट, शफल, रिपीट, स्लीप टाइमर, इक्वलाइज़र, बास बूस्ट, वर्चुअलाइज़र, डुअल-ट्रैक ऑडियो, रेडियो प्लेबैक, फोरग्राउंड सर्विस, WorkManager और बैकग्राउंड मीडिया प्रोसेसिंग जैसी सुविधाएँ शामिल हैं।'),
-      t('Built document-oriented Android workflows integrating Apache POI, POI OOXML, DocumentFile, Kotlin Serialization, JSON processing, local persistence, and file-management APIs to support structured document, spreadsheet, resume-generation, and on-device file-processing workflows.', 'Apache POI, POI OOXML, DocumentFile, Kotlin Serialization, JSON और Android file-management APIs को एकीकृत करके डॉक्यूमेंट, स्प्रेडशीट, रिज्यूमे-जनरेशन और ऑन-डिवाइस फाइल-प्रोसेसिंग आधारित Android सिस्टम विकसित किए।'),
-      t('Built immersive interactive web applications using React, JavaScript, TypeScript, Vite, Tailwind CSS, Three.js, React Three Fiber, Drei, WebGL/WebGL2, GSAP, responsive UI systems, interactive 3D scenes, scientific visualizations, browser APIs, and Firebase-based hosting and cloud services.', 'React, JavaScript, TypeScript, Vite, Tailwind CSS, Three.js, React Three Fiber, Drei, WebGL/WebGL2 और GSAP का उपयोग करके इमर्सिव इंटरैक्टिव वेब एप्लिकेशन, 3D सीन, रिस्पॉन्सिव UI और वैज्ञानिक विज़ुअलाइज़ेशन विकसित किए तथा Firebase आधारित होस्टिंग और क्लाउड सेवाओं को एकीकृत किया।'),
-      t('Designed interactive scientific visualization and astrophysics simulation experiences covering stellar and compact-object concepts such as white dwarfs, brown dwarfs, neutron stars, pulsars, magnetars, black holes, white holes, and quasars, combining mathematical models, physics-based parameters, 3D rendering, WebGL visualization, and interactive simulation interfaces.', 'White Dwarf, Brown Dwarf, Neutron Star, Pulsar, Magnetar, Black Hole, White Hole और Quasar जैसे stellar तथा compact-object concepts पर आधारित इंटरैक्टिव वैज्ञानिक विज़ुअलाइज़ेशन और astrophysics simulation अनुभव विकसित किए, जिनमें mathematical models, physics-based parameters, 3D rendering, WebGL और interactive simulation interfaces का संयोजन किया गया।')
-    ]
-  }];
+  
   return (
     <section id="experience" className="py-10 md:py-20 px-6 md:px-10 relative z-10 pointer-events-none perspective-[1200px]">
       <motion.div style={{ rotateX: isMobile ? 0 : rotateX, rotateY: isMobile ? 0 : rotateY, transformStyle: 'preserve-3d' }} className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 pointer-events-auto items-start will-change-transform">
         <div className="lg:col-span-4 order-1 relative">
-          <motion.div initial={{ rotateY: 15, opacity: 0, y: 30 }} whileInView={{ rotateY: isMobile ? 0 : 5, opacity: 1, y: 0 }} viewport={{ once: true, margin: '-100px' }} transition={{ duration: 0.8 }} whileHover={!isMobile ? { scale: 1.02, rotateY: 8, rotateX: 4, y: -5, boxShadow: '25px 25px 50px -12px rgba(0,0,0,0.25)' } : {}} className="tts-card w-full max-w-sm mx-auto lg:mx-0 rounded-3xl overflow-hidden border shadow-xl backdrop-blur-xl p-2.5 bg-white/80 border-black/5 sticky top-32 transition-all duration-300 cursor-pointer active:scale-95" onClick={playUISound}>
-            <div className="rounded-2xl overflow-hidden aspect-[4/5] relative bg-slate-200">
+          <motion.div initial={{ rotateY: 15, opacity: 0, y: 30 }} whileInView={{ rotateY: isMobile ? 0 : 5, opacity: 1, y: 0 }} viewport={{ once: true, margin: '-100px' }} transition={{ duration: 0.8 }} whileHover={!isMobile ? { scale: 1.02, rotateY: 8, rotateX: 4, y: -5, boxShadow: '25px 25px 50px -12px rgba(0,0,0,0.25)' } : {}} className="w-full max-w-sm mx-auto lg:mx-0 rounded-3xl overflow-hidden border shadow-xl backdrop-blur-xl p-2.5 bg-white/80 border-black/5 sticky top-32 transition-all duration-300">
+            <div className="tts-card rounded-2xl overflow-hidden aspect-[4/5] relative bg-slate-200 cursor-pointer" onClick={playUISound}>
               <img src="/isha.ndisha_1785611777_3954320607764516452_77465641188.webp" alt="Ishan Mall" loading="lazy" className="absolute inset-0 w-full h-full object-cover object-center z-0" />
               <div className="absolute inset-0 bg-gradient-to-t from-slate-950/95 via-slate-900/30 to-transparent z-10" />
               <div className="absolute bottom-0 left-0 p-5 md:p-6 w-full z-20">
                 <Text3D depth={3} className="text-2xl md:text-3xl font-black mb-3" color="text-white" shadowColor="#1e293b">{t('Ishan Mall', 'ईशान मल्ल')}</Text3D>
                 <div className="space-y-2 mt-2">
-                  <p className="text-slate-200 text-xs flex items-center gap-2 font-bold"><GraduationCap size={16} className="text-cyan-400 shrink-0" /> {t('B.Tech CSE (2024-2027), AKTU', 'बी.टेक सीएसई (2024-2027), AKTU')}</p>
-                  <p className="text-slate-200 text-xs flex items-center gap-2 font-bold"><Award size={16} className="text-pink-400 shrink-0" /> {t('Class XII Science (2022)', 'कक्षा १२ विज्ञान (२०२२)')}</p>
-                  <p className="text-slate-200 text-xs flex items-center gap-2 font-bold"><BookOpen size={16} className="text-blue-400 shrink-0" /> {t('Class X (2020)', 'कक्षा १० (२०२०)')}</p>
+                  <p className="text-slate-200 text-xs flex items-center gap-2 font-bold"><GraduationCap size={16} className="text-cyan-400 shrink-0" /> <Text3D as="span" depth={1} color="text-slate-200">{t('B.Tech CSE (2024-2027), AKTU', 'बी.टेक सीएसई (2024-2027), AKTU')}</Text3D></p>
+                  <p className="text-slate-200 text-xs flex items-center gap-2 font-bold"><Award size={16} className="text-pink-400 shrink-0" /> <Text3D as="span" depth={1} color="text-slate-200">{t('Class XII Science (2022)', 'कक्षा १२ विज्ञान (२०२२)')}</Text3D></p>
+                  <p className="text-slate-200 text-xs flex items-center gap-2 font-bold"><BookOpen size={16} className="text-blue-400 shrink-0" /> <Text3D as="span" depth={1} color="text-slate-200">{t('Class X (2020)', 'कक्षा १० (२०२०)')}</Text3D></p>
                 </div>
               </div>
             </div>
+            
+            <a href="/Ishan_Mall_FINAL_ATS_Resume_UPDATED_CERTIFICATION.pdf" download="Ishan_Mall_Resume.pdf" className="tts-card mt-3 flex items-center justify-center gap-2 w-full py-3 rounded-xl font-bold text-white bg-gradient-to-r from-cyan-500 to-blue-500 shadow-md hover:shadow-lg transition-all active:scale-95" onClick={playUISound}>
+              <Download size={18} /> <Text3D depth={1} color="text-white">{t('Download Resume', 'रेज़्यूमे डाउनलोड करें')}</Text3D>
+            </a>
           </motion.div>
         </div>
+        
         <div className="lg:col-span-8 order-2 space-y-10 lg:pl-4">
           <motion.div onClick={playUISound} whileHover={!isMobile ? { y: -4, boxShadow: '0px 20px 40px -10px rgba(0,0,0,0.15)' } : {}} className="tts-card p-6 md:p-8 rounded-3xl border shadow-xl backdrop-blur-xl bg-gradient-to-br from-blue-50/90 to-purple-50/90 border-black/5 text-slate-800 transition-all duration-300 cursor-pointer">
             <div className="mb-4"><Text3D depth={3} className="text-2xl font-black tracking-tight" gradient="from-slate-900 via-blue-900 to-slate-800" shadowColor="#93c5fd">{t('Professional Summary', 'व्यावसायिक सारांश')}</Text3D></div>
-            <p className="text-sm md:text-base font-medium leading-relaxed text-slate-700">
+            <Text3D as="div" depth={1} color="text-slate-700" className="text-sm md:text-base font-medium leading-relaxed">
               {t('Versatile software engineer experienced in designing, developing, and deploying production-grade Android applications, immersive interactive web platforms, multimedia systems, and scientific visualization experiences. Strongly focused on Kotlin, Jetpack Compose, Material 3, MVVM, Hilt, Room, Coroutines, Flow, WorkManager, MediaStore, Storage Access Framework, Media3/ExoPlayer, and scalable offline-first application architectures. Experienced in building advanced photo, video, audio, document, storage, background-processing, authentication, and local-data workflows with an emphasis on performance, reliability, privacy, maintainability, and responsive user experiences. On the web, proficient in React, JavaScript, TypeScript, Vite, Tailwind CSS, Three.js, React Three Fiber, Drei, WebGL/WebGL2, GSAP, and Firebase, creating responsive 2.5D/3D interfaces, interactive visualizations, and browser-based experiences. Also experienced with scientific and astrophysics visualization, mathematical and physics-based modeling, astronomical calculations, and interactive simulations covering stellar and compact-object systems. Familiar with on-device machine learning and computer-vision technologies including TensorFlow Lite/LiteRT, MediaPipe, Google ML Kit, and OpenCV, along with Git/GitHub, Gradle, Firebase deployment, Google Play Console, testing, debugging, security, SEO, technical documentation, and end-to-end application release workflows.', 'एक बहुमुखी सॉफ्टवेयर इंजीनियर, जिसे प्रोडक्शन-ग्रेड Android एप्लिकेशन, इमर्सिव इंटरैक्टिव वेब प्लेटफॉर्म, मल्टीमीडिया सिस्टम और वैज्ञानिक विज़ुअलाइज़ेशन अनुभवों को डिजाइन, विकसित और डिप्लॉय करने का अनुभव है। Kotlin, Jetpack Compose, Material 3, MVVM, Hilt, Room, Coroutines, Flow, WorkManager, MediaStore, Storage Access Framework, Media3/ExoPlayer और स्केलेबल ऑफलाइन-फर्स्ट एप्लिकेशन आर्किटेक्चर में मजबूत पकड़। फोटो, वीडियो, ऑडियो, डॉक्यूमेंट, स्टोरेज, बैकग्राउंड प्रोसेसिंग, ऑथेंटिकेशन और लोकल-डेटा सिस्टम विकसित करने का अनुभव, जिसमें परफॉर्मेंस, विश्वसनीयता, प्राइवेसी, मेंटेनबिलिटी और रिस्पॉन्सिव यूज़र एक्सपीरियंस पर विशेष ध्यान दिया जाता है। वेब डेवलपमेंट में React, JavaScript, TypeScript, Vite, Tailwind CSS, Three.js, React Three Fiber, Drei, WebGL/WebGL2, GSAP और Firebase के माध्यम से रिस्पॉन्सिव 2.5D/3D इंटरफेस, इंटरैक्टिव विज़ुअलाइज़ेशन और ब्राउज़र-आधारित अनुभव विकसित करने में सक्षम। Scientific और astrophysics visualization, mathematical एवं physics-based modeling, astronomical calculations तथा stellar और compact-object systems पर आधारित interactive simulations का भी अनुभव। TensorFlow Lite/LiteRT, MediaPipe, Google ML Kit और OpenCV जैसी on-device machine learning एवं computer-vision technologies के साथ कार्य करने का अनुभव, साथ ही Git/GitHub, Gradle, Firebase deployment, Google Play Console, testing, debugging, security, SEO, technical documentation और end-to-end application release workflows में व्यावहारिक दक्षता।')}
-            </p>
+            </Text3D>
           </motion.div>
-          <div className="space-y-6">
-            <div className="flex items-center gap-3"><Text3D depth={4} className="tts-card text-2xl md:text-4xl font-black tracking-tight cursor-pointer" color="text-slate-900" shadowColor="#cbd5e1">{t('Work Milestones', 'कार्य के मील के पत्थर')}</Text3D></div>
-            {experiences.map((exp, i) => (
-              <motion.div key={i} onClick={playUISound} whileHover={!isMobile ? { y: -6, boxShadow: '0px 20px 40px -10px rgba(0,0,0,0.15)' } : {}} className="tts-card p-6 md:p-8 rounded-3xl border shadow-xl backdrop-blur-xl bg-white/85 border-black/5 transition-all duration-300 cursor-pointer">
-                <div className="flex flex-col md:flex-row md:items-center justify-between gap-2 mb-2">
-                  <Text3D depth={2} color="text-slate-900" shadowColor="#e2e8f0" className="text-xl md:text-2xl font-black">{exp.role}</Text3D>
-                  <span className="text-xs font-mono font-bold text-cyan-600 bg-cyan-500/10 px-3 py-1 rounded-full w-fit shadow-sm">{exp.period}</span>
-                </div>
-                <p className="text-xs uppercase tracking-wider font-bold text-pink-500 mb-6">{exp.type}</p>
-                <ul className="space-y-3 text-sm md:text-base font-medium text-slate-700">
-                  {exp.bullets.map((b, idx) => <li key={idx} className="flex items-start gap-3"><span className="text-pink-500 mt-1 shrink-0 font-black">✦</span><span>{b}</span></li>)}
-                </ul>
-              </motion.div>
-            ))}
-          </div>
         </div>
       </motion.div>
     </section>
@@ -467,7 +448,7 @@ const allItems = [
       <motion.div style={{ rotateX: isMobile ? 0 : rotateX, rotateY: isMobile ? 0 : rotateY, transformStyle: 'preserve-3d' }} className="max-w-7xl mx-auto px-6 md:px-10 pointer-events-auto will-change-transform">
         <div className="mb-12 text-center md:text-left">
           <Text3D depth={6} className="tts-card text-4xl md:text-5xl font-black tracking-tight cursor-pointer" color="text-slate-900" shadowColor="#cbd5e1">{t('Global Database', 'ग्लोबल डेटाबेस')}</Text3D>
-          <p className="mt-3 text-sm md:text-base font-bold text-slate-500 max-w-2xl">{t('Explore the complete repository of projects, web applications, and technical architectures.', 'प्रोजेक्ट्स, वेब एप्लिकेशन और तकनीकी आर्किटेक्चर की पूरी रिपॉजिटरी का अन्वेषण करें।')}</p>
+          <Text3D as="p" depth={1} className="tts-card mt-3 text-sm md:text-base font-bold text-slate-500 max-w-2xl">{t('Explore the complete repository of projects, web applications, and technical architectures.', 'प्रोजेक्ट्स, वेब एप्लिकेशन और तकनीकी आर्किटेक्चर की पूरी रिपॉजिटरी का अन्वेषण करें।')}</Text3D>
         </div>
         <div className="relative max-w-3xl mb-8 group">
           <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none"><Search className="text-slate-400 group-focus-within:text-pink-500 transition-colors" size={20} /></div>
@@ -475,8 +456,8 @@ const allItems = [
         </div>
         <div className="flex flex-wrap gap-2 mb-12">
           {filters.map((filter) => (
-            <motion.button key={filter} onClick={() => { playUISound(); setActiveFilter(filter); }} whileHover={{ y: -3, boxShadow: '0 8px 15px -3px rgba(0,0,0,0.1)' }} whileTap={{ y: 0, boxShadow: 'none' }} className={`px-4 py-2 rounded-full text-xs font-bold transition-all border flex items-center gap-2 ${ activeFilter === filter ? 'bg-gradient-to-r from-cyan-500 to-pink-500 text-white border-transparent shadow-md' : 'bg-white/90 text-slate-700 hover:bg-white border-slate-200 shadow-sm' }`}>
-              {filter === 'ALL' && <Filter size={14} />} {t(filter, filter === 'Projects' ? 'प्रोजेक्ट्स' : filter === 'Websites' ? 'वेबसाइटें' : filter === 'Technologies' ? 'तकनीकें' : filter)}
+            <motion.button key={filter} onClick={() => { playUISound(); setActiveFilter(filter); }} whileHover={{ y: -3, boxShadow: '0 8px 15px -3px rgba(0,0,0,0.1)' }} whileTap={{ y: 0, boxShadow: 'none' }} className={`tts-card px-4 py-2 rounded-full text-xs font-bold transition-all border flex items-center gap-2 ${ activeFilter === filter ? 'bg-gradient-to-r from-cyan-500 to-pink-500 text-white border-transparent shadow-md' : 'bg-white/90 text-slate-700 hover:bg-white border-slate-200 shadow-sm' }`}>
+              {filter === 'ALL' && <Filter size={14} />} <Text3D depth={1} color="currentColor">{t(filter, filter === 'Projects' ? 'प्रोजेक्ट्स' : filter === 'Websites' ? 'वेबसाइटें' : filter === 'Technologies' ? 'तकनीकें' : filter)}</Text3D>
             </motion.button>
           ))}
         </div>
@@ -490,12 +471,12 @@ const allItems = [
                   <CardComponent {...linkProps} layout initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.9 }} transition={{ duration: 0.3 }} key={item.title} onClick={playUISound} whileHover={!isMobile ? { y: -8, boxShadow: '0px 25px 40px -10px rgba(0,0,0,0.15)' } : {}} className={`tts-card flex flex-col p-6 md:p-8 rounded-3xl border shadow-lg backdrop-blur-xl bg-white/80 border-black/5 h-full transition-all group ${item.url ? 'cursor-pointer' : ''}`}>
                     <div className="flex justify-between items-start mb-4">
                       <div className="p-3 bg-slate-50 rounded-2xl w-fit border border-slate-100 shadow-sm group-hover:scale-105 transition-transform">{item.icon}</div>
-                      {item.url ? <ArrowUpRight className="text-slate-300 group-hover:text-pink-500 transition-colors link-indicator" /> : <span className="text-[10px] font-bold uppercase tracking-widest px-2 py-1 bg-slate-100 text-slate-500 rounded-lg">{item.type}</span>}
+                      {item.url ? <ArrowUpRight className="text-slate-300 group-hover:text-pink-500 transition-colors link-indicator" /> : <span className="text-[10px] font-bold uppercase tracking-widest px-2 py-1 bg-slate-100 text-slate-500 rounded-lg"><Text3D depth={1} color="text-slate-500">{item.type}</Text3D></span>}
                     </div>
                     <div className="mb-2"><Text3D depth={3} className="text-xl font-black" color="text-slate-900" shadowColor="#cbd5e1">{item.title}</Text3D></div>
-                    <p className="text-sm font-medium text-slate-600 mb-6 flex-1 leading-relaxed">{item.desc}</p>
+                    <Text3D as="p" depth={1} color="text-slate-600" className="text-sm font-medium mb-6 flex-1 leading-relaxed">{item.desc}</Text3D>
                     <div className="flex flex-wrap gap-1.5 mt-auto">
-                      {item.tags.slice(0, 4).map(tag => <span key={tag} className="text-[10px] font-bold px-2 py-1 bg-white border border-slate-200 text-slate-600 rounded-md">{tag}</span>)}
+                      {item.tags.slice(0, 4).map(tag => <span key={tag} className="text-[10px] font-bold px-2 py-1 bg-white border border-slate-200 text-slate-600 rounded-md"><Text3D depth={1} color="text-slate-600">{tag}</Text3D></span>)}
                     </div>
                   </CardComponent>
                 );
@@ -503,8 +484,8 @@ const allItems = [
             ) : (
               <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="col-span-full py-20 text-center flex flex-col items-center">
                 <Search size={48} className="text-slate-300 mb-4" />
-                <h3 className="text-2xl font-black text-slate-800">{t('No results found', 'कोई परिणाम नहीं मिला')}</h3>
-                <p className="text-slate-500 mt-2 font-medium">{t('Try adjusting your search term or filter category.', 'खोज शब्द या फ़िल्टर श्रेणी को बदलने का प्रयास करें।')}</p>
+                <Text3D as="h3" depth={2} className="tts-card text-2xl font-black text-slate-800">{t('No results found', 'कोई परिणाम नहीं मिला')}</Text3D>
+                <Text3D as="p" depth={1} className="tts-card text-slate-500 mt-2 font-medium">{t('Try adjusting your search term or filter category.', 'खोज शब्द या फ़िल्टर श्रेणी को बदलने का प्रयास करें।')}</Text3D>
               </motion.div>
             )}
           </AnimatePresence>
@@ -531,12 +512,12 @@ const UnderConstructionSection = ({ rotateX, rotateY, isMobile }) => {
           <div className="p-4 bg-[#fff9cc] rounded-[1.25rem] border border-[#fce96a] shadow-sm"><Wrench size={32} className="text-[#d97706]" /></div>
           <div>
             <h2 className="text-4xl md:text-5xl font-black tracking-tight text-slate-900" style={{ textShadow: '2px 2px 0px #fce96a' }}>{t('In The Lab', 'प्रयोगशाला में')}</h2>
-            <p className="mt-2 text-sm md:text-base font-bold text-[#d97706] flex items-center gap-2 justify-center md:justify-start"><Clock size={16} /> {t('Work in Progress & Active Architecture', 'प्रगतिरत कार्य एवं सक्रिय आर्किटेक्चर')}</p>
+            <Text3D as="p" depth={1} className="mt-2 text-sm md:text-base font-bold text-[#d97706] flex items-center gap-2 justify-center md:justify-start"><Clock size={16} /> {t('Work in Progress & Active Architecture', 'प्रगतिरत कार्य एवं सक्रिय आर्किटेक्चर')}</Text3D>
           </div>
         </div>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
           <div>
-            <h3 className="tts-card text-[17px] font-black text-slate-800 mb-6 flex items-center gap-2 cursor-pointer" onClick={playUISound}><Smartphone size={18} className="text-pink-500" /> {t('Mobile Applications', 'मोबाइल एप्लिकेशन')}</h3>
+            <h3 className="tts-card text-[17px] font-black text-slate-800 mb-6 flex items-center gap-2 cursor-pointer" onClick={playUISound}><Smartphone size={18} className="text-pink-500" /> <Text3D depth={1} as="span">{t('Mobile Applications', 'मोबाइल एप्लिकेशन')}</Text3D></h3>
             <div className="space-y-4">
               {wipApps.map((app, idx) => {
                 const CardComp = app.url ? motion.a : motion.div;
@@ -545,11 +526,11 @@ const UnderConstructionSection = ({ rotateX, rotateY, isMobile }) => {
                   <CardComp {...props} key={idx} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5, delay: idx * 0.1 }} onClick={playUISound} whileHover={!isMobile ? { y: -4, boxShadow: '0px 15px 30px -10px rgba(0,0,0,0.1)' } : {}} className={`tts-card block w-full p-6 rounded-3xl border shadow-sm backdrop-blur-xl bg-white/90 border-slate-200 relative overflow-hidden group ${app.url ? 'cursor-pointer active:scale-[0.98]' : ''} transition-all`}>
                     <div className="absolute top-0 right-0 p-4 flex items-center gap-1.5 opacity-60 group-hover:opacity-100 transition-opacity">
                       {app.url && <ArrowUpRight size={14} className="text-slate-400 group-hover:text-pink-500 link-indicator" />}
-                      <Settings size={12} className="animate-spin-slow text-slate-400" /><span className="text-[10px] font-bold uppercase tracking-widest text-slate-400">WIP</span>
+                      <Settings size={12} className="animate-spin-slow text-slate-400" /><span className="text-[10px] font-bold uppercase tracking-widest text-slate-400"><Text3D depth={1} color="text-slate-400">WIP</Text3D></span>
                     </div>
                     <div className="flex items-start gap-4">
                       <div className="p-3 bg-slate-50 border border-slate-100 rounded-2xl shrink-0 group-hover:scale-105 transition-transform">{app.icon}</div>
-                      <div className="pr-12"><h4 className="text-lg font-black text-slate-900 leading-tight mb-1">{app.title}</h4><p className="text-xs font-mono font-bold text-slate-500 mb-3">{app.tech}</p><p className="text-[13px] font-medium text-slate-600 leading-relaxed">{app.desc}</p></div>
+                      <div className="pr-12"><Text3D as="h4" depth={2} className="text-lg font-black text-slate-900 leading-tight mb-1">{app.title}</Text3D><Text3D as="p" depth={1} className="text-xs font-mono font-bold text-slate-500 mb-3">{app.tech}</Text3D><Text3D as="p" depth={1} className="text-[13px] font-medium text-slate-600 leading-relaxed">{app.desc}</Text3D></div>
                     </div>
                   </CardComp>
                 );
@@ -557,7 +538,7 @@ const UnderConstructionSection = ({ rotateX, rotateY, isMobile }) => {
             </div>
           </div>
           <div>
-            <h3 className="tts-card text-[17px] font-black text-slate-800 mb-6 flex items-center gap-2 cursor-pointer" onClick={playUISound}><Globe size={18} className="text-blue-500" /> {t('Web Platforms', 'वेब प्लेटफॉर्म')}</h3>
+            <h3 className="tts-card text-[17px] font-black text-slate-800 mb-6 flex items-center gap-2 cursor-pointer" onClick={playUISound}><Globe size={18} className="text-blue-500" /> <Text3D depth={1} as="span">{t('Web Platforms', 'वेब प्लेटफॉर्म')}</Text3D></h3>
             <div className="space-y-4">
               {wipWeb.map((web, idx) => {
                 const CardComp = web.url ? motion.a : motion.div;
@@ -566,11 +547,11 @@ const UnderConstructionSection = ({ rotateX, rotateY, isMobile }) => {
                   <CardComp {...props} key={idx} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5, delay: idx * 0.1 }} onClick={playUISound} whileHover={!isMobile ? { y: -4, boxShadow: '0px 15px 30px -10px rgba(0,0,0,0.1)' } : {}} className={`tts-card block w-full p-6 rounded-3xl border shadow-sm backdrop-blur-xl bg-white/90 border-slate-200 relative overflow-hidden group ${web.url ? 'cursor-pointer active:scale-[0.98]' : ''} transition-all`}>
                     <div className="absolute top-0 right-0 p-4 flex items-center gap-1.5 opacity-60 group-hover:opacity-100 transition-opacity">
                       {web.url && <ArrowUpRight size={14} className="text-slate-400 group-hover:text-pink-500 link-indicator" />}
-                      <Settings size={12} className="animate-spin-slow text-slate-400" /><span className="text-[10px] font-bold uppercase tracking-widest text-slate-400">WIP</span>
+                      <Settings size={12} className="animate-spin-slow text-slate-400" /><span className="text-[10px] font-bold uppercase tracking-widest text-slate-400"><Text3D depth={1} color="text-slate-400">WIP</Text3D></span>
                     </div>
                     <div className="flex items-start gap-4">
                       <div className="p-3 bg-slate-50 border border-slate-100 rounded-2xl shrink-0 group-hover:scale-105 transition-transform">{web.icon}</div>
-                      <div className="pr-12"><h4 className="text-lg font-black text-slate-900 leading-tight mb-1">{web.title}</h4><p className="text-xs font-mono font-bold text-slate-500 mb-3">{web.tech}</p><p className="text-[13px] font-medium text-slate-600 leading-relaxed">{web.desc}</p></div>
+                      <div className="pr-12"><Text3D as="h4" depth={2} className="text-lg font-black text-slate-900 leading-tight mb-1">{web.title}</Text3D><Text3D as="p" depth={1} className="text-xs font-mono font-bold text-slate-500 mb-3">{web.tech}</Text3D><Text3D as="p" depth={1} className="text-[13px] font-medium text-slate-600 leading-relaxed">{web.desc}</Text3D></div>
                     </div>
                   </CardComp>
                 );
@@ -629,13 +610,13 @@ const TechMatrixSection = ({ rotateX, rotateY, isMobile }) => {
       <motion.div style={{ rotateX: isMobile ? 0 : rotateX, rotateY: isMobile ? 0 : rotateY, transformStyle: 'preserve-3d' }} className="max-w-7xl mx-auto pointer-events-auto will-change-transform">
         <div className="mb-12 text-center md:text-left">
           <Text3D depth={6} className="tts-card text-3xl md:text-5xl font-black tracking-tight cursor-pointer" color="text-slate-900" shadowColor="#cbd5e1">{t('Technology Matrix', 'प्रौद्योगिकी मैट्रिक्स')}</Text3D>
-          <p className="mt-3 text-sm md:text-base font-bold text-slate-500">{t('A comprehensive mapping of domains to specialized technologies utilized in production.', 'उत्पादन में उपयोग की जाने वाली विशेष तकनीकों के लिए डोमेन का एक व्यापक मानचित्रण।')}</p>
+          <Text3D as="p" depth={1} className="tts-card mt-3 text-sm md:text-base font-bold text-slate-500">{t('A comprehensive mapping of domains to specialized technologies utilized in production.', 'उत्पादन में उपयोग की जाने वाली विशेष तकनीकों के लिए डोमेन का एक व्यापक मानचित्रण।')}</Text3D>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
           {domains.map((row, idx) => (
             <motion.div key={row.domain} initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: '-50px' }} transition={{ duration: 0.4, delay: isMobile ? 0 : (idx % 4) * 0.05 }} onClick={playUISound} whileHover={!isMobile ? { y: -4, boxShadow: '0px 15px 30px -5px rgba(0,0,0,0.15)' } : {}} className="tts-card p-5 border rounded-3xl shadow-md relative group backdrop-blur-xl border-slate-200 bg-white/80 hover:bg-white transition-all duration-300 flex flex-col gap-3 cursor-pointer active:scale-95">
-              <div className="flex items-center gap-2 border-b border-slate-100 pb-3"><Cpu size={18} className="text-cyan-500 shrink-0" /><span className="text-base font-black text-slate-800 leading-tight">{row.domain}</span></div>
-              <div className="flex flex-wrap gap-1.5">{row.techs.map(tech => <span key={tech} className="px-2 py-1 bg-slate-50 border border-slate-200 rounded-lg text-[11px] font-bold text-slate-600">{tech}</span>)}</div>
+              <div className="flex items-center gap-2 border-b border-slate-100 pb-3"><Cpu size={18} className="text-cyan-500 shrink-0" /><Text3D as="span" depth={2} className="text-base font-black text-slate-800 leading-tight">{row.domain}</Text3D></div>
+              <div className="flex flex-wrap gap-1.5">{row.techs.map(tech => <span key={tech} className="px-2 py-1 bg-slate-50 border border-slate-200 rounded-lg text-[11px] font-bold text-slate-600"><Text3D depth={1} color="text-slate-600">{tech}</Text3D></span>)}</div>
             </motion.div>
           ))}
         </div>
@@ -655,12 +636,12 @@ const CertificationsSection = ({ rotateX, rotateY, isMobile }) => {
       <motion.div style={{ rotateX: isMobile ? 0 : rotateX, rotateY: isMobile ? 0 : rotateY, transformStyle: 'preserve-3d' }} className="max-w-7xl mx-auto pointer-events-auto will-change-transform">
         <div className="mb-12 text-center md:text-left">
           <Text3D depth={6} className="tts-card text-3xl md:text-5xl font-black tracking-tight cursor-pointer" color="text-slate-900" shadowColor="#cbd5e1">{t('Google Credentials', 'गूगल क्रेडेंशियल्स')}</Text3D>
-          <p className="mt-2 text-sm md:text-base font-bold text-slate-500">{t('Google Developer Profile and Cloud credentials.', 'गूगल डेवलपर प्रोफाइल और क्लाउड क्रेडेंशियल्स।')}</p>
+          <Text3D as="p" depth={1} className="tts-card mt-2 text-sm md:text-base font-bold text-slate-500">{t('Google Developer Profile and Cloud credentials.', 'गूगल डेवलपर प्रोफाइल और क्लाउड क्रेडेंशियल्स।')}</Text3D>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
           {badges.map((badge, i) => (
             <motion.div key={i} initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: '-50px' }} transition={{ duration: 0.4, delay: isMobile ? 0 : (i % 4) * 0.05 }} onClick={playUISound} whileHover={!isMobile ? { y: -4, boxShadow: '0px 15px 30px -5px rgba(0,0,0,0.15)' } : {}} className="tts-card p-4 border rounded-2xl shadow-md relative group backdrop-blur-xl border-slate-200 bg-white/80 hover:bg-white transition-all duration-300 flex items-center gap-3 cursor-pointer active:scale-95">
-              <Award size={20} className="text-pink-500 shrink-0" /><span className="text-sm font-bold text-slate-800 leading-tight">{badge}</span>
+              <Award size={20} className="text-pink-500 shrink-0" /><Text3D as="span" depth={1} className="text-sm font-bold text-slate-800 leading-tight">{badge}</Text3D>
             </motion.div>
           ))}
         </div>
@@ -725,7 +706,7 @@ const TrainingCertificationsSection = ({ rotateX, rotateY, isMobile }) => {
       <motion.div style={{ rotateX: isMobile ? 0 : rotateX, rotateY: isMobile ? 0 : rotateY, transformStyle: 'preserve-3d' }} className="max-w-7xl mx-auto pointer-events-auto will-change-transform">
         <div className="mb-10 text-center md:text-left">
           <Text3D depth={6} className="tts-card text-3xl md:text-5xl font-black tracking-tight cursor-pointer" color="text-slate-900" shadowColor="#cbd5e1">{t('Training & Certifications', 'प्रशिक्षण और प्रमाणपत्र')}</Text3D>
-          <p className="mt-3 text-sm md:text-base font-bold text-slate-500">{t('Professional development, specialized training, and foundational knowledge.', 'व्यावसायिक विकास, विशेष प्रशिक्षण और मूलभूत ज्ञान।')}</p>
+          <Text3D as="p" depth={1} className="tts-card mt-3 text-sm md:text-base font-bold text-slate-500">{t('Professional development, specialized training, and foundational knowledge.', 'व्यावसायिक विकास, विशेष प्रशिक्षण और मूलभूत ज्ञान।')}</Text3D>
         </div>
 
         <div className="space-y-10 md:space-y-12">
@@ -744,7 +725,7 @@ const TrainingCertificationsSection = ({ rotateX, rotateY, isMobile }) => {
                   <motion.div key={cIdx} initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: '-50px' }} transition={{ duration: 0.3, delay: isMobile ? 0 : cIdx * 0.05 }} onClick={playUISound} whileHover={!isMobile ? { y: -2, boxShadow: '0px 10px 20px -5px rgba(0,0,0,0.1)' } : {}} className="tts-card p-4 border rounded-2xl shadow-sm relative group backdrop-blur-xl border-slate-200 bg-white/70 hover:bg-white transition-all duration-300 flex flex-col justify-start cursor-pointer active:scale-[0.98]">
                     <div className="flex items-start gap-2.5">
                       <span className="text-pink-500 font-black text-sm leading-none opacity-80 mt-0.5 shrink-0">✦</span>
-                      <p className="text-xs md:text-sm font-medium text-slate-700 leading-snug">{course}</p>
+                      <Text3D as="p" depth={1} className="text-xs md:text-sm font-medium text-slate-700 leading-snug">{course}</Text3D>
                     </div>
                   </motion.div>
                 ))}
@@ -769,26 +750,26 @@ const Footer = ({ rotateX, rotateY, isMobile }) => {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 mb-16">
           <div className="lg:col-span-7 space-y-6">
             <Text3D depth={6} className="tts-card text-4xl md:text-6xl font-black tracking-tighter cursor-pointer" color="text-slate-900" shadowColor="#cbd5e1">{t("Let's build something exceptional.", "आइए कुछ असाधारण बनाएं।")}</Text3D>
-            <p className="tts-card text-sm md:text-base text-slate-600 font-medium max-w-lg leading-relaxed cursor-pointer" onClick={playUISound}>
+            <Text3D as="p" depth={1} className="tts-card text-sm md:text-base text-slate-600 font-medium max-w-lg leading-relaxed cursor-pointer" onClick={playUISound}>
               {t('I am currently open to freelance engineering projects, contract opportunities, internships, and full-time software engineering or architecture roles. If you are looking for someone to design, build, optimize, or maintain a production-ready application, I would be glad to discuss your requirements. I can contribute across the complete development lifecycle—from architecture and UI engineering to multimedia systems, databases, backend integration, 3D/WebGL experiences, testing, deployment, and release. My primary strengths include Kotlin and Jetpack Compose for native Android applications, as well as React, Three.js, WebGL, and Firebase for interactive modern web experiences. If you have a project, product idea, technical requirement, or engineering opportunity that aligns with these skills, please feel free to reach out. I would be happy to connect, understand your needs, and explore how I can contribute to building it.', 'मैं वर्तमान में फ्रीलांस इंजीनियरिंग प्रोजेक्ट्स, कॉन्ट्रैक्ट अवसरों, इंटर्नशिप तथा फुल-टाइम सॉफ्टवेयर इंजीनियरिंग या आर्किटेक्चर भूमिकाओं के लिए उपलब्ध हूँ। यदि आप किसी प्रोडक्शन-रेडी एप्लिकेशन को डिजाइन, विकसित, ऑप्टिमाइज़ या मेंटेन करने के लिए किसी इंजीनियर की तलाश कर रहे हैं, तो मुझे आपकी आवश्यकताओं पर चर्चा करने में खुशी होगी। मैं पूरे डेवलपमेंट लाइफसाइकल में योगदान दे सकता हूँ—आर्किटेक्चर और UI इंजीनियरिंग से लेकर मल्टीमीडिया सिस्टम, डेटाबेस, बैकएंड इंटीग्रेशन, 3D/WebGL अनुभव, टेस्टिंग, डिप्लॉयमेंट और रिलीज़ तक। मेरी मुख्य विशेषज्ञताओं में नेटिव Android एप्लिकेशन के लिए Kotlin और Jetpack Compose तथा इंटरैक्टिव आधुनिक वेब अनुभवों के लिए React, Three.js, WebGL और Firebase शामिल हैं। यदि आपके पास कोई प्रोजेक्ट, प्रोडक्ट आइडिया, तकनीकी आवश्यकता या ऐसी इंजीनियरिंग opportunity है जो मेरी skills से मेल खाती है, तो कृपया मुझसे संपर्क करें। मुझे आपसे जुड़कर आपकी आवश्यकताओं को समझने और यह जानने में खुशी होगी कि मैं आपके प्रोजेक्ट के निर्माण में किस प्रकार योगदान दे सकता हूँ।')}
-            </p>
+            </Text3D>
             <div className="flex flex-col gap-3">
-              <motion.a whileHover={!isMobile ? { x: 6 } : {}} href="mailto:ishanmall789@gmail.com" onClick={playUISound} className="inline-flex items-center gap-3 text-xl md:text-2xl font-bold transition-colors text-slate-900 hover:text-pink-600 w-fit group">
+              <motion.a whileHover={!isMobile ? { x: 6 } : {}} href="mailto:ishanmall789@gmail.com" onClick={playUISound} className="tts-card inline-flex items-center gap-3 text-xl md:text-2xl font-bold transition-colors text-slate-900 hover:text-pink-600 w-fit group">
                 <Mail className="text-pink-500" /> <Text3D depth={2} color="currentColor" shadowColor="#e2e8f0" interactive={false}>ishanmall789@gmail.com</Text3D> <ArrowUpRight size={22} className="text-pink-500 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
               </motion.a>
             </div>
           </div>
           <div className="lg:col-span-5">
             <motion.div whileHover={!isMobile ? { y: -6, boxShadow: '0 25px 50px -12px rgba(0,0,0,0.15)' } : {}} className="p-6 md:p-8 rounded-3xl border shadow-xl backdrop-blur-xl bg-white/90 border-slate-200 transition-all duration-300">
-              <h3 className="tts-card text-lg font-black text-slate-900 mb-4 flex items-center gap-2 cursor-pointer" onClick={playUISound}><Send size={18} className="text-cyan-500" /> {t('Send Direct Inquiry', 'सीधी पूछताछ भेजें')}</h3>
+              <h3 className="tts-card text-lg font-black text-slate-900 mb-4 flex items-center gap-2 cursor-pointer" onClick={playUISound}><Send size={18} className="text-cyan-500" /> <Text3D depth={1} as="span">{t('Send Direct Inquiry', 'सीधी पूछताछ भेजें')}</Text3D></h3>
               {submitted ? (
-                <div className="tts-card p-4 rounded-xl bg-cyan-50 border border-cyan-200 text-cyan-800 text-sm font-bold flex items-center gap-2 shadow-inner"><CheckCircle2 size={18} className="text-cyan-600" /> {t('Thank you! Your message has been initiated.', 'धन्यवाद! आपका संदेश भेज दिया गया है।')}</div>
+                <div className="tts-card p-4 rounded-xl bg-cyan-50 border border-cyan-200 text-cyan-800 text-sm font-bold flex items-center gap-2 shadow-inner"><CheckCircle2 size={18} className="text-cyan-600" /> <Text3D depth={1}>{t('Thank you! Your message has been initiated.', 'धन्यवाद! आपका संदेश भेज दिया गया है।')}</Text3D></div>
               ) : (
                 <form onSubmit={handleSubmit} className="space-y-4">
                   <div><label className="block text-xs font-bold text-slate-600 mb-1">{t('Your Name', 'आपका नाम')}</label><input type="text" required placeholder={t("e.g. Satoshi Nakamoto", "उदा. सातोशी नाकामोतो")} className="w-full px-4 py-2.5 rounded-xl border border-slate-200 bg-slate-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-pink-500 text-sm font-medium text-slate-900 placeholder-slate-400 shadow-inner" /></div>
                   <div><label className="block text-xs font-bold text-slate-600 mb-1">{t('Email Address', 'ईमेल पता')}</label><input type="email" required placeholder="you@company.com" className="w-full px-4 py-2.5 rounded-xl border border-slate-200 bg-slate-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-pink-500 text-sm font-medium text-slate-900 placeholder-slate-400 shadow-inner" /></div>
                   <div><label className="block text-xs font-bold text-slate-600 mb-1">{t('Project Brief', 'प्रोजेक्ट संक्षिप्त')}</label><textarea rows={3} required placeholder={t("Describe what you want to build...", "वर्णन करें कि आप क्या बनाना चाहते हैं...")} className="w-full px-4 py-2.5 rounded-xl border border-slate-200 bg-slate-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-pink-500 text-sm font-medium text-slate-900 placeholder-slate-400 resize-none shadow-inner" /></div>
-                  <motion.button type="submit" whileHover={{ y: -3, boxShadow: '0 12px 20px -3px rgba(236, 72, 153, 0.5)' }} whileTap={{ y: 0, boxShadow: '0 2px 5px -1px rgba(236, 72, 153, 0.4)' }} className="w-full py-3 rounded-xl font-bold text-white bg-gradient-to-r from-cyan-500 via-pink-500 to-blue-500 shadow-lg text-sm transition-all">{t('Submit Project Request', 'प्रोजेक्ट अनुरोध सबमिट करें')}</motion.button>
+                  <motion.button type="submit" whileHover={{ y: -3, boxShadow: '0 12px 20px -3px rgba(236, 72, 153, 0.5)' }} whileTap={{ y: 0, boxShadow: '0 2px 5px -1px rgba(236, 72, 153, 0.4)' }} className="tts-card w-full py-3 rounded-xl font-bold text-white bg-gradient-to-r from-cyan-500 via-pink-500 to-blue-500 shadow-lg text-sm transition-all"><Text3D depth={1} color="text-white">{t('Submit Project Request', 'प्रोजेक्ट अनुरोध सबमिट करें')}</Text3D></motion.button>
                 </form>
               )}
             </motion.div>
@@ -797,10 +778,10 @@ const Footer = ({ rotateX, rotateY, isMobile }) => {
         <div className="flex flex-col md:flex-row items-center justify-between gap-6 pt-8 border-t border-slate-200">
           <div className="flex flex-wrap gap-3">
             {[{ label: 'GitHub', icon: Code2, url: 'https://github.com/ishanmall' }, { label: 'LinkedIn', icon: Briefcase, url: 'https://www.linkedin.com/in/ishan-mall-4b20ab296/' }, { label: 'YouTube', icon: Tv, url: 'https://www.youtube.com/@ishanmall9527' }, { label: 'Instagram', icon: Camera, url: 'https://www.instagram.com/isha.ndisha/' }, { label: 'Google Developer', icon: Code2, url: 'https://me.developers.google.com/u/114187295149454370660' }, { label: 'Credly', icon: Award, url: 'https://www.credly.com/users/ishan-mall/' }].map((social) => (
-              <motion.a key={social.label} href={social.url} target="_blank" rel="noreferrer" onClick={playUISound} whileHover={{ y: -3, boxShadow: '0 6px 10px -2px rgba(0,0,0,0.15)' }} whileTap={{ y: 0, boxShadow: 'none' }} className="flex items-center gap-2 px-4 py-2 rounded-full border font-bold bg-white/90 border-slate-200 text-slate-700 text-xs shadow-md transition-all active:scale-95"><social.icon size={16} /> {social.label}</motion.a>
+              <motion.a key={social.label} href={social.url} target="_blank" rel="noreferrer" onClick={playUISound} whileHover={{ y: -3, boxShadow: '0 6px 10px -2px rgba(0,0,0,0.15)' }} whileTap={{ y: 0, boxShadow: 'none' }} className="tts-card flex items-center gap-2 px-4 py-2 rounded-full border font-bold bg-white/90 border-slate-200 text-slate-700 text-xs shadow-md transition-all active:scale-95"><social.icon size={16} /> <Text3D depth={1} color="text-slate-700">{social.label}</Text3D></motion.a>
             ))}
           </div>
-          <p className="tts-card text-xs font-mono font-bold text-slate-400 cursor-pointer" onClick={playUISound}>&copy; {new Date().getFullYear()} Ishan Mall — Gorakhpur, UP, India.</p>
+          <Text3D as="p" depth={1} className="tts-card text-xs font-mono font-bold text-slate-400 cursor-pointer" onClick={playUISound}>&copy; {new Date().getFullYear()} Ishan Mall — Gorakhpur, UP, India.</Text3D>
         </div>
       </motion.div>
     </footer>
@@ -851,9 +832,11 @@ export default function App() {
       if (typeof window === 'undefined' || !('speechSynthesis' in window)) return;
       if (e.target.closest('.no-tts')) return;
       if (e.target.tagName && e.target.tagName.toLowerCase() === 'canvas') return;
+      
       const anchor = e.target.closest('a');
       let textToRead = '';
-      if (anchor && anchor.href && !anchor.href.includes('mailto')) {
+      
+      if (anchor && anchor.href && !anchor.href.includes('mailto') && !anchor.hasAttribute('download')) {
         e.preventDefault(); 
         if (pendingLink === anchor.href) {
           window.open(anchor.href, anchor.target || '_self');
@@ -864,19 +847,35 @@ export default function App() {
           setTimeout(() => setPendingLink(null), 5000); 
         }
       }
-      const validTags = ['p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'span', 'li'];
+      
+      const validTags = ['p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'span', 'li', 'div'];
       let sourceElement = null;
       if (e.target.closest('.tts-card')) sourceElement = e.target.closest('.tts-card');
       else if (validTags.includes(e.target.tagName.toLowerCase())) sourceElement = e.target;
       else if (anchor) sourceElement = anchor;
 
       if (sourceElement) {
+        // Deep clone to safely manipulate and extract text
         const clone = sourceElement.cloneNode(true);
+        
+        // Remove ALL hidden structural spans generated by Text3D to prevent duplicate text
         const hiddenElements = clone.querySelectorAll('[aria-hidden="true"]');
-        hiddenElements.forEach(el => el.remove());
-        textToRead = clone.innerText || clone.textContent;
+        hiddenElements.forEach(el => {
+          if (el.parentNode) el.parentNode.removeChild(el);
+        });
+
+        // Remove elements explicitly flagged to bypass TTS
+        const noTtsElements = clone.querySelectorAll('.no-tts');
+        noTtsElements.forEach(el => {
+          if (el.parentNode) el.parentNode.removeChild(el);
+        });
+
+        // Use standard textContent now that duplicates are wiped out
+        textToRead = clone.textContent;
       }
-      if (textToRead && textToRead.length < 800 && textToRead.trim().length > 0) {
+
+      // Increased threshold to 2500 to allow the full professional summary to be read at once
+      if (textToRead && textToRead.length < 2500 && textToRead.trim().length > 0) {
         textToRead = textToRead.replace(/WIP/g, '').replace(/✦/g, '').replace(/•/g, '').trim();
         window.speechSynthesis.cancel();
         const utterance = new SpeechSynthesisUtterance(textToRead);
