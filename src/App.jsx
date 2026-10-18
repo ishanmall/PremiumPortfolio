@@ -1,13 +1,12 @@
 import React, { useRef, useMemo, Suspense, useEffect, useState } from 'react';
 import { motion, useScroll, useMotionValue, useSpring, useTransform, useReducedMotion, AnimatePresence } from 'framer-motion';
 import { ReactLenis } from 'lenis/react';
-
 import 'lenis/dist/lenis.css';
 import { ArrowUpRight, Code2, Play, Briefcase, Camera, Tv, Award, GraduationCap, BookOpen, Menu, X, Smartphone, Layers, ShieldCheck, Database, Music, CheckCircle2, Mail, Send, Terminal, Globe, Rocket, BrainCircuit, MonitorSmartphone, Search, Filter, Cpu, Orbit, Wrench, Clock, Settings, Volume2, VolumeX, Languages, SmilePlus, Download, Puzzle } from 'lucide-react';
 import * as THREE from 'three';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { useGLTF, Sparkles, Grid, useProgress } from '@react-three/drei';
-useGLTF.preload('/supercar.glb');
+// Deliberately avoid eager GLB preloading: a missing/slow model must not block the portfolio UI.
 
 let audioCtx = null;
 const playUISound = () => {
@@ -227,22 +226,45 @@ const RacingCar = ({ scrollYProgress, isMobile, reducedMotion }) => {
   );
 };
 
+// Non-blocking asset status: the portfolio content remains usable if a 3D asset is slow or unavailable.
 const LoaderOverlay = () => {
   const { progress, active } = useProgress();
   return (
     <AnimatePresence>
       {active && (
-        <motion.div initial={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.6 }} className="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-[#f8fafc]">
-          <Text3D depth={8} className="text-4xl md:text-5xl font-extrabold tracking-tighter mb-4 animate-pulse" gradient="from-cyan-400 via-pink-500 to-blue-600">ISHAN</Text3D>
-          <div className="w-56 h-1.5 bg-slate-200 rounded-full overflow-hidden shadow-inner">
-            <div className="h-full bg-gradient-to-r from-cyan-500 via-pink-500 to-blue-500 transition-all duration-300" style={{ width: `${progress}%` }} />
-          </div>
-          <p className="text-xs font-mono font-bold text-slate-500 mt-3 tracking-widest"><Text3D depth={1} color="text-slate-500">INITIALIZING ASSETS {Math.round(progress)}%</Text3D></p>
+        <motion.div
+          initial={{ opacity: 0, y: -8 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -8 }}
+          transition={{ duration: 0.2 }}
+          role="status"
+          aria-live="polite"
+          className="fixed right-4 top-20 z-[40] pointer-events-none flex items-center gap-3 rounded-xl border border-slate-200 bg-white/90 px-4 py-3 shadow-lg backdrop-blur-md"
+        >
+          <span className="h-2 w-2 rounded-full bg-cyan-500 animate-pulse" />
+          <span className="text-xs font-mono font-bold text-slate-600">Loading 3D assets {Math.round(progress)}%</span>
         </motion.div>
       )}
     </AnimatePresence>
   );
 };
+
+class SceneErrorBoundary extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { hasError: false };
+  }
+  static getDerivedStateFromError() {
+    return { hasError: true };
+  }
+  componentDidCatch(error) {
+    console.error('3D scene asset failed; keeping portfolio content available:', error);
+  }
+  render() {
+    if (this.state.hasError) return null;
+    return this.props.children;
+  }
+}
 
 const Global3DScene = ({ scrollYProgress, isMobile, reducedMotion }) => (
   <div className="fixed inset-0 pointer-events-none z-0 bg-[#f8fafc]">
@@ -254,7 +276,7 @@ const Global3DScene = ({ scrollYProgress, isMobile, reducedMotion }) => (
         <spotLight position={[-10, 10, 5]} intensity={2} color="#ec4899" angle={0.3} penumbra={1} />
         <spotLight position={[10, 5, -5]} intensity={2} color="#06b6d4" angle={0.3} penumbra={1} />
         <Grid position={[0, -0.51, 0]} args={[200, 200]} cellSize={1} cellThickness={1} cellColor="#e2e8f0" sectionSize={5} sectionThickness={1.5} sectionColor="#cbd5e1" fadeDistance={65} fadeStrength={1} />
-        <RacingCar scrollYProgress={scrollYProgress} isMobile={isMobile} reducedMotion={reducedMotion} />
+        <SceneErrorBoundary><RacingCar scrollYProgress={scrollYProgress} isMobile={isMobile} reducedMotion={reducedMotion} /></SceneErrorBoundary>
         {!reducedMotion && <Sparkles count={isMobile ? 30 : 120} scale={60} size={isMobile ? 1.5 : 3} speed={0.4} opacity={0.3} color="#ec4899" />}
         <fog attach="fog" args={['#f8fafc', 10, isMobile ? 40 : 50]} />
       </Suspense>
@@ -540,7 +562,7 @@ const ChromeExtensionsSection = ({ rotateX, rotateY, isMobile }) => {
                 </span>
               </div>
               <Text3D as="h3" depth={4} className="text-3xl font-black tracking-tight text-slate-900 md:text-4xl" shadowColor="#bae6fd">
-                InstaSwift <span className="text-cyan-600">v7.0</span>
+                InstaSwift
               </Text3D>
               <Text3D as="p" depth={1} className="mt-4 max-w-3xl text-sm font-medium leading-relaxed text-slate-600 md:text-base">
                 {t(
@@ -556,7 +578,7 @@ const ChromeExtensionsSection = ({ rotateX, rotateY, isMobile }) => {
             </div>
             <div className="flex flex-col gap-3 md:min-w-52">
               <span className="inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-cyan-500 via-pink-500 to-blue-500 px-5 py-3.5 text-sm font-extrabold text-white shadow-lg transition-transform group-hover:scale-[1.03]">
-                <Github size={18} /> {t('View on GitHub', 'GitHub पर देखें')} <ArrowUpRight size={17} />
+                <Code2 size={18} /> {t('View on GitHub', 'GitHub पर देखें')} <ArrowUpRight size={17} />
               </span>
               <span className="text-center text-xs font-semibold text-slate-400">github.com/ishanmall/InstaSwift</span>
             </div>
@@ -721,7 +743,6 @@ const CertificationsSection = ({ rotateX, rotateY, isMobile }) => {
     </section>
   );
 };
-
 const TrainingCertificationsSection = ({ rotateX, rotateY, isMobile }) => {
   const { t } = React.useContext(TranslationContext);
   const trainingData = [
@@ -811,7 +832,6 @@ const TrainingCertificationsSection = ({ rotateX, rotateY, isMobile }) => {
     </section>
   );
 };
-
 const Footer = ({ rotateX, rotateY, isMobile }) => {
   const { t } = React.useContext(TranslationContext);
   const [submitted, setSubmitted] = useState(false);
