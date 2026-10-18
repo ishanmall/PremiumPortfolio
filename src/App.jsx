@@ -417,7 +417,7 @@ const UnifiedDatabase = ({ rotateX, rotateY, isMobile }) => {
   const { t } = React.useContext(TranslationContext);
   const [searchTerm, setSearchTerm] = useState('');
   const [activeFilter, setActiveFilter] = useState('ALL');
-  const filters = ['ALL', 'Websites', 'Android'];
+  const filters = ['ALL', 'Websites', 'Android', 'Extensions'];
 const allItems = [
     { 
       title: 'GalleryBox', type: 'App', category: 'Android', 
@@ -458,6 +458,11 @@ const allItems = [
       title: 'Mandir Dharshan', type: 'Web', category: 'Websites', 
       desc: t('Large-scale visual temple knowledge catalogue heavily driven by structured local data, featuring custom location searches and dark mode.', 'कस्टम स्थान खोजों और डार्क मोड की विशेषता वाला संरचित स्थानीय डेटा द्वारा संचालित बड़े पैमाने का दृश्य मंदिर ज्ञान कैटलॉग।'), 
       tags: ['Websites'], icon: <Globe size={24} className="text-orange-500" />, url: 'https://mandir-dharshan.web.app/' 
+    },
+    { 
+      title: 'InstaSwift', type: 'Chrome Extension', category: 'Extensions',
+      desc: t('A Chrome extension project for downloading accessible Instagram profile media, including posts, Reels, and carousel items.', 'Instagram प्रोफ़ाइल के उपलब्ध मीडिया—पोस्ट, Reels और carousel items—डाउनलोड करने के लिए Chrome extension प्रोजेक्ट।'),
+      tags: ['Extensions', 'Chrome Extension', 'JavaScript', 'Manifest V3'], icon: <Puzzle size={24} className="text-cyan-600" />, url: 'https://github.com/ishanmall/InstaSwift'
     }
   ];
   const filteredItems = allItems.filter(item => {
@@ -480,7 +485,7 @@ const allItems = [
         <div className="flex flex-wrap gap-2 mb-12">
           {filters.map((filter) => (
             <motion.button key={filter} onClick={() => { playUISound(); setActiveFilter(filter); }} whileHover={{ y: -3, boxShadow: '0 8px 15px -3px rgba(0,0,0,0.1)' }} whileTap={{ y: 0, boxShadow: 'none' }} className={`tts-card px-4 py-2 rounded-full text-xs font-bold transition-all border flex items-center gap-2 ${ activeFilter === filter ? 'bg-gradient-to-r from-cyan-500 to-pink-500 text-white border-transparent shadow-md' : 'bg-white/90 text-slate-700 hover:bg-white border-slate-200 shadow-sm' }`}>
-              {filter === 'ALL' && <Filter size={14} />} <Text3D depth={1} color="currentColor">{t(filter, filter === 'Projects' ? 'प्रोजेक्ट्स' : filter === 'Websites' ? 'वेबसाइटें' : filter === 'Technologies' ? 'तकनीकें' : filter)}</Text3D>
+              {filter === 'ALL' && <Filter size={14} />} <Text3D depth={1} color="currentColor">{t(filter, filter === 'Websites' ? 'वेबसाइटें' : filter === 'Android' ? 'एंड्रॉइड' : filter === 'Extensions' ? 'एक्सटेंशन' : filter)}</Text3D>
             </motion.button>
           ))}
         </div>
@@ -513,77 +518,6 @@ const allItems = [
             )}
           </AnimatePresence>
         </div>
-      </motion.div>
-    </section>
-  );
-};
-
-const ChromeExtensionsSection = ({ rotateX, rotateY, isMobile }) => {
-  const { t } = React.useContext(TranslationContext);
-  return (
-    <section id="extensions" className="py-20 md:py-32 px-6 md:px-10 relative z-10 pointer-events-none perspective-[1200px]">
-      <motion.div
-        style={{ rotateX: isMobile ? 0 : rotateX, rotateY: isMobile ? 0 : rotateY, transformStyle: 'preserve-3d' }}
-        className="max-w-7xl mx-auto pointer-events-auto will-change-transform"
-      >
-        <div className="mb-12 flex flex-col md:flex-row md:items-end md:justify-between gap-5">
-          <div>
-            <Text3D depth={6} className="tts-card text-4xl md:text-5xl font-black tracking-tight" color="text-slate-900" shadowColor="#cbd5e1">
-              {t('Chrome Extensions', 'क्रोम एक्सटेंशन')}
-            </Text3D>
-            <Text3D as="p" depth={1} className="tts-card mt-3 text-sm md:text-base font-bold text-slate-500 max-w-2xl">
-              {t('Lightweight browser tools built to improve everyday web workflows.', 'रोज़मर्रा के वेब वर्कफ़्लो को बेहतर बनाने के लिए बनाए गए हल्के ब्राउज़र टूल।')}
-            </Text3D>
-          </div>
-          <span className="inline-flex items-center gap-2 w-fit rounded-full border border-cyan-200 bg-cyan-50/90 px-4 py-2 text-xs font-bold text-cyan-700 shadow-sm">
-            <Puzzle size={15} /> {t('Browser Tools', 'ब्राउज़र टूल्स')}
-          </span>
-        </div>
-
-        <motion.a
-          href="https://github.com/ishanmall/InstaSwift"
-          target="_blank"
-          rel="noreferrer"
-          onClick={playUISound}
-          whileHover={!isMobile ? { y: -8, rotateX: 2, boxShadow: '0px 28px 55px -18px rgba(6,182,212,0.28)' } : {}}
-          whileTap={{ scale: 0.99 }}
-          className="tts-card group relative block overflow-hidden rounded-[2rem] border border-slate-200 bg-white/85 p-6 shadow-xl backdrop-blur-xl transition-all md:p-10"
-        >
-          <div className="absolute -right-12 -top-16 h-56 w-56 rounded-full bg-cyan-200/30 blur-3xl transition-all duration-500 group-hover:bg-pink-200/40" />
-          <div className="absolute bottom-0 right-0 h-1.5 w-full bg-gradient-to-r from-cyan-400 via-pink-500 to-blue-500" />
-          <div className="relative grid grid-cols-1 items-center gap-8 md:grid-cols-[1fr_auto]">
-            <div>
-              <div className="mb-5 flex flex-wrap items-center gap-3">
-                <div className="flex h-14 w-14 items-center justify-center rounded-2xl border border-cyan-100 bg-gradient-to-br from-cyan-50 to-blue-50 text-cyan-600 shadow-sm transition-transform duration-300 group-hover:scale-110 group-hover:rotate-3">
-                  <Puzzle size={29} />
-                </div>
-                <span className="rounded-full border border-amber-200 bg-amber-50 px-3 py-1 text-[10px] font-black uppercase tracking-[0.18em] text-amber-700">
-                  {t('Active Development', 'डेवलपमेंट जारी')}
-                </span>
-              </div>
-              <Text3D as="h3" depth={4} className="text-3xl font-black tracking-tight text-slate-900 md:text-4xl" shadowColor="#bae6fd">
-                InstaSwift
-              </Text3D>
-              <Text3D as="p" depth={1} className="mt-4 max-w-3xl text-sm font-medium leading-relaxed text-slate-600 md:text-base">
-                {t(
-                  'A Manifest V3 Chrome extension project designed to discover accessible Instagram profile Posts, Reels, and carousel media, with a download queue and progress HUD. Coverage and duplicate handling are still being tested against real profiles.',
-                  'Manifest V3 पर आधारित Chrome extension प्रोजेक्ट, जिसे Instagram प्रोफ़ाइल के उपलब्ध Posts, Reels और carousel media खोजने के लिए बनाया जा रहा है। इसमें download queue और progress HUD शामिल हैं; media coverage और duplicate handling की वास्तविक प्रोफ़ाइल पर जाँच जारी है।'
-                )}
-              </Text3D>
-              <div className="mt-6 flex flex-wrap gap-2">
-                {['Chrome Extension', 'Manifest V3', 'JavaScript', 'Posts + Reels', 'GitHub'].map((tag) => (
-                  <span key={tag} className="rounded-lg border border-slate-200 bg-white/90 px-3 py-1.5 text-[11px] font-bold text-slate-600 shadow-sm">{tag}</span>
-                ))}
-              </div>
-            </div>
-            <div className="flex flex-col gap-3 md:min-w-52">
-              <span className="inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-cyan-500 via-pink-500 to-blue-500 px-5 py-3.5 text-sm font-extrabold text-white shadow-lg transition-transform group-hover:scale-[1.03]">
-                <Code2 size={18} /> {t('View on GitHub', 'GitHub पर देखें')} <ArrowUpRight size={17} />
-              </span>
-              <span className="text-center text-xs font-semibold text-slate-400">github.com/ishanmall/InstaSwift</span>
-            </div>
-          </div>
-        </motion.a>
       </motion.div>
     </section>
   );
@@ -996,7 +930,6 @@ export default function App() {
           <Statistics rotateX={rotateX} rotateY={rotateY} isMobile={isMobile} />
           <ProfileAndExperience rotateX={rotateX} rotateY={rotateY} isMobile={isMobile} />
           <UnifiedDatabase rotateX={rotateX} rotateY={rotateY} isMobile={isMobile} />
-          <ChromeExtensionsSection rotateX={rotateX} rotateY={rotateY} isMobile={isMobile} />
           <UnderConstructionSection rotateX={rotateX} rotateY={rotateY} isMobile={isMobile} />
           <TechMatrixSection rotateX={rotateX} rotateY={rotateY} isMobile={isMobile} />
           <CertificationsSection rotateX={rotateX} rotateY={rotateY} isMobile={isMobile} />
