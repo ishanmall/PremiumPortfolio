@@ -460,18 +460,6 @@ const UnifiedDatabase = ({ rotateX, rotateY, isMobile }) => {
       desc: t('A Chrome extension project for downloading accessible Instagram profile media, including posts, Reels, and carousel items.', 'Instagram प्रोफ़ाइल के उपलब्ध मीडिया—पोस्ट, Reels और carousel items—डाउनलोड करने के लिए Chrome extension प्रोजेक्ट।'),
       tags: ['Extensions', 'Chrome Extension', 'JavaScript', 'Manifest V3'], icon: <Puzzle size={24} className="text-cyan-600" />, url: 'https://github.com/ishanmall/InstaSwift'
     },
-      {
-    title: 'InstaSwift',
-    type: 'Chrome Extension',
-    category: 'Extensions',
-    desc: t(
-      'A Chrome extension project for downloading accessible Instagram profile media, including posts, Reels, and carousel items.',
-      'Instagram प्रोफ़ाइल के उपलब्ध मीडिया—पोस्ट, Reels और carousel items—डाउनलोड करने के लिए Chrome extension प्रोजेक्ट।'
-    ),
-    tags: ['Extensions', 'Chrome Extension', 'JavaScript', 'Manifest V3'],
-    icon: <Puzzle size={24} className="text-cyan-600" />,
-    url: 'https://github.com/ishanmall/InstaSwift'
-  },
   {
     title: 'FacebookSwift',
     type: 'Chrome Extension',
