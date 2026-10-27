@@ -459,7 +459,43 @@ const UnifiedDatabase = ({ rotateX, rotateY, isMobile }) => {
       title: 'InstaSwift', type: 'Chrome Extension', category: 'Extensions',
       desc: t('A Chrome extension project for downloading accessible Instagram profile media, including posts, Reels, and carousel items.', 'Instagram प्रोफ़ाइल के उपलब्ध मीडिया—पोस्ट, Reels और carousel items—डाउनलोड करने के लिए Chrome extension प्रोजेक्ट।'),
       tags: ['Extensions', 'Chrome Extension', 'JavaScript', 'Manifest V3'], icon: <Puzzle size={24} className="text-cyan-600" />, url: 'https://github.com/ishanmall/InstaSwift'
-    }
+    },
+      {
+    title: 'InstaSwift',
+    type: 'Chrome Extension',
+    category: 'Extensions',
+    desc: t(
+      'A Chrome extension project for downloading accessible Instagram profile media, including posts, Reels, and carousel items.',
+      'Instagram प्रोफ़ाइल के उपलब्ध मीडिया—पोस्ट, Reels और carousel items—डाउनलोड करने के लिए Chrome extension प्रोजेक्ट।'
+    ),
+    tags: ['Extensions', 'Chrome Extension', 'JavaScript', 'Manifest V3'],
+    icon: <Puzzle size={24} className="text-cyan-600" />,
+    url: 'https://github.com/ishanmall/InstaSwift'
+  },
+  {
+    title: 'FacebookSwift',
+    type: 'Chrome Extension',
+    category: 'Extensions',
+    desc: t(
+      'A browser extension project for Facebook, built to extend functionality through a dedicated GitHub-hosted codebase.',
+      'Facebook के लिए एक ब्राउज़र एक्सटेंशन प्रोजेक्ट, जिसका कोड GitHub पर उपलब्ध है और जो ब्राउज़र की सुविधाओं को विस्तारित करने के लिए बनाया गया है।'
+    ),
+    tags: ['Extensions', 'Chrome Extension', 'JavaScript', 'Manifest V3'],
+    icon: <Puzzle size={24} className="text-blue-600" />,
+    url: 'https://github.com/ishanmall/FacebookSwift'
+  },
+  {
+    title: 'WhatsAppSwift',
+    type: 'Chrome Extension',
+    category: 'Extensions',
+    desc: t(
+      'A browser extension project for WhatsApp, with its source code and development maintained in a dedicated GitHub repository.',
+      'WhatsApp के लिए एक ब्राउज़र एक्सटेंशन प्रोजेक्ट, जिसका सोर्स कोड और डेवलपमेंट एक समर्पित GitHub रिपॉज़िटरी में उपलब्ध है।'
+    ),
+    tags: ['Extensions', 'Chrome Extension', 'JavaScript', 'Manifest V3'],
+    icon: <Puzzle size={24} className="text-green-600" />,
+    url: 'https://github.com/ishanmall/WhatsAppSwift'
+  }
   ];
   const filteredItems = allItems.filter(item => {
     const filterMatch = activeFilter === 'ALL' || item.category === activeFilter || item.tags.includes(activeFilter);
