@@ -455,11 +455,18 @@ const UnifiedDatabase = ({ rotateX, rotateY, isMobile }) => {
       desc: t('Large-scale visual temple knowledge catalogue heavily driven by structured local data, featuring custom location searches and dark mode.', 'कस्टम स्थान खोजों और डार्क मोड की विशेषता वाला संरचित स्थानीय डेटा द्वारा संचालित बड़े पैमाने का दृश्य मंदिर ज्ञान कैटलॉग।'), 
       tags: ['Websites'], icon: <Globe size={24} className="text-orange-500" />, url: 'https://mandir-dharshan.web.app/' 
     },
-    { 
-      title: 'InstaSwift', type: 'Chrome Extension', category: 'Extensions',
-      desc: t('A Chrome extension project for downloading accessible Instagram profile media, including posts, Reels, and carousel items.', 'Instagram प्रोफ़ाइल के उपलब्ध मीडिया—पोस्ट, Reels और carousel items—डाउनलोड करने के लिए Chrome extension प्रोजेक्ट।'),
-      tags: ['Extensions', 'Chrome Extension', 'JavaScript', 'Manifest V3'], icon: <Puzzle size={24} className="text-cyan-600" />, url: 'https://github.com/ishanmall/InstaSwift'
-    },
+     {
+    title: 'InstaSwift',
+    type: 'Chrome Extension',
+    category: 'Extensions',
+    desc: t(
+      'A Chrome extension project for downloading accessible Instagram profile media, including posts, Reels, and carousel items.',
+      'Instagram प्रोफ़ाइल के उपलब्ध मीडिया—पोस्ट, Reels और carousel items—डाउनलोड करने के लिए Chrome extension प्रोजेक्ट।'
+    ),
+    tags: ['Extensions', 'Chrome Extension', 'JavaScript', 'Manifest V3'],
+    icon: <Puzzle size={24} className="text-cyan-600" />,
+    url: 'https://github.com/ishanmall/InstaSwift'
+  },
   {
     title: 'FacebookSwift',
     type: 'Chrome Extension',
