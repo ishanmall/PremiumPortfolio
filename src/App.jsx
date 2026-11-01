@@ -455,18 +455,6 @@ const UnifiedDatabase = ({ rotateX, rotateY, isMobile }) => {
       desc: t('Large-scale visual temple knowledge catalogue heavily driven by structured local data, featuring custom location searches and dark mode.', 'कस्टम स्थान खोजों और डार्क मोड की विशेषता वाला संरचित स्थानीय डेटा द्वारा संचालित बड़े पैमाने का दृश्य मंदिर ज्ञान कैटलॉग।'), 
       tags: ['Websites'], icon: <Globe size={24} className="text-orange-500" />, url: 'https://mandir-dharshan.web.app/' 
     },
-     {
-    title: 'InstaSwift',
-    type: 'Chrome Extension',
-    category: 'Extensions',
-    desc: t(
-      'A Chrome extension project for downloading accessible Instagram profile media, including posts, Reels, and carousel items.',
-      'Instagram प्रोफ़ाइल के उपलब्ध मीडिया—पोस्ट, Reels और carousel items—डाउनलोड करने के लिए Chrome extension प्रोजेक्ट।'
-    ),
-    tags: ['Extensions', 'Chrome Extension', 'JavaScript', 'Manifest V3'],
-    icon: <Puzzle size={24} className="text-cyan-600" />,
-    url: 'https://github.com/ishanmall/InstaSwift'
-  },
   {
     title: 'FacebookSwift',
     type: 'Chrome Extension',
@@ -839,7 +827,7 @@ const Footer = ({ rotateX, rotateY, isMobile }) => {
         </div>
         <div className="flex flex-col md:flex-row items-center justify-between gap-6 pt-8 border-t border-slate-200">
           <div className="flex flex-wrap gap-3">
-            {[{ label: 'GitHub', icon: Code2, url: 'https://github.com/ishanmall' }, { label: 'LinkedIn', icon: Briefcase, url: 'https://www.linkedin.com/in/ishan-mall-4b20ab296/' }, { label: 'YouTube', icon: Tv, url: 'https://www.youtube.com/@ishanmall9527' }, { label: 'Instagram', icon: Camera, url: 'https://www.instagram.com/isha_ndisha/' }, { label: 'Google Developer', icon: Code2, url: 'https://me.developers.google.com/u/114187295149454370660' }, { label: 'Credly', icon: Award, url: 'https://www.credly.com/users/ishan-mall/' }].map((social) => (
+            {[{ label: 'GitHub', icon: Code2, url: 'https://github.com/ishanmall' }, { label: 'LinkedIn', icon: Briefcase, url: 'https://www.linkedin.com/in/ishan-mall-4b20ab296/' }, { label: 'YouTube', icon: Tv, url: 'https://www.youtube.com/@ishanmall9527' }, { label: 'Google Developer', icon: Code2, url: 'https://me.developers.google.com/u/114187295149454370660' }, { label: 'Credly', icon: Award, url: 'https://www.credly.com/users/ishan-mall/' }].map((social) => (
               <motion.a key={social.label} href={social.url} target="_blank" rel="noreferrer" onClick={playUISound} whileHover={{ y: -3, boxShadow: '0 6px 10px -2px rgba(0,0,0,0.15)' }} whileTap={{ y: 0, boxShadow: 'none' }} className="tts-card flex items-center gap-2 px-4 py-2 rounded-full border font-bold bg-white/90 border-slate-200 text-slate-700 text-xs shadow-md transition-all active:scale-95"><social.icon size={16} /> <Text3D depth={1} color="text-slate-700">{social.label}</Text3D></motion.a>
             ))}
           </div>
