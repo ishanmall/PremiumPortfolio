@@ -455,6 +455,18 @@ const UnifiedDatabase = ({ rotateX, rotateY, isMobile }) => {
       desc: t('Large-scale visual temple knowledge catalogue heavily driven by structured local data, featuring custom location searches and dark mode.', 'कस्टम स्थान खोजों और डार्क मोड की विशेषता वाला संरचित स्थानीय डेटा द्वारा संचालित बड़े पैमाने का दृश्य मंदिर ज्ञान कैटलॉग।'), 
       tags: ['Websites'], icon: <Globe size={24} className="text-orange-500" />, url: 'https://mandir-dharshan.web.app/' 
     },
+    {
+    title: 'Who Is God?',
+    type: 'Web',
+    category: 'Websites',
+    desc: t(
+    'An interactive spiritual knowledge platform exploring the concept of God, divine philosophies, Vedic perspectives, and interconnected aspects of Hindu philosophy.',
+    'ईश्वर की अवधारणा, दिव्य दर्शन, वैदिक दृष्टिकोण और हिंदू दर्शन के विभिन्न परस्पर जुड़े पहलुओं को समझने वाला एक इंटरैक्टिव आध्यात्मिक ज्ञान मंच।'
+    ),
+    tags: ['Websites', 'Spirituality', 'Hindu Philosophy', 'Vedic Knowledge'],
+    icon: <BookOpen size={24} className="text-amber-500" />,
+    url: 'https://who-is-god.web.app/'
+  },
   {
     title: 'FacebookSwift',
     type: 'Chrome Extension',
