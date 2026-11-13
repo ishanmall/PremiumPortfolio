@@ -6,7 +6,6 @@ import { ArrowUpRight, Code2, Play, Briefcase, Camera, Tv, Award, GraduationCap,
 import * as THREE from 'three';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { useGLTF, Sparkles, Grid, useProgress } from '@react-three/drei';
-// Deliberately avoid eager GLB preloading: a missing/slow model must not block the portfolio UI.
 
 let audioCtx = null;
 const playUISound = () => {
@@ -226,7 +225,6 @@ const RacingCar = ({ scrollYProgress, isMobile, reducedMotion }) => {
   );
 };
 
-// Non-blocking asset status: the portfolio content remains usable if a 3D asset is slow or unavailable.
 const LoaderOverlay = () => {
   const { progress, active } = useProgress();
   return (
@@ -435,6 +433,15 @@ const UnifiedDatabase = ({ rotateX, rotateY, isMobile }) => {
       desc: t('Deeply immersive multilingual scripture reader covering the complete 18 Adhyayas. Translates Sanskrit source text into Hindi and English.', 'संपूर्ण 18 अध्यायों को कवर करने वाला गहराई से इमर्सिव बहुभाषी शास्त्र पाठक। संस्कृत को हिंदी और अंग्रेजी में अनुवाद करता है।'), 
       tags: ['Android'], icon: <BookOpen size={24} className="text-orange-500" />, url: 'https://play.google.com/store/apps/details?id=com.anantagita' 
     },
+    {
+      title: 'Water Ejector',
+      type: 'App',
+      category: 'Android',
+      desc: t('A sharply focused offline Android utility leveraging modern Compose UI architecture, interactive Lottie animations, and window adjustments.', 'आधुनिक कंपोज़ यूआई आर्किटेक्चर, इंटरैक्टिव लोटी एनिमेशन और विंडो समायोजन का लाभ उठाने वाली ऑफ़लाइन एंड्रॉइड उपयोगिता।'),
+      tags: ['Android'],
+      icon: <Smartphone size={24} className="text-cyan-500" />,
+      url: 'https://play.google.com/store/apps/details?id=com.waterejector'
+    },
     { 
       title: 'Cosmic Codex', type: 'Web3D', category: 'Websites', 
       desc: t('Extensible astrophysical simulation suite featuring multiple cosmic environments (Black Holes, Neutron Stars) built on React Three Fiber.', 'रिएक्ट थ्री फाइबर पर निर्मित कई ब्रह्मांडीय वातावरण (ब्लैक होल, न्यूट्रॉन स्टार) की विशेषता वाला खगोल भौतिकी सिमुलेशन सुइट।'), 
@@ -553,8 +560,7 @@ const UnifiedDatabase = ({ rotateX, rotateY, isMobile }) => {
 const UnderConstructionSection = ({ rotateX, rotateY, isMobile }) => {
   const { t } = React.useContext(TranslationContext);
   const wipApps = [
-    { title: 'Ananta Sanatan', tech: 'Kotlin, Compose, Firestore, Room', desc: t('Expansive digital Sanatan knowledge platform backed by heavy cloud infrastructure, persistent local storage, and Google credential integration.', 'अत्यधिक क्लाउड इंफ्रास्ट्रक्चर, स्थायी स्थानीय भंडारण और Google क्रेडेंशियल एकीकरण द्वारा समर्थित व्यापक डिजिटल सनातन ज्ञान मंच।'), icon: <ShieldCheck size={20} className="text-red-500" />, url: 'https://github.com/ishanmall/AnantaSanatan' },
-    { title: 'WaterEjector', tech: 'Kotlin, Compose, Lottie', desc: t('A sharply focused offline Android utility leveraging modern Compose UI architecture, interactive Lottie animations, and window adjustments.', 'आधुनिक कंपोज़ यूआई आर्किटेक्चर, इंटरैक्टिव लोटी एनिमेशन और विंडो समायोजन का लाभ उठाने वाली ऑफ़लाइन एंड्रॉइड उपयोगिता।'), icon: <Smartphone size={20} className="text-cyan-500" />, url: 'https://github.com/ishanmall/WaterEjector' }
+    { title: 'Ananta Sanatan', tech: 'Kotlin, Compose, Firestore, Room', desc: t('Expansive digital Sanatan knowledge platform backed by heavy cloud infrastructure, persistent local storage, and Google credential integration.', 'अत्यधिक क्लाउड इंफ्रास्ट्रक्चर, स्थायी स्थानीय भंडारण और Google क्रेडेंशियल एकीकरण द्वारा समर्थित व्यापक डिजिटल सनातन ज्ञान मंच।'), icon: <ShieldCheck size={20} className="text-red-500" />, url: 'https://github.com/ishanmall/AnantaSanatan' }
   ];
   const wipWeb = [
     { title: 'Portfolio Website', tech: 'React, TypeScript, Three.js, Firebase', desc: t('Robust full-stack web portfolio architecture combining React, GSAP animations, 3D WebGL scenes, and Firebase Serverless backends.', 'रिएक्ट, GSAP एनिमेशन, 3D WebGL दृश्यों और फायरबेस सर्वरलेस बैकएंड के संयोजन वाला मजबूत वेब पोर्टफोलियो आर्किटेक्चर।'), icon: <MonitorSmartphone size={20} className="text-indigo-500" />, url: 'https://github.com/ishanmall/Portfolio-Website' }
@@ -715,7 +721,8 @@ const TrainingCertificationsSection = ({ rotateX, rotateY, isMobile }) => {
         t('Fundamentals of Remote Sensing for Air Quality Application — Module 1: Why Use Remote Sensing for Air Quality?; Module 2: What Determines Air Quality?; Module 3: How Do We Measure Air Quality with Remote Sensors?; Module 4: How Can We Use Remote Sensing Data for Air Quality Applications?; Knowledge Check and Survey', 'वायु गुणवत्ता अनुप्रयोग के लिए रिमोट सेंसिंग के मूल सिद्धांत — मॉड्यूल 1: वायु गुणवत्ता के लिए रिमोट सेंसिंग का उपयोग क्यों करें?; मॉड्यूल 2: वायु गुणवत्ता क्या निर्धारित करती है?; मॉड्यूल 3: हम रिमोट सेंसर से वायु गुणवत्ता कैसे मापते हैं?; मॉड्यूल 4: हम वायु गुणवत्ता अनुप्रयोगों के लिए रिमोट सेंसिंग डेटा का उपयोग कैसे कर सकते हैं?; ज्ञान की जांच और सर्वेक्षण'), 
         t('Hyperspectral Data for Land and Coastal Systems — Module 1: Overview of Hyperspectral Data; Module 2: Hyperspectral Data for Land Management; Module 3: Hyperspectral Data for Coastal and Ocean Systems', 'भूमि और तटीय प्रणालियों के लिए हाइपरस्पेक्ट्रल डेटा — मॉड्यूल 1: हाइपरस्पेक्ट्रल डेटा का अवलोकन; मॉड्यूल 2: भूमि प्रबंधन के लिए हाइपरस्पेक्ट्रल डेटा; मॉड्यूल 3: तटीय और महासागर प्रणालियों के लिए हाइपरस्पेक्ट्रल डेटा'), 
         t('Sustainable Earth Science Applications — Modules 1–3: Earth Observations Applications Pathway from Concept to User Adoption; Partner and End-User Collaboration; Communication Strategies; EO Application Project Management; Community and Societal Benefits; User Impact Evaluation', 'सतत पृथ्वी विज्ञान अनुप्रयोग — मॉड्यूल 1-3: अवधारणा से उपयोगकर्ता अपनाने तक पृथ्वी अवलोकन अनुप्रयोग मार्ग; भागीदार और अंतिम-उपयोगकर्ता सहयोग; संचार रणनीतियां; ईओ अनुप्रयोग परियोजना प्रबंधन; सामुदायिक और सामाजिक लाभ; उपयोगकर्ता प्रभाव मूल्यांकन'), 
-        t('NASA Open Science 101 — Open Science Principles, Practices, Collaboration, Transparency, Reproducibility, Data Sharing and Open Research Workflows', 'नासा ओपन साइंस 101 — ओपन साइंस सिद्धांत, प्रथाएं, सहयोग, पारदर्शिता, प्रतिलिपि प्रस्तुत करने योग्यता, डेटा साझाकरण और ओपन रिसर्च वर्कफ़्लो') ,
+        t('NASA Open Science 101 — Open Science Principles, Practices, Collaboration, Transparency, Reproducibility, Data Sharing and Open Research Workflows', 'नासा ओपन साइंस 101 — ओपन साइंस सिद्धांत, प्रथाएं, सहयोग, पारदर्शिता, प्रतिलिपि प्रस्तुत करने योग्यता, डेटा साझाकरण और ओपन रिसर्च वर्कफ़्लो'),
+        t('NASA Open Science Essentials — Open Science Principles, Practices, Collaboration, Transparency, Reproducibility, Data Sharing and Open Research Workflows', 'नासा ओपन साइंस एसेंशियल्स — ओपन साइंस सिद्धांत, प्रथाएं, सहयोग, पारदर्शिता, प्रतिलिपि प्रस्तुत करने योग्यता, डेटा साझाकरण और ओपन रिसर्च वर्कफ़्लो'),
         t('Introduction to Satellite Remote Sensing for Air Quality Applications — Session 1: Overview of ARSET and Introduction to Satellite Remote Sensing; Session 2: Fundamentals of Remote Sensing Imagery and Tools to Access; Session 3: NASA Aerosol Products for Particulate Matter Air Quality; Session 4: NASA Trace Gas Products; Session 5: Course Overview, Q&A, and Future Satellite Capabilities for Air Quality Monitoring', 'वायु गुणवत्ता अनुप्रयोगों के लिए उपग्रह रिमोट सेंसिंग का परिचय — सत्र 1: ARSET का परिचय और उपग्रह रिमोट सेंसिंग; सत्र 2: रिमोट सेंसिंग इमेजरी के मूल सिद्धांत और डेटा एक्सेस टूल; सत्र 3: पार्टिकुलेट मैटर वायु गुणवत्ता के लिए NASA एयरोसोल उत्पाद; सत्र 4: NASA ट्रेस गैस उत्पाद; सत्र 5: पाठ्यक्रम सारांश, प्रश्नोत्तर और वायु गुणवत्ता निगरानी के लिए भविष्य की उपग्रह क्षमताएँ')
       ], 
       icon: <Rocket size={20} className="text-blue-500" /> 
@@ -917,26 +924,21 @@ export default function App() {
       else if (anchor) sourceElement = anchor;
 
       if (sourceElement) {
-        // Deep clone to safely manipulate and extract text
         const clone = sourceElement.cloneNode(true);
         
-        // Remove ALL hidden structural spans generated by Text3D to prevent duplicate text
         const hiddenElements = clone.querySelectorAll('[aria-hidden="true"]');
         hiddenElements.forEach(el => {
           if (el.parentNode) el.parentNode.removeChild(el);
         });
 
-        // Remove elements explicitly flagged to bypass TTS
         const noTtsElements = clone.querySelectorAll('.no-tts');
         noTtsElements.forEach(el => {
           if (el.parentNode) el.parentNode.removeChild(el);
         });
 
-        // Use standard textContent now that duplicates are wiped out
         textToRead = clone.textContent;
       }
 
-      // Increased threshold to 2500 to allow the full professional summary to be read at once
       if (textToRead && textToRead.length < 2500 && textToRead.trim().length > 0) {
         textToRead = textToRead.replace(/WIP/g, '').replace(/✦/g, '').replace(/•/g, '').trim();
         window.speechSynthesis.cancel();
