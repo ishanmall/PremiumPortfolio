@@ -2,10 +2,184 @@ import React, { useRef, useMemo, Suspense, useEffect, useState } from 'react';
 import { motion, useScroll, useMotionValue, useSpring, useTransform, useReducedMotion, AnimatePresence } from 'framer-motion';
 import { ReactLenis } from 'lenis/react';
 import 'lenis/dist/lenis.css';
-import { ArrowUpRight, Code2, Play, Briefcase, Camera, Tv, Award, GraduationCap, BookOpen, Menu, X, Smartphone, Layers, ShieldCheck, Database, Music, CheckCircle2, Mail, Send, Terminal, Globe, Rocket, BrainCircuit, MonitorSmartphone, Search, Filter, Cpu, Orbit, Wrench, Clock, Settings, Volume2, VolumeX, Languages, SmilePlus, Puzzle } from 'lucide-react';
+import { ArrowUpRight, Code2, Play, Briefcase, Camera, Tv, Award, GraduationCap, BookOpen, Menu, X, Smartphone, Layers, ShieldCheck, CheckCircle2, Mail, Send, Globe, Rocket, BrainCircuit, MonitorSmartphone, Search, Filter, Cpu, Orbit, Wrench, Clock, Settings, Volume2, VolumeX, Languages, SmilePlus, Puzzle } from 'lucide-react';
 import * as THREE from 'three';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { useGLTF, Sparkles, Grid, useProgress } from '@react-three/drei';
+
+const SITE_URL = 'https://portfolio-b1973.web.app';
+const PROFILE_IMAGE = `${SITE_URL}/isha.ndisha_1785611777_3954320607764516452_77465641188.webp`;
+
+const STRUCTURED_DATA = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'WebSite',
+      '@id': `${SITE_URL}/#website`,
+      url: SITE_URL,
+      name: 'Ishan Mall — Android Developer, Software Engineer & 3D Web Portfolio',
+      description: 'Official portfolio of Ishan Mall featuring published Android apps on Google Play, 3D WebGL/React websites, Chrome extensions, and NASA, ISRO/IIRS, and Google certifications.',
+      inLanguage: ['en', 'hi'],
+      publisher: { '@id': `${SITE_URL}/#person` },
+    },
+    {
+      '@type': 'ProfilePage',
+      '@id': `${SITE_URL}/#profilepage`,
+      url: SITE_URL,
+      name: 'Ishan Mall — Portfolio, Apps, Websites & Certifications',
+      mainEntity: { '@id': `${SITE_URL}/#person` },
+      isPartOf: { '@id': `${SITE_URL}/#website` },
+    },
+    {
+      '@type': 'Person',
+      '@id': `${SITE_URL}/#person`,
+      name: 'Ishan Mall',
+      alternateName: ['Ishan', 'ishanmall'],
+      url: SITE_URL,
+      image: PROFILE_IMAGE,
+      email: 'mailto:ishanmall789@gmail.com',
+      jobTitle: 'Android Developer & Software Engineer',
+      description: 'Software Engineer and Android Developer (B.Tech CSE, AKTU) specializing in Kotlin, Jetpack Compose, Material 3, Room, Media3/ExoPlayer, React, Three.js, WebGL2, Firebase, on-device ML, and astrophysics visualization.',
+      address: {
+        '@type': 'PostalAddress',
+        addressLocality: 'Gorakhpur',
+        addressRegion: 'Uttar Pradesh',
+        addressCountry: 'IN',
+      },
+      alumniOf: [
+        {
+          '@type': 'CollegeOrUniversity',
+          name: 'Dr. A.P.J. Abdul Kalam Technical University (AKTU) — B.Tech Computer Science & Engineering (2024–2027)',
+        },
+      ],
+      sameAs: [
+        'https://play.google.com/store/apps/dev?id=4926136840256493221',
+        'https://github.com/ishanmall',
+        'https://www.linkedin.com/in/ishan-mall-4b20ab296/',
+        'https://www.youtube.com/@ishanmall9527',
+        'https://me.developers.google.com/u/114187295149454370660',
+        'https://www.credly.com/users/ishan-mall/',
+      ],
+      knowsAbout: [
+        'Android Development', 'Kotlin', 'Java', 'Jetpack Compose', 'Material 3', 'MVVM',
+        'Clean Architecture', 'Hilt', 'Room ORM', 'SQLite', 'DataStore', 'MediaStore API',
+        'Storage Access Framework', 'Media3', 'ExoPlayer', 'WorkManager', 'Coroutines',
+        'React', 'JavaScript', 'TypeScript', 'Vite', 'Tailwind CSS', 'Three.js',
+        'React Three Fiber', 'WebGL', 'WebGL2', 'GLSL Shaders', 'GSAP', 'Framer Motion',
+        'Firebase', 'Cloud Firestore', 'Firebase Auth', 'TensorFlow Lite', 'LiteRT',
+        'MediaPipe', 'Google ML Kit', 'OpenCV', 'Astrophysics Simulation', 'Remote Sensing',
+        'NASA ARSET', 'ISRO IIRS', 'GIS', 'GNSS', 'Apache POI', 'Chrome Extensions', 'SEO',
+      ],
+      hasCredential: [
+        { '@type': 'EducationalOccupationalCredential', name: 'NASA ARSET — Fundamentals of Remote Sensing', credentialCategory: 'certificate', recognizedBy: { '@type': 'Organization', name: 'NASA' } },
+        { '@type': 'EducationalOccupationalCredential', name: 'NASA ARSET — Fundamentals of Remote Sensing for Air Quality Application', credentialCategory: 'certificate', recognizedBy: { '@type': 'Organization', name: 'NASA' } },
+        { '@type': 'EducationalOccupationalCredential', name: 'NASA ARSET — Hyperspectral Data for Land and Coastal Systems', credentialCategory: 'certificate', recognizedBy: { '@type': 'Organization', name: 'NASA' } },
+        { '@type': 'EducationalOccupationalCredential', name: 'NASA — Sustainable Earth Science Applications', credentialCategory: 'certificate', recognizedBy: { '@type': 'Organization', name: 'NASA' } },
+        { '@type': 'EducationalOccupationalCredential', name: 'NASA Open Science 101', credentialCategory: 'certificate', recognizedBy: { '@type': 'Organization', name: 'NASA' } },
+        { '@type': 'EducationalOccupationalCredential', name: 'NASA Open Science Essentials', credentialCategory: 'certificate', recognizedBy: { '@type': 'Organization', name: 'NASA' } },
+        { '@type': 'EducationalOccupationalCredential', name: 'NASA ARSET — Introduction to Satellite Remote Sensing for Air Quality Applications', credentialCategory: 'certificate', recognizedBy: { '@type': 'Organization', name: 'NASA' } },
+        { '@type': 'EducationalOccupationalCredential', name: 'ISRO / IIRS — Aerosols: Measurement, Retrieval and Impacts', credentialCategory: 'certificate', recognizedBy: { '@type': 'Organization', name: 'ISRO / IIRS' } },
+        { '@type': 'EducationalOccupationalCredential', name: 'ISRO / IIRS — AI/ML for Geodata Analysis', credentialCategory: 'certificate', recognizedBy: { '@type': 'Organization', name: 'ISRO / IIRS' } },
+        { '@type': 'EducationalOccupationalCredential', name: 'ISRO / IIRS — Climate Change Induced Disasters', credentialCategory: 'certificate', recognizedBy: { '@type': 'Organization', name: 'ISRO / IIRS' } },
+        { '@type': 'EducationalOccupationalCredential', name: 'ISRO / IIRS — Earth Observations & Tropical Cyclone Monitoring and Forecasting', credentialCategory: 'certificate', recognizedBy: { '@type': 'Organization', name: 'ISRO / IIRS' } },
+        { '@type': 'EducationalOccupationalCredential', name: 'ISRO / IIRS — AI/ML for Hydroinformatics', credentialCategory: 'certificate', recognizedBy: { '@type': 'Organization', name: 'ISRO / IIRS' } },
+        { '@type': 'EducationalOccupationalCredential', name: 'ISRO / IIRS — NISAR Applications (SAR, Polarimetric & Interferometric Analysis)', credentialCategory: 'certificate', recognizedBy: { '@type': 'Organization', name: 'ISRO / IIRS' } },
+        { '@type': 'EducationalOccupationalCredential', name: 'ISRO / IIRS — Science Discussion (Vigyan Charcha)', credentialCategory: 'certificate', recognizedBy: { '@type': 'Organization', name: 'ISRO / IIRS' } },
+        { '@type': 'EducationalOccupationalCredential', name: 'ISRO / IIRS — Basics of Remote Sensing, GIS and GNSS', credentialCategory: 'certificate', recognizedBy: { '@type': 'Organization', name: 'ISRO / IIRS' } },
+        { '@type': 'EducationalOccupationalCredential', name: 'Google Developer Profile & Google Cloud Computing Badges (Kotlin, Jetpack Compose, Room, WorkManager, DataStore, Navigation, SQL)', credentialCategory: 'badge', url: 'https://me.developers.google.com/u/114187295149454370660', recognizedBy: { '@type': 'Organization', name: 'Google' } },
+        { '@type': 'EducationalOccupationalCredential', name: 'Android App Development & Android App Development with AI', credentialCategory: 'certificate' },
+        { '@type': 'EducationalOccupationalCredential', name: 'YUVA AI for ALL', credentialCategory: 'certificate', recognizedBy: { '@type': 'Organization', name: 'NASSCOM FutureSkills Prime' } },
+        { '@type': 'EducationalOccupationalCredential', name: 'YUVA Artificial Intelligence (AI)', credentialCategory: 'certificate', recognizedBy: { '@type': 'Organization', name: 'TCS iON' } },
+        { '@type': 'EducationalOccupationalCredential', name: 'Operating Systems Basics', credentialCategory: 'certificate', url: 'https://www.credly.com/users/ishan-mall/', recognizedBy: { '@type': 'Organization', name: 'Cisco Networking Academy' } },
+        { '@type': 'EducationalOccupationalCredential', name: "TATA Crucible Campus Quiz 2025, Puzzler's Pursuit (IIM Rohtak), VBYLD 2026", credentialCategory: 'award' },
+      ],
+    },
+    {
+      '@type': 'ItemList',
+      '@id': `${SITE_URL}/#projects`,
+      name: 'Ishan Mall Projects — Android Apps, Websites & Chrome Extensions',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, item: { '@type': 'MobileApplication', name: 'GalleryBox', operatingSystem: 'Android', applicationCategory: 'MultimediaApplication', url: 'https://play.google.com/store/apps/details?id=com.gallerybox', description: 'Large-scale multi-domain multimedia platform combining Gallery, Stories, Trash lifecycles, Duo Music Player, Radio, and Video processing tools.', author: { '@id': `${SITE_URL}/#person` } } },
+        { '@type': 'ListItem', position: 2, item: { '@type': 'MobileApplication', name: 'Ananta Brahmanda', operatingSystem: 'Android', applicationCategory: 'LifestyleApplication', url: 'https://play.google.com/store/apps/details?id=com.brahmanda', description: 'Spiritual and cosmic knowledge platform combining Vedic ephemeris with exact alarms, notifications, and persistent location background services.', author: { '@id': `${SITE_URL}/#person` } } },
+        { '@type': 'ListItem', position: 3, item: { '@type': 'MobileApplication', name: 'ResumeMakers', operatingSystem: 'Android', applicationCategory: 'BusinessApplication', url: 'https://play.google.com/store/apps/details?id=com.ishanmall.resumemaker', description: 'Comprehensive offline Android resume creator utilizing Apache POI for Excel and document processing, local DB, and FileProvider export infrastructure.', author: { '@id': `${SITE_URL}/#person` } } },
+        { '@type': 'ListItem', position: 4, item: { '@type': 'MobileApplication', name: 'Ananta Gita', operatingSystem: 'Android', applicationCategory: 'BooksApplication', url: 'https://play.google.com/store/apps/details?id=com.anantagita', description: 'Deeply immersive multilingual Bhagavad Gita scripture reader covering all 18 Adhyayas with Sanskrit, Hindi, and English translations.', author: { '@id': `${SITE_URL}/#person` } } },
+        { '@type': 'ListItem', position: 5, item: { '@type': 'MobileApplication', name: 'Water Ejector', operatingSystem: 'Android', applicationCategory: 'UtilitiesApplication', url: 'https://play.google.com/store/apps/details?id=com.waterejector', description: 'Offline Android speaker water-ejection utility built with Jetpack Compose, interactive Lottie animations, and window adjustments.', author: { '@id': `${SITE_URL}/#person` } } },
+        { '@type': 'ListItem', position: 6, item: { '@type': 'WebApplication', name: 'Cosmic Codex', applicationCategory: 'EducationalApplication', url: 'https://cosmic-codex-14559.web.app/', description: 'Extensible 3D astrophysical simulation suite featuring Black Holes, Neutron Stars, and cosmic environments built on React Three Fiber and WebGL.', author: { '@id': `${SITE_URL}/#person` } } },
+        { '@type': 'ListItem', position: 7, item: { '@type': 'WebApplication', name: 'Premium Portfolio 3D', applicationCategory: 'WebApplication', url: 'https://portfolio-b1973.web.app/', description: 'Interactive 3D developer portfolio with a scroll-driven racing-car rig, dynamic particles, physics velocity, and bilingual voice synthesis.', author: { '@id': `${SITE_URL}/#person` } } },
+        { '@type': 'ListItem', position: 8, item: { '@type': 'WebApplication', name: 'Gaystiny', applicationCategory: 'EntertainmentApplication', url: 'https://gaystiny-a5016.web.app/', description: 'Humorous interactive prank questionnaire web app with animated transitions and playful fictional results.', author: { '@id': `${SITE_URL}/#person` } } },
+        { '@type': 'ListItem', position: 9, item: { '@type': 'WebApplication', name: 'Mandir Dharshan', applicationCategory: 'ReferenceApplication', url: 'https://mandir-dharshan.web.app/', description: 'Large-scale visual temple knowledge catalogue driven by structured local data with custom location search and dark mode.', author: { '@id': `${SITE_URL}/#person` } } },
+        { '@type': 'ListItem', position: 10, item: { '@type': 'WebApplication', name: 'Who Is God?', applicationCategory: 'EducationalApplication', url: 'https://who-is-god.web.app/', description: 'Interactive spiritual knowledge platform exploring the concept of God, divine philosophies, and Vedic Hindu philosophy.', author: { '@id': `${SITE_URL}/#person` } } },
+        { '@type': 'ListItem', position: 11, item: { '@type': 'SoftwareApplication', name: 'FacebookSwift', operatingSystem: 'Chrome', applicationCategory: 'BrowserApplication', url: 'https://github.com/ishanmall/FacebookSwift', description: 'Manifest V3 Chrome Extension for Facebook maintained on GitHub.', author: { '@id': `${SITE_URL}/#person` } } },
+        { '@type': 'ListItem', position: 12, item: { '@type': 'SoftwareApplication', name: 'WhatsAppSwift', operatingSystem: 'Chrome', applicationCategory: 'BrowserApplication', url: 'https://github.com/ishanmall/WhatsAppSwift', description: 'Manifest V3 Chrome Extension for WhatsApp maintained on GitHub.', author: { '@id': `${SITE_URL}/#person` } } },
+        { '@type': 'ListItem', position: 13, item: { '@type': 'SoftwareSourceCode', name: 'Ananta Sanatan', programmingLanguage: 'Kotlin', codeRepository: 'https://github.com/ishanmall/AnantaSanatan', description: 'Work-in-progress digital Sanatan knowledge Android app built with Kotlin, Jetpack Compose, Firestore, and Room.', author: { '@id': `${SITE_URL}/#person` } } },
+        { '@type': 'ListItem', position: 14, item: { '@type': 'SoftwareSourceCode', name: 'Portfolio Website Source', programmingLanguage: 'JavaScript, TypeScript, React, Three.js', codeRepository: 'https://github.com/ishanmall/Portfolio-Website', description: 'Full-stack 3D WebGL portfolio architecture using React, GSAP, Three.js, and Firebase.', author: { '@id': `${SITE_URL}/#person` } } },
+      ],
+    },
+  ],
+};
+
+const SEOHead = ({ lang = 'en' }) => {
+  useEffect(() => {
+    document.documentElement.lang = lang === 'hi' ? 'hi' : 'en';
+
+    const title =
+      lang === 'hi'
+        ? 'ईशान मल्ल (Ishan Mall) — एंड्रॉइड डेवलपर, सॉफ्टवेयर इंजीनियर, ऐप्स, वेबसाइट्स, NASA व ISRO प्रमाणपत्र'
+        : 'Ishan Mall — Android Developer, Software Engineer | Apps, 3D Websites, NASA & ISRO Certifications';
+
+    const description =
+      'Official portfolio of Ishan Mall (B.Tech CSE, AKTU, Gorakhpur). Explore published Android apps (GalleryBox, Ananta Brahmanda, ResumeMakers, Ananta Gita, Water Ejector), 3D/Web platforms (Cosmic Codex, Mandir Dharshan, Who Is God?, Gaystiny), Chrome Extensions (FacebookSwift, WhatsAppSwift), and 30+ NASA, ISRO/IIRS, Google Developer, and Cisco certifications.';
+
+    document.title = title;
+
+    const setMeta = (attr, key, content) => {
+      let el = document.head.querySelector(`meta[${attr}="${key}"]`);
+      if (!el) {
+        el = document.createElement('meta');
+        el.setAttribute(attr, key);
+        document.head.appendChild(el);
+      }
+      el.setAttribute('content', content);
+    };
+
+    setMeta('name', 'description', description);
+    setMeta('name', 'keywords', 'Ishan Mall, Ishan Mall portfolio, Android Developer India, Kotlin Jetpack Compose Developer, GalleryBox, Ananta Brahmanda, ResumeMakers, Ananta Gita, Water Ejector, Cosmic Codex, Mandir Dharshan, Who Is God, Gaystiny, FacebookSwift, WhatsAppSwift, Ananta Sanatan, NASA ARSET certified, ISRO IIRS certified, AKTU B.Tech CSE, Three.js WebGL Developer, Gorakhpur Software Engineer');
+    setMeta('name', 'author', 'Ishan Mall');
+    setMeta('name', 'robots', 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1');
+
+    setMeta('property', 'og:type', 'profile');
+    setMeta('property', 'og:url', SITE_URL);
+    setMeta('property', 'og:title', title);
+    setMeta('property', 'og:description', description);
+    setMeta('property', 'og:image', PROFILE_IMAGE);
+    setMeta('property', 'og:site_name', 'Ishan Mall Portfolio');
+
+    setMeta('name', 'twitter:card', 'summary_large_image');
+    setMeta('name', 'twitter:title', title);
+    setMeta('name', 'twitter:description', description);
+    setMeta('name', 'twitter:image', PROFILE_IMAGE);
+
+    let canonical = document.head.querySelector('link[rel="canonical"]');
+    if (!canonical) {
+      canonical = document.createElement('link');
+      canonical.setAttribute('rel', 'canonical');
+      document.head.appendChild(canonical);
+    }
+    canonical.setAttribute('href', `${SITE_URL}/`);
+
+    const scriptId = 'ishan-mall-jsonld';
+    let script = document.getElementById(scriptId);
+    if (!script) {
+      script = document.createElement('script');
+      script.id = scriptId;
+      script.type = 'application/ld+json';
+      document.head.appendChild(script);
+    }
+    script.textContent = JSON.stringify(STRUCTURED_DATA);
+  }, [lang]);
+
+  return null;
+};
 
 let audioCtx = null;
 const playUISound = () => {
@@ -34,12 +208,12 @@ const playUISound = () => {
 
 const TranslationContext = React.createContext({ lang: 'en', t: (en, hi) => en });
 
-const Text3D = ({ as: Component = 'span', children, className = '', depth = 6, gradient = null, color = 'text-slate-900', shadowColor = '#cbd5e1', isMobile = false }) => {
+const Text3D = ({ as: Component = 'span', id, children, className = '', depth = 6, gradient = null, color = 'text-slate-900', shadowColor = '#cbd5e1', isMobile = false }) => {
   const activeDepth = isMobile ? Math.max(1, Math.floor(depth / 1.5)) : depth;
   const shadow = Array.from({ length: activeDepth }).map((_, i) => `${i + 1}px ${i + 1}px 0px ${shadowColor}`).join(', ');
   
   return (
-    <Component className={`relative ${Component === 'span' ? 'inline-block' : 'block'} ${className} group cursor-default`}>
+    <Component id={id} className={`relative ${Component === 'span' ? 'inline-block' : 'block'} ${className} group cursor-default`}>
       <span aria-hidden="true" className="absolute inset-0 pointer-events-none transition-transform duration-300 group-hover:-translate-x-1 group-hover:-translate-y-1" style={{ color: 'transparent', textShadow: shadow, zIndex: -1 }}>{children}</span>
       <span className={`relative z-10 block transition-transform duration-300 group-hover:-translate-x-1 group-hover:-translate-y-1 ${gradient ? `bg-clip-text text-transparent bg-gradient-to-r ${gradient}` : color}`}>{children}</span>
     </Component>
@@ -52,8 +226,8 @@ const trackCurve = new THREE.CatmullRomCurve3([
   new THREE.Vector3(0, 0, -110),
 ]);
 
-const CameraRig = ({ scrollYProgress, isMobile, reducedMotion }) => {
-  const { mouse, camera } = useThree();
+const CameraRig = ({ scrollYProgress, isMobile }) => {
+  const { camera } = useThree();
   const currentOffset = useRef(new THREE.Vector3(-4, 1, 8));
   const currentLookAt = useRef(new THREE.Vector3());
   const trackPosition = useRef(new THREE.Vector3());
@@ -265,7 +439,7 @@ class SceneErrorBoundary extends React.Component {
 }
 
 const Global3DScene = ({ scrollYProgress, isMobile, reducedMotion }) => (
-  <div className="fixed inset-0 pointer-events-none z-0 bg-[#f8fafc]">
+  <div aria-hidden="true" className="fixed inset-0 pointer-events-none z-0 bg-[#f8fafc]">
     <Canvas dpr={isMobile ? [1, 1] : [1, 1.5]} camera={{ fov: isMobile ? 55 : 45 }} gl={{ alpha: false, antialias: !isMobile }} onCreated={({ gl }) => gl.setClearColor('#f8fafc')}>
       <Suspense fallback={null}>
         <CameraRig scrollYProgress={scrollYProgress} isMobile={isMobile} reducedMotion={reducedMotion} />
@@ -285,50 +459,58 @@ const Global3DScene = ({ scrollYProgress, isMobile, reducedMotion }) => (
 const Nav = ({ voiceEnabled, setVoiceEnabled, lang, setLang }) => {
   const { t } = React.useContext(TranslationContext);
   const [isOpen, setIsOpen] = useState(false);
-  const links = [ { en: 'Experience', hi: 'अनुभव' }, { en: 'Database', hi: 'डेटाबेस' }, { en: 'Extensions', hi: 'एक्सटेंशन' }, { en: 'Lab', hi: 'प्रयोगशाला' }, { en: 'Matrix', hi: 'मैट्रिक्स' }, { en: 'Credentials', hi: 'प्रमाणपत्र' }, { en: 'Contact', hi: 'संपर्क' } ];
+  const links = [
+    { en: 'Experience', hi: 'अनुभव', href: '#experience' },
+    { en: 'Database', hi: 'डेटाबेस', href: '#database' },
+    { en: 'Extensions', hi: 'एक्सटेंशन', href: '#database' },
+    { en: 'Lab', hi: 'प्रयोगशाला', href: '#lab' },
+    { en: 'Matrix', hi: 'मैट्रिक्स', href: '#matrix' },
+    { en: 'Credentials', hi: 'प्रमाणपत्र', href: '#credentials' },
+    { en: 'Contact', hi: 'संपर्क', href: '#contact' },
+  ];
   const handleVoiceToggle = () => { playUISound(); setVoiceEnabled(!voiceEnabled); if ('speechSynthesis' in window) window.speechSynthesis.cancel(); };
   const handleLangToggle = () => { playUISound(); setLang(lang === 'en' ? 'hi' : 'en'); if ('speechSynthesis' in window) window.speechSynthesis.cancel(); };
 
   return (
-    <>
-      <motion.nav initial={{ y: -20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: 0.8, ease: [0.76, 0, 0.24, 1] }} className="fixed top-0 left-0 right-0 z-50 p-4 md:px-8 md:py-5 flex justify-between items-center backdrop-blur-xl border-b shadow-lg bg-white/75 border-black/5 shadow-slate-200/40">
-        <a href="#" onClick={playUISound} className="flex items-center gap-2 tts-card">
+    <header>
+      <motion.nav aria-label="Primary Navigation" initial={{ y: -20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: 0.8, ease: [0.76, 0, 0.24, 1] }} className="fixed top-0 left-0 right-0 z-50 p-4 md:px-8 md:py-5 flex justify-between items-center backdrop-blur-xl border-b shadow-lg bg-white/75 border-black/5 shadow-slate-200/40">
+        <a href="#" title="Ishan Mall Portfolio Home" onClick={playUISound} className="flex items-center gap-2 tts-card">
           <Text3D depth={3} className="text-xl md:text-2xl font-black tracking-tighter" gradient="from-cyan-400 via-pink-500 to-blue-600">ISHAN</Text3D>
           <span className="hidden sm:inline-block px-2 py-0.5 rounded-full text-[10px] font-bold bg-pink-500/10 text-pink-600 border border-pink-500/20 shadow-sm"><Text3D depth={1} color="text-pink-600">PORTFOLIO 3D</Text3D></span>
         </a>
         <ul className="hidden md:flex gap-8 text-sm font-bold text-slate-800">
           {links.map((item) => (
-            <li key={item.en}><a href={`#${item.en.toLowerCase()}`} onClick={playUISound} className="relative group block tts-card"><Text3D depth={2} color="text-slate-700" shadowColor="#e2e8f0" className="transition-colors group-hover:text-pink-500">{lang === 'hi' ? item.hi : item.en}</Text3D></a></li>
+            <li key={item.en}><a href={item.href} onClick={playUISound} className="relative group block tts-card"><Text3D depth={2} color="text-slate-700" shadowColor="#e2e8f0" className="transition-colors group-hover:text-pink-500">{lang === 'hi' ? item.hi : item.en}</Text3D></a></li>
           ))}
         </ul>
         <div className="hidden md:flex items-center gap-3">
-          <button className="no-tts flex items-center gap-2 px-3 py-2 rounded-full text-xs font-bold text-slate-700 bg-white border border-slate-200 shadow-sm transition-all active:scale-95 hover:bg-slate-50" onClick={handleLangToggle}><Languages size={16} className="text-blue-500" /><span><Text3D depth={1}>{lang === 'en' ? 'हिंदी' : 'ENG'}</Text3D></span></button>
-          <button className="no-tts flex items-center gap-2 px-3 py-2 rounded-full text-xs font-bold text-slate-700 bg-white border border-slate-200 shadow-sm transition-all active:scale-95 hover:bg-slate-50" onClick={handleVoiceToggle}>{voiceEnabled ? <Volume2 size={16} className="text-pink-500 animate-pulse" /> : <VolumeX size={16} />}<span><Text3D depth={1}>{voiceEnabled ? t('Voice ON', 'आवाज़ चालू') : t('Voice OFF', 'आवाज़ बंद')}</Text3D></span></button>
-          <motion.a href="https://play.google.com/store/apps/dev?id=4926136840256493221" target="_blank" rel="noreferrer" onClick={playUISound} whileHover={{ y: -3, boxShadow: '0 12px 20px -3px rgba(236, 72, 153, 0.5)' }} whileTap={{ y: 0, boxShadow: '0 2px 5px -1px rgba(236, 72, 153, 0.4)' }} className="tts-card flex items-center gap-2 px-5 py-2.5 rounded-full text-xs font-bold text-white bg-gradient-to-r from-cyan-500 to-pink-500 shadow-md transition-all"><Play size={14} fill="currentColor" /> <Text3D depth={1} color="text-white">{t('Play Store', 'प्ले स्टोर')}</Text3D></motion.a>
+          <button aria-label="Switch language" className="no-tts flex items-center gap-2 px-3 py-2 rounded-full text-xs font-bold text-slate-700 bg-white border border-slate-200 shadow-sm transition-all active:scale-95 hover:bg-slate-50" onClick={handleLangToggle}><Languages size={16} className="text-blue-500" /><span><Text3D depth={1}>{lang === 'en' ? 'हिंदी' : 'ENG'}</Text3D></span></button>
+          <button aria-label="Toggle voice narration" className="no-tts flex items-center gap-2 px-3 py-2 rounded-full text-xs font-bold text-slate-700 bg-white border border-slate-200 shadow-sm transition-all active:scale-95 hover:bg-slate-50" onClick={handleVoiceToggle}>{voiceEnabled ? <Volume2 size={16} className="text-pink-500 animate-pulse" /> : <VolumeX size={16} />}<span><Text3D depth={1}>{voiceEnabled ? t('Voice ON', 'आवाज़ चालू') : t('Voice OFF', 'आवाज़ बंद')}</Text3D></span></button>
+          <motion.a href="https://play.google.com/store/apps/dev?id=4926136840256493221" target="_blank" rel="noopener noreferrer" title="Ishan Mall Google Play Developer Page" onClick={playUISound} whileHover={{ y: -3, boxShadow: '0 12px 20px -3px rgba(236, 72, 153, 0.5)' }} whileTap={{ y: 0, boxShadow: '0 2px 5px -1px rgba(236, 72, 153, 0.4)' }} className="tts-card flex items-center gap-2 px-5 py-2.5 rounded-full text-xs font-bold text-white bg-gradient-to-r from-cyan-500 to-pink-500 shadow-md transition-all"><Play size={14} fill="currentColor" /> <Text3D depth={1} color="text-white">{t('Play Store', 'प्ले स्टोर')}</Text3D></motion.a>
         </div>
         <div className="md:hidden flex items-center gap-2">
-          <button className="no-tts p-2 text-slate-700 bg-slate-100 rounded-full active:scale-95 transition-transform" onClick={handleLangToggle}><Languages size={18} className="text-blue-500" /></button>
-          <button className="no-tts p-2 text-slate-700 bg-slate-100 rounded-full active:scale-95 transition-transform" onClick={handleVoiceToggle}>{voiceEnabled ? <Volume2 size={18} className="text-pink-500" /> : <VolumeX size={18} />}</button>
-          <button className="p-2 text-slate-800 active:scale-95 transition-transform no-tts" onClick={() => { playUISound(); setIsOpen(!isOpen); }}>{isOpen ? <X size={24} /> : <Menu size={24} />}</button>
+          <button aria-label="Switch language" className="no-tts p-2 text-slate-700 bg-slate-100 rounded-full active:scale-95 transition-transform" onClick={handleLangToggle}><Languages size={18} className="text-blue-500" /></button>
+          <button aria-label="Toggle voice narration" className="no-tts p-2 text-slate-700 bg-slate-100 rounded-full active:scale-95 transition-transform" onClick={handleVoiceToggle}>{voiceEnabled ? <Volume2 size={18} className="text-pink-500" /> : <VolumeX size={18} />}</button>
+          <button aria-label="Toggle navigation menu" className="p-2 text-slate-800 active:scale-95 transition-transform no-tts" onClick={() => { playUISound(); setIsOpen(!isOpen); }}>{isOpen ? <X size={24} /> : <Menu size={24} />}</button>
         </div>
       </motion.nav>
       <AnimatePresence>
         {isOpen && (
           <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} className="fixed inset-0 z-40 bg-white/95 backdrop-blur-2xl pt-24 px-6 flex flex-col gap-6 md:hidden">
             {links.map((item) => (
-              <a key={item.en} href={`#${item.en.toLowerCase()}`} onClick={() => { playUISound(); setIsOpen(false); }} className="tts-card text-3xl font-black text-slate-800 hover:text-pink-500 border-b border-slate-100 pb-4 active:scale-95 transition-transform"><Text3D depth={2}>{lang === 'hi' ? item.hi : item.en}</Text3D></a>
+              <a key={item.en} href={item.href} onClick={() => { playUISound(); setIsOpen(false); }} className="tts-card text-3xl font-black text-slate-800 hover:text-pink-500 border-b border-slate-100 pb-4 active:scale-95 transition-transform"><Text3D depth={2}>{lang === 'hi' ? item.hi : item.en}</Text3D></a>
             ))}
           </motion.div>
         )}
       </AnimatePresence>
-    </>
+    </header>
   );
 };
 
 const Hero = ({ rotateX, rotateY, isMobile }) => {
   const { t } = React.useContext(TranslationContext);
   return (
-    <section className="h-[100svh] flex flex-col justify-center p-6 md:p-10 relative z-10 perspective-[1200px] pointer-events-none">
+    <section aria-label="Ishan Mall — Android Developer and Software Engineer" className="h-[100svh] flex flex-col justify-center p-6 md:p-10 relative z-10 perspective-[1200px] pointer-events-none">
       <motion.div style={{ rotateX: isMobile ? 0 : rotateX, rotateY: isMobile ? 0 : rotateY, transformStyle: 'preserve-3d' }} className="w-full max-w-7xl mx-auto pointer-events-auto mt-20 md:mt-28 will-change-transform">
         <div className="overflow-hidden mb-6">
           <motion.div initial={{ y: '100%', opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: 0.8, delay: 0.2, type: 'spring', stiffness: 100 }} whileHover={!isMobile ? { y: -4, boxShadow: '0px 10px 20px -5px rgba(236, 72, 153, 0.3)' } : {}}>
@@ -340,12 +522,13 @@ const Hero = ({ rotateX, rotateY, isMobile }) => {
           </motion.div>
         </div>
         <h1 className="tts-card text-[14vw] md:text-[9.5vw] leading-[0.88] tracking-tighter uppercase font-black flex flex-col items-start relative select-none cursor-pointer">
+          <span className="sr-only">Ishan Mall — </span>
           <motion.div initial={{ rotateX: 60, opacity: 0, y: 80 }} animate={{ rotateX: 0, opacity: 1, y: 0 }} transition={{ duration: 1, delay: 0.25 }}><Text3D depth={isMobile ? 4 : 8} isMobile={isMobile} shadowColor="#94a3b8" color="text-slate-900">{t('ANDROID', 'एंड्रॉइड')}</Text3D></motion.div>
           <motion.div initial={{ rotateX: 60, opacity: 0, y: 80 }} animate={{ rotateX: 0, opacity: 1, y: 0 }} transition={{ duration: 1, delay: 0.35 }}><Text3D depth={isMobile ? 4 : 8} isMobile={isMobile} shadowColor="#c084fc" gradient="from-pink-500 via-purple-500 to-indigo-600">{t('DEVELOPER', 'डेवलपर')}</Text3D></motion.div>
           <motion.div initial={{ rotateX: 60, opacity: 0, y: 80 }} animate={{ rotateX: 0, opacity: 1, y: 0 }} transition={{ duration: 1, delay: 0.45 }}><Text3D depth={isMobile ? 4 : 8} isMobile={isMobile} shadowColor="#67e8f9" gradient="from-cyan-400 via-blue-500 to-pink-500">{t('ENGINEER', 'इंजीनियर')}</Text3D></motion.div>
         </h1>
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.8 }} onClick={playUISound} className="tts-card mt-10 max-w-xl text-slate-600 font-semibold text-sm md:text-base leading-relaxed backdrop-blur-sm bg-white/40 p-4 rounded-2xl border border-white/60 shadow-md cursor-pointer">
-          <Text3D as="div" depth={1} color="text-slate-600">{t('Crafting high-throughput, offline-first mobile experiences powered by reactive state engines, strict clean architecture, and modern immersive Three.js interactive web environments.', 'रिएक्टिव स्टेट इंजन, सख्त क्लीन आर्किटेक्चर और आधुनिक इमर्सिव Three.js वेब वातावरण द्वारा संचालित उच्च-थ्रूपुट, ऑफ़लाइन-फर्स्ट मोबाइल अनुभव तैयार करना।')}</Text3D>
+          <Text3D as="p" depth={1} color="text-slate-600">{t('Crafting high-throughput, offline-first mobile experiences powered by reactive state engines, strict clean architecture, and modern immersive Three.js interactive web environments.', 'रिएक्टिव स्टेट इंजन, सख्त क्लीन आर्किटेक्चर और आधुनिक इमर्सिव Three.js वेब वातावरण द्वारा संचालित उच्च-थ्रूपुट, ऑफ़लाइन-फर्स्ट मोबाइल अनुभव तैयार करना।')}</Text3D>
         </motion.div>
       </motion.div>
     </section>
@@ -356,7 +539,7 @@ const Statistics = ({ rotateX, rotateY, isMobile }) => {
   const { t } = React.useContext(TranslationContext);
   const stats = [ { label: t('Projects', 'प्रोजेक्ट्स'), value: '10+' }, { label: t('Web Platforms', 'वेब प्लेटफॉर्म'), value: '4+' }, { label: t('Technologies', 'तकनीकें'), value: '20+' }, { label: t('Credentials', 'प्रमाणपत्र'), value: '30+' }, { label: t('Features', 'विशेषताएं'), value: '100+' } ];
   return (
-    <section className="py-12 md:py-20 relative z-10 pointer-events-none perspective-[1200px]">
+    <section aria-label="Portfolio Statistics" className="py-12 md:py-20 relative z-10 pointer-events-none perspective-[1200px]">
       <motion.div style={{ rotateX: isMobile ? 0 : rotateX, rotateY: isMobile ? 0 : rotateY, transformStyle: 'preserve-3d' }} className="max-w-7xl mx-auto px-6 md:px-10 pointer-events-auto will-change-transform">
         <div className="grid grid-cols-2 md:grid-cols-5 gap-4 md:gap-6">
           {stats.map((stat, idx) => (
@@ -375,15 +558,15 @@ const ProfileAndExperience = ({ rotateX, rotateY, isMobile }) => {
   const { t } = React.useContext(TranslationContext);
   
   return (
-    <section id="experience" className="py-10 md:py-20 px-6 md:px-10 relative z-10 pointer-events-none perspective-[1200px]">
+    <section id="experience" aria-labelledby="heading-experience" className="py-10 md:py-20 px-6 md:px-10 relative z-10 pointer-events-none perspective-[1200px]">
       <motion.div style={{ rotateX: isMobile ? 0 : rotateX, rotateY: isMobile ? 0 : rotateY, transformStyle: 'preserve-3d' }} className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 pointer-events-auto items-start will-change-transform">
         <div className="lg:col-span-4 order-1 relative">
           <motion.div initial={{ rotateY: 15, opacity: 0, y: 30 }} whileInView={{ rotateY: isMobile ? 0 : 5, opacity: 1, y: 0 }} viewport={{ once: true, margin: '-100px' }} transition={{ duration: 0.8 }} whileHover={!isMobile ? { scale: 1.02, rotateY: 8, rotateX: 4, y: -5, boxShadow: '25px 25px 50px -12px rgba(0,0,0,0.25)' } : {}} className="w-full max-w-sm mx-auto lg:mx-0 rounded-3xl overflow-hidden border shadow-xl backdrop-blur-xl p-2.5 bg-white/80 border-black/5 sticky top-32 transition-all duration-300">
             <div className="tts-card rounded-2xl overflow-hidden aspect-[4/5] relative bg-slate-200 cursor-pointer" onClick={playUISound}>
-              <img src="/isha.ndisha_1785611777_3954320607764516452_77465641188.webp" alt="Ishan Mall" loading="lazy" className="absolute inset-0 w-full h-full object-cover object-center z-0" />
+              <img src="/isha.ndisha_1785611777_3954320607764516452_77465641188.webp" alt="Ishan Mall — Android Developer, Software Engineer, B.Tech CSE AKTU, Gorakhpur India" loading="lazy" className="absolute inset-0 w-full h-full object-cover object-center z-0" />
               <div className="absolute inset-0 bg-gradient-to-t from-slate-950/95 via-slate-900/30 to-transparent z-10" />
               <div className="absolute bottom-0 left-0 p-5 md:p-6 w-full z-20">
-                <Text3D depth={3} className="text-2xl md:text-3xl font-black mb-3" color="text-white" shadowColor="#1e293b">{t('Ishan Mall', 'ईशान मल्ल')}</Text3D>
+                <Text3D as="h2" depth={3} className="text-2xl md:text-3xl font-black mb-3" color="text-white" shadowColor="#1e293b">{t('Ishan Mall', 'ईशान मल्ल')}</Text3D>
                 <div className="space-y-2 mt-2">
                   <p className="text-slate-200 text-xs flex items-center gap-2 font-bold"><GraduationCap size={16} className="text-cyan-400 shrink-0" /> <Text3D as="span" depth={1} color="text-slate-200">{t('B.Tech CSE (2024-2027), AKTU', 'बी.टेक सीएसई (2024-2027), AKTU')}</Text3D></p>
                   <p className="text-slate-200 text-xs flex items-center gap-2 font-bold"><Award size={16} className="text-pink-400 shrink-0" /> <Text3D as="span" depth={1} color="text-slate-200">{t('Class XII Science (2022)', 'कक्षा १२ विज्ञान (२०२२)')}</Text3D></p>
@@ -395,12 +578,12 @@ const ProfileAndExperience = ({ rotateX, rotateY, isMobile }) => {
         </div>
         
         <div className="lg:col-span-8 order-2 space-y-10 lg:pl-4">
-          <motion.div onClick={playUISound} whileHover={!isMobile ? { y: -4, boxShadow: '0px 20px 40px -10px rgba(0,0,0,0.15)' } : {}} className="tts-card p-6 md:p-8 rounded-3xl border shadow-xl backdrop-blur-xl bg-gradient-to-br from-blue-50/90 to-purple-50/90 border-black/5 text-slate-800 transition-all duration-300 cursor-pointer">
-            <div className="mb-4"><Text3D depth={3} className="text-2xl font-black tracking-tight" gradient="from-slate-900 via-blue-900 to-slate-800" shadowColor="#93c5fd">{t('Professional Summary', 'व्यावसायिक सारांश')}</Text3D></div>
-            <Text3D as="div" depth={1} color="text-slate-700" className="text-sm md:text-base font-medium leading-relaxed">
+          <motion.article onClick={playUISound} whileHover={!isMobile ? { y: -4, boxShadow: '0px 20px 40px -10px rgba(0,0,0,0.15)' } : {}} className="tts-card p-6 md:p-8 rounded-3xl border shadow-xl backdrop-blur-xl bg-gradient-to-br from-blue-50/90 to-purple-50/90 border-black/5 text-slate-800 transition-all duration-300 cursor-pointer">
+            <div className="mb-4"><Text3D as="h2" id="heading-experience" depth={3} className="text-2xl font-black tracking-tight" gradient="from-slate-900 via-blue-900 to-slate-800" shadowColor="#93c5fd">{t('Professional Summary', 'व्यावसायिक सारांश')}</Text3D></div>
+            <Text3D as="p" depth={1} color="text-slate-700" className="text-sm md:text-base font-medium leading-relaxed">
               {t('Versatile software engineer experienced in designing, developing, and deploying production-grade Android applications, immersive interactive web platforms, multimedia systems, and scientific visualization experiences. Strongly focused on Kotlin, Jetpack Compose, Material 3, MVVM, Hilt, Room, Coroutines, Flow, WorkManager, MediaStore, Storage Access Framework, Media3/ExoPlayer, and scalable offline-first application architectures. Experienced in building advanced photo, video, audio, document, storage, background-processing, authentication, and local-data workflows with an emphasis on performance, reliability, privacy, maintainability, and responsive user experiences. On the web, proficient in React, JavaScript, TypeScript, Vite, Tailwind CSS, Three.js, React Three Fiber, Drei, WebGL/WebGL2, GSAP, and Firebase, creating responsive 2.5D/3D interfaces, interactive visualizations, and browser-based experiences. Also experienced with scientific and astrophysics visualization, mathematical and physics-based modeling, astronomical calculations, and interactive simulations covering stellar and compact-object systems. Familiar with on-device machine learning and computer-vision technologies including TensorFlow Lite/LiteRT, MediaPipe, Google ML Kit, and OpenCV, along with Git/GitHub, Gradle, Firebase deployment, Google Play Console, testing, debugging, security, SEO, technical documentation, and end-to-end application release workflows.', 'एक बहुमुखी सॉफ्टवेयर इंजीनियर, जिसे प्रोडक्शन-ग्रेड Android एप्लिकेशन, इमर्सिव इंटरैक्टिव वेब प्लेटफॉर्म, मल्टीमीडिया सिस्टम और वैज्ञानिक विज़ुअलाइज़ेशन अनुभवों को डिजाइन, विकसित और डिप्लॉय करने का अनुभव है। Kotlin, Jetpack Compose, Material 3, MVVM, Hilt, Room, Coroutines, Flow, WorkManager, MediaStore, Storage Access Framework, Media3/ExoPlayer और स्केलेबल ऑफलाइन-फर्स्ट एप्लिकेशन आर्किटेक्चर में मजबूत पकड़। फोटो, वीडियो, ऑडियो, डॉक्यूमेंट, स्टोरेज, बैकग्राउंड प्रोसेसिंग, ऑथेंटिकेशन और लोकल-डेटा सिस्टम विकसित करने का अनुभव, जिसमें परफॉर्मेंस, विश्वसनीयता, प्राइवेसी, मेंटेनबिलिटी और रिस्पॉन्सिव यूज़र एक्सपीरियंस पर विशेष ध्यान दिया जाता है। वेब डेवलपमेंट में React, JavaScript, TypeScript, Vite, Tailwind CSS, Three.js, React Three Fiber, Drei, WebGL/WebGL2, GSAP और Firebase के माध्यम से रिस्पॉन्सिव 2.5D/3D इंटरफेस, इंटरैक्टिव विज़ुअलाइज़ेशन और ब्राउज़र-आधारित अनुभव विकसित करने में सक्षम। Scientific और astrophysics visualization, mathematical एवं physics-based modeling, astronomical calculations तथा stellar और compact-object systems पर आधारित interactive simulations का भी अनुभव। TensorFlow Lite/LiteRT, MediaPipe, Google ML Kit और OpenCV जैसी on-device machine learning एवं computer-vision technologies के साथ कार्य करने का अनुभव, साथ ही Git/GitHub, Gradle, Firebase deployment, Google Play Console, testing, debugging, security, SEO, technical documentation और end-to-end application release workflows में व्यावहारिक दक्षता।')}
             </Text3D>
-          </motion.div>
+          </motion.article>
         </div>
       </motion.div>
     </section>
@@ -463,41 +646,41 @@ const UnifiedDatabase = ({ rotateX, rotateY, isMobile }) => {
       tags: ['Websites'], icon: <Globe size={24} className="text-orange-500" />, url: 'https://mandir-dharshan.web.app/' 
     },
     {
-    title: 'Who Is God?',
-    type: 'Web',
-    category: 'Websites',
-    desc: t(
-    'An interactive spiritual knowledge platform exploring the concept of God, divine philosophies, Vedic perspectives, and interconnected aspects of Hindu philosophy.',
-    'ईश्वर की अवधारणा, दिव्य दर्शन, वैदिक दृष्टिकोण और हिंदू दर्शन के विभिन्न परस्पर जुड़े पहलुओं को समझने वाला एक इंटरैक्टिव आध्यात्मिक ज्ञान मंच।'
-    ),
-    tags: ['Websites', 'Spirituality', 'Hindu Philosophy', 'Vedic Knowledge'],
-    icon: <BookOpen size={24} className="text-amber-500" />,
-    url: 'https://who-is-god.web.app/'
-  },
-  {
-    title: 'FacebookSwift',
-    type: 'Chrome Extension',
-    category: 'Extensions',
-    desc: t(
-      'A browser extension project for Facebook, built to extend functionality through a dedicated GitHub-hosted codebase.',
-      'Facebook के लिए एक ब्राउज़र एक्सटेंशन प्रोजेक्ट, जिसका कोड GitHub पर उपलब्ध है और जो ब्राउज़र की सुविधाओं को विस्तारित करने के लिए बनाया गया है।'
-    ),
-    tags: ['Extensions', 'Chrome Extension', 'JavaScript', 'Manifest V3'],
-    icon: <Puzzle size={24} className="text-blue-600" />,
-    url: 'https://github.com/ishanmall/FacebookSwift'
-  },
-  {
-    title: 'WhatsAppSwift',
-    type: 'Chrome Extension',
-    category: 'Extensions',
-    desc: t(
-      'A browser extension project for WhatsApp, with its source code and development maintained in a dedicated GitHub repository.',
-      'WhatsApp के लिए एक ब्राउज़र एक्सटेंशन प्रोजेक्ट, जिसका सोर्स कोड और डेवलपमेंट एक समर्पित GitHub रिपॉज़िटरी में उपलब्ध है।'
-    ),
-    tags: ['Extensions', 'Chrome Extension', 'JavaScript', 'Manifest V3'],
-    icon: <Puzzle size={24} className="text-green-600" />,
-    url: 'https://github.com/ishanmall/WhatsAppSwift'
-  }
+      title: 'Who Is God?',
+      type: 'Web',
+      category: 'Websites',
+      desc: t(
+        'An interactive spiritual knowledge platform exploring the concept of God, divine philosophies, Vedic perspectives, and interconnected aspects of Hindu philosophy.',
+        'ईश्वर की अवधारणा, दिव्य दर्शन, वैदिक दृष्टिकोण और हिंदू दर्शन के विभिन्न परस्पर जुड़े पहलुओं को समझने वाला एक इंटरैक्टिव आध्यात्मिक ज्ञान मंच।'
+      ),
+      tags: ['Websites', 'Spirituality', 'Hindu Philosophy', 'Vedic Knowledge'],
+      icon: <BookOpen size={24} className="text-amber-500" />,
+      url: 'https://who-is-god.web.app/'
+    },
+    {
+      title: 'FacebookSwift',
+      type: 'Chrome Extension',
+      category: 'Extensions',
+      desc: t(
+        'A browser extension project for Facebook, built to extend functionality through a dedicated GitHub-hosted codebase.',
+        'Facebook के लिए एक ब्राउज़र एक्सटेंशन प्रोजेक्ट, जिसका कोड GitHub पर उपलब्ध है और जो ब्राउज़र की सुविधाओं को विस्तारित करने के लिए बनाया गया है।'
+      ),
+      tags: ['Extensions', 'Chrome Extension', 'JavaScript', 'Manifest V3'],
+      icon: <Puzzle size={24} className="text-blue-600" />,
+      url: 'https://github.com/ishanmall/FacebookSwift'
+    },
+    {
+      title: 'WhatsAppSwift',
+      type: 'Chrome Extension',
+      category: 'Extensions',
+      desc: t(
+        'A browser extension project for WhatsApp, with its source code and development maintained in a dedicated GitHub repository.',
+        'WhatsApp के लिए एक ब्राउज़र एक्सटेंशन प्रोजेक्ट, जिसका सोर्स कोड और डेवलपमेंट एक समर्पित GitHub रिपॉज़िटरी में उपलब्ध है।'
+      ),
+      tags: ['Extensions', 'Chrome Extension', 'JavaScript', 'Manifest V3'],
+      icon: <Puzzle size={24} className="text-green-600" />,
+      url: 'https://github.com/ishanmall/WhatsAppSwift'
+    }
   ];
   const filteredItems = allItems.filter(item => {
     const filterMatch = activeFilter === 'ALL' || item.category === activeFilter || item.tags.includes(activeFilter);
@@ -506,15 +689,15 @@ const UnifiedDatabase = ({ rotateX, rotateY, isMobile }) => {
   });
 
   return (
-    <section id="database" className="py-20 md:py-32 relative z-10 pointer-events-none perspective-[1200px]">
+    <section id="database" aria-labelledby="heading-database" className="py-20 md:py-32 relative z-10 pointer-events-none perspective-[1200px]">
       <motion.div style={{ rotateX: isMobile ? 0 : rotateX, rotateY: isMobile ? 0 : rotateY, transformStyle: 'preserve-3d' }} className="max-w-7xl mx-auto px-6 md:px-10 pointer-events-auto will-change-transform">
         <div className="mb-12 text-center md:text-left">
-          <Text3D depth={6} className="tts-card text-4xl md:text-5xl font-black tracking-tight cursor-pointer" color="text-slate-900" shadowColor="#cbd5e1">{t('Global Database', 'ग्लोबल डेटाबेस')}</Text3D>
+          <Text3D as="h2" id="heading-database" depth={6} className="tts-card text-4xl md:text-5xl font-black tracking-tight cursor-pointer" color="text-slate-900" shadowColor="#cbd5e1">{t('Global Database', 'ग्लोबल डेटाबेस')}</Text3D>
           <Text3D as="p" depth={1} className="tts-card mt-3 text-sm md:text-base font-bold text-slate-500 max-w-2xl">{t('Explore the complete repository of projects, web applications, and technical architectures.', 'प्रोजेक्ट्स, वेब एप्लिकेशन और तकनीकी आर्किटेक्चर की पूरी रिपॉजिटरी का अन्वेषण करें।')}</Text3D>
         </div>
         <div className="relative max-w-3xl mb-8 group">
           <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none"><Search className="text-slate-400 group-focus-within:text-pink-500 transition-colors" size={20} /></div>
-          <input type="text" placeholder={t("Search projects, technologies, architectures...", "प्रोजेक्ट्स, तकनीक, आर्किटेक्चर खोजें...")} value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} className="w-full pl-12 pr-4 py-4 rounded-2xl border border-slate-200 bg-white/70 backdrop-blur-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-pink-500 text-sm md:text-base font-medium text-slate-900 placeholder-slate-400 shadow-sm transition-all" />
+          <input type="text" aria-label="Search projects" placeholder={t("Search projects, technologies, architectures...", "प्रोजेक्ट्स, तकनीक, आर्किटेक्चर खोजें...")} value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} className="w-full pl-12 pr-4 py-4 rounded-2xl border border-slate-200 bg-white/70 backdrop-blur-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-pink-500 text-sm md:text-base font-medium text-slate-900 placeholder-slate-400 shadow-sm transition-all" />
         </div>
         <div className="flex flex-wrap gap-2 mb-12">
           {filters.map((filter) => (
@@ -526,16 +709,16 @@ const UnifiedDatabase = ({ rotateX, rotateY, isMobile }) => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8">
           <AnimatePresence mode="popLayout">
             {filteredItems.length > 0 ? (
-              filteredItems.map((item, idx) => {
-                const CardComponent = item.url ? motion.a : motion.div;
-                const linkProps = item.url ? { href: item.url, target: "_blank", rel: "noreferrer" } : {};
+              filteredItems.map((item) => {
+                const CardComponent = item.url ? motion.a : motion.article;
+                const linkProps = item.url ? { href: item.url, target: "_blank", rel: "noopener noreferrer", title: `${item.title} — ${item.type} by Ishan Mall` } : {};
                 return (
                   <CardComponent {...linkProps} layout initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.9 }} transition={{ duration: 0.3 }} key={item.title} onClick={playUISound} whileHover={!isMobile ? { y: -8, boxShadow: '0px 25px 40px -10px rgba(0,0,0,0.15)' } : {}} className={`tts-card flex flex-col p-6 md:p-8 rounded-3xl border shadow-lg backdrop-blur-xl bg-white/80 border-black/5 h-full transition-all group ${item.url ? 'cursor-pointer' : ''}`}>
                     <div className="flex justify-between items-start mb-4">
                       <div className="p-3 bg-slate-50 rounded-2xl w-fit border border-slate-100 shadow-sm group-hover:scale-105 transition-transform">{item.icon}</div>
                       {item.url ? <ArrowUpRight className="text-slate-300 group-hover:text-pink-500 transition-colors link-indicator" /> : <span className="text-[10px] font-bold uppercase tracking-widest px-2 py-1 bg-slate-100 text-slate-500 rounded-lg"><Text3D depth={1} color="text-slate-500">{item.type}</Text3D></span>}
                     </div>
-                    <div className="mb-2"><Text3D depth={3} className="text-xl font-black" color="text-slate-900" shadowColor="#cbd5e1">{item.title}</Text3D></div>
+                    <div className="mb-2"><Text3D as="h3" depth={3} className="text-xl font-black" color="text-slate-900" shadowColor="#cbd5e1">{item.title}</Text3D></div>
                     <Text3D as="p" depth={1} color="text-slate-600" className="text-sm font-medium mb-6 flex-1 leading-relaxed">{item.desc}</Text3D>
                     <div className="flex flex-wrap gap-1.5 mt-auto">
                       {item.tags.slice(0, 4).map(tag => <span key={tag} className="text-[10px] font-bold px-2 py-1 bg-white border border-slate-200 text-slate-600 rounded-md"><Text3D depth={1} color="text-slate-600">{tag}</Text3D></span>)}
@@ -567,12 +750,12 @@ const UnderConstructionSection = ({ rotateX, rotateY, isMobile }) => {
   ];
 
   return (
-    <section id="lab" className="py-20 md:py-32 relative z-10 pointer-events-none perspective-[1200px]">
+    <section id="lab" aria-labelledby="heading-lab" className="py-20 md:py-32 relative z-10 pointer-events-none perspective-[1200px]">
       <motion.div style={{ rotateX: isMobile ? 0 : rotateX, rotateY: isMobile ? 0 : rotateY, transformStyle: 'preserve-3d' }} className="max-w-7xl mx-auto px-6 md:px-10 pointer-events-auto will-change-transform">
         <div className="tts-card mb-14 flex flex-col md:flex-row items-center gap-4 cursor-pointer" onClick={playUISound}>
           <div className="p-4 bg-[#fff9cc] rounded-[1.25rem] border border-[#fce96a] shadow-sm"><Wrench size={32} className="text-[#d97706]" /></div>
           <div>
-            <h2 className="text-4xl md:text-5xl font-black tracking-tight text-slate-900" style={{ textShadow: '2px 2px 0px #fce96a' }}>{t('In The Lab', 'प्रयोगशाला में')}</h2>
+            <h2 id="heading-lab" className="text-4xl md:text-5xl font-black tracking-tight text-slate-900" style={{ textShadow: '2px 2px 0px #fce96a' }}>{t('In The Lab', 'प्रयोगशाला में')}</h2>
             <Text3D as="p" depth={1} className="mt-2 text-sm md:text-base font-bold text-[#d97706] flex items-center gap-2 justify-center md:justify-start"><Clock size={16} /> {t('Work in Progress & Active Architecture', 'प्रगतिरत कार्य एवं सक्रिय आर्किटेक्चर')}</Text3D>
           </div>
         </div>
@@ -581,8 +764,8 @@ const UnderConstructionSection = ({ rotateX, rotateY, isMobile }) => {
             <h3 className="tts-card text-[17px] font-black text-slate-800 mb-6 flex items-center gap-2 cursor-pointer" onClick={playUISound}><Smartphone size={18} className="text-pink-500" /> <Text3D depth={1} as="span">{t('Mobile Applications', 'मोबाइल एप्लिकेशन')}</Text3D></h3>
             <div className="space-y-4">
               {wipApps.map((app, idx) => {
-                const CardComp = app.url ? motion.a : motion.div;
-                const props = app.url ? { href: app.url, target: '_blank', rel: 'noreferrer' } : {};
+                const CardComp = app.url ? motion.a : motion.article;
+                const props = app.url ? { href: app.url, target: '_blank', rel: 'noopener noreferrer', title: `${app.title} on GitHub` } : {};
                 return (
                   <CardComp {...props} key={idx} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5, delay: idx * 0.1 }} onClick={playUISound} whileHover={!isMobile ? { y: -4, boxShadow: '0px 15px 30px -10px rgba(0,0,0,0.1)' } : {}} className={`tts-card block w-full p-6 rounded-3xl border shadow-sm backdrop-blur-xl bg-white/90 border-slate-200 relative overflow-hidden group ${app.url ? 'cursor-pointer active:scale-[0.98]' : ''} transition-all`}>
                     <div className="absolute top-0 right-0 p-4 flex items-center gap-1.5 opacity-60 group-hover:opacity-100 transition-opacity">
@@ -602,8 +785,8 @@ const UnderConstructionSection = ({ rotateX, rotateY, isMobile }) => {
             <h3 className="tts-card text-[17px] font-black text-slate-800 mb-6 flex items-center gap-2 cursor-pointer" onClick={playUISound}><Globe size={18} className="text-blue-500" /> <Text3D depth={1} as="span">{t('Web Platforms', 'वेब प्लेटफॉर्म')}</Text3D></h3>
             <div className="space-y-4">
               {wipWeb.map((web, idx) => {
-                const CardComp = web.url ? motion.a : motion.div;
-                const props = web.url ? { href: web.url, target: '_blank', rel: 'noreferrer' } : {};
+                const CardComp = web.url ? motion.a : motion.article;
+                const props = web.url ? { href: web.url, target: '_blank', rel: 'noopener noreferrer', title: `${web.title} on GitHub` } : {};
                 return (
                   <CardComp {...props} key={idx} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5, delay: idx * 0.1 }} onClick={playUISound} whileHover={!isMobile ? { y: -4, boxShadow: '0px 15px 30px -10px rgba(0,0,0,0.1)' } : {}} className={`tts-card block w-full p-6 rounded-3xl border shadow-sm backdrop-blur-xl bg-white/90 border-slate-200 relative overflow-hidden group ${web.url ? 'cursor-pointer active:scale-[0.98]' : ''} transition-all`}>
                     <div className="absolute top-0 right-0 p-4 flex items-center gap-1.5 opacity-60 group-hover:opacity-100 transition-opacity">
@@ -667,18 +850,18 @@ const TechMatrixSection = ({ rotateX, rotateY, isMobile }) => {
   ];
 
   return (
-    <section id="matrix" className="py-20 md:py-32 px-6 md:px-10 relative z-10 pointer-events-none perspective-[1200px]">
+    <section id="matrix" aria-labelledby="heading-matrix" className="py-20 md:py-32 px-6 md:px-10 relative z-10 pointer-events-none perspective-[1200px]">
       <motion.div style={{ rotateX: isMobile ? 0 : rotateX, rotateY: isMobile ? 0 : rotateY, transformStyle: 'preserve-3d' }} className="max-w-7xl mx-auto pointer-events-auto will-change-transform">
         <div className="mb-12 text-center md:text-left">
-          <Text3D depth={6} className="tts-card text-3xl md:text-5xl font-black tracking-tight cursor-pointer" color="text-slate-900" shadowColor="#cbd5e1">{t('Technology Matrix', 'प्रौद्योगिकी मैट्रिक्स')}</Text3D>
+          <Text3D as="h2" id="heading-matrix" depth={6} className="tts-card text-3xl md:text-5xl font-black tracking-tight cursor-pointer" color="text-slate-900" shadowColor="#cbd5e1">{t('Technology Matrix', 'प्रौद्योगिकी मैट्रिक्स')}</Text3D>
           <Text3D as="p" depth={1} className="tts-card mt-3 text-sm md:text-base font-bold text-slate-500">{t('A comprehensive mapping of domains to specialized technologies utilized in production.', 'उत्पादन में उपयोग की जाने वाली विशेष तकनीकों के लिए डोमेन का एक व्यापक मानचित्रण।')}</Text3D>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
           {domains.map((row, idx) => (
-            <motion.div key={row.domain} initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: '-50px' }} transition={{ duration: 0.4, delay: isMobile ? 0 : (idx % 4) * 0.05 }} onClick={playUISound} whileHover={!isMobile ? { y: -4, boxShadow: '0px 15px 30px -5px rgba(0,0,0,0.15)' } : {}} className="tts-card p-5 border rounded-3xl shadow-md relative group backdrop-blur-xl border-slate-200 bg-white/80 hover:bg-white transition-all duration-300 flex flex-col gap-3 cursor-pointer active:scale-95">
-              <div className="flex items-center gap-2 border-b border-slate-100 pb-3"><Cpu size={18} className="text-cyan-500 shrink-0" /><Text3D as="span" depth={2} className="text-base font-black text-slate-800 leading-tight">{row.domain}</Text3D></div>
+            <motion.article key={row.domain} initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: '-50px' }} transition={{ duration: 0.4, delay: isMobile ? 0 : (idx % 4) * 0.05 }} onClick={playUISound} whileHover={!isMobile ? { y: -4, boxShadow: '0px 15px 30px -5px rgba(0,0,0,0.15)' } : {}} className="tts-card p-5 border rounded-3xl shadow-md relative group backdrop-blur-xl border-slate-200 bg-white/80 hover:bg-white transition-all duration-300 flex flex-col gap-3 cursor-pointer active:scale-95">
+              <div className="flex items-center gap-2 border-b border-slate-100 pb-3"><Cpu size={18} className="text-cyan-500 shrink-0" /><Text3D as="h3" depth={2} className="text-base font-black text-slate-800 leading-tight">{row.domain}</Text3D></div>
               <div className="flex flex-wrap gap-1.5">{row.techs.map(tech => <span key={tech} className="px-2 py-1 bg-slate-50 border border-slate-200 rounded-lg text-[11px] font-bold text-slate-600"><Text3D depth={1} color="text-slate-600">{tech}</Text3D></span>)}</div>
-            </motion.div>
+            </motion.article>
           ))}
         </div>
       </motion.div>
@@ -693,10 +876,10 @@ const CertificationsSection = ({ rotateX, rotateY, isMobile }) => {
   ];
 
   return (
-    <section id="credentials" className="py-20 md:py-32 px-6 md:px-10 relative z-10 pointer-events-none perspective-[1200px]">
+    <section id="credentials" aria-labelledby="heading-credentials" className="py-20 md:py-32 px-6 md:px-10 relative z-10 pointer-events-none perspective-[1200px]">
       <motion.div style={{ rotateX: isMobile ? 0 : rotateX, rotateY: isMobile ? 0 : rotateY, transformStyle: 'preserve-3d' }} className="max-w-7xl mx-auto pointer-events-auto will-change-transform">
         <div className="mb-12 text-center md:text-left">
-          <Text3D depth={6} className="tts-card text-3xl md:text-5xl font-black tracking-tight cursor-pointer" color="text-slate-900" shadowColor="#cbd5e1">{t('Google Credentials', 'गूगल क्रेडेंशियल्स')}</Text3D>
+          <Text3D as="h2" id="heading-credentials" depth={6} className="tts-card text-3xl md:text-5xl font-black tracking-tight cursor-pointer" color="text-slate-900" shadowColor="#cbd5e1">{t('Google Credentials', 'गूगल क्रेडेंशियल्स')}</Text3D>
           <Text3D as="p" depth={1} className="tts-card mt-2 text-sm md:text-base font-bold text-slate-500">{t('Google Developer Profile and Cloud credentials.', 'गूगल डेवलपर प्रोफाइल और क्लाउड क्रेडेंशियल्स।')}</Text3D>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
@@ -770,35 +953,31 @@ const TrainingCertificationsSection = ({ rotateX, rotateY, isMobile }) => {
   ];
 
   return (
-    <section id="training" className="py-20 md:py-32 px-6 md:px-10 relative z-10 pointer-events-none perspective-[1200px]">
+    <section id="training" aria-labelledby="heading-training" className="py-20 md:py-32 px-6 md:px-10 relative z-10 pointer-events-none perspective-[1200px]">
       <motion.div style={{ rotateX: isMobile ? 0 : rotateX, rotateY: isMobile ? 0 : rotateY, transformStyle: 'preserve-3d' }} className="max-w-7xl mx-auto pointer-events-auto will-change-transform">
         <div className="mb-10 text-center md:text-left">
-          <Text3D depth={6} className="tts-card text-3xl md:text-5xl font-black tracking-tight cursor-pointer" color="text-slate-900" shadowColor="#cbd5e1">{t('Training & Certifications', 'प्रशिक्षण और प्रमाणपत्र')}</Text3D>
+          <Text3D as="h2" id="heading-training" depth={6} className="tts-card text-3xl md:text-5xl font-black tracking-tight cursor-pointer" color="text-slate-900" shadowColor="#cbd5e1">{t('Training & Certifications', 'प्रशिक्षण और प्रमाणपत्र')}</Text3D>
           <Text3D as="p" depth={1} className="tts-card mt-3 text-sm md:text-base font-bold text-slate-500">{t('Professional development, specialized training, and foundational knowledge.', 'व्यावसायिक विकास, विशेष प्रशिक्षण और मूलभूत ज्ञान।')}</Text3D>
         </div>
 
         <div className="space-y-10 md:space-y-12">
           {trainingData.map((category, idx) => (
             <div key={idx} className="flex flex-col gap-4">
-              
-              {/* Organization Header Card - Compacted */}
               <motion.div initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true, margin: '-50px' }} transition={{ duration: 0.5, delay: isMobile ? 0 : 0.1 }} onClick={playUISound} className="tts-card inline-flex items-center gap-3 p-3 md:p-4 rounded-2xl border shadow-sm backdrop-blur-xl bg-white/90 border-slate-200 self-start cursor-pointer active:scale-95 transition-transform relative z-10">
                 <div className="p-2.5 bg-slate-50 rounded-xl border border-slate-100 shadow-sm shrink-0">{category.icon}</div>
-                <Text3D depth={2} className="text-lg md:text-xl font-black pr-2" color="text-slate-900" shadowColor="#cbd5e1" interactive={false}>{category.org}</Text3D>
+                <Text3D as="h3" depth={2} className="text-lg md:text-xl font-black pr-2" color="text-slate-900" shadowColor="#cbd5e1">{category.org}</Text3D>
               </motion.div>
 
-              {/* Individual Topic Cards Grid - Compacted */}
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4 pl-4 md:pl-6 border-l-2 border-slate-200 ml-5 md:ml-7">
                 {category.courses.map((course, cIdx) => (
-                  <motion.div key={cIdx} initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: '-50px' }} transition={{ duration: 0.3, delay: isMobile ? 0 : cIdx * 0.05 }} onClick={playUISound} whileHover={!isMobile ? { y: -2, boxShadow: '0px 10px 20px -5px rgba(0,0,0,0.1)' } : {}} className="tts-card p-4 border rounded-2xl shadow-sm relative group backdrop-blur-xl border-slate-200 bg-white/70 hover:bg-white transition-all duration-300 flex flex-col justify-start cursor-pointer active:scale-[0.98]">
+                  <motion.article key={cIdx} initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: '-50px' }} transition={{ duration: 0.3, delay: isMobile ? 0 : cIdx * 0.05 }} onClick={playUISound} whileHover={!isMobile ? { y: -2, boxShadow: '0px 10px 20px -5px rgba(0,0,0,0.1)' } : {}} className="tts-card p-4 border rounded-2xl shadow-sm relative group backdrop-blur-xl border-slate-200 bg-white/70 hover:bg-white transition-all duration-300 flex flex-col justify-start cursor-pointer active:scale-[0.98]">
                     <div className="flex items-start gap-2.5">
-                      <span className="text-pink-500 font-black text-sm leading-none opacity-80 mt-0.5 shrink-0">✦</span>
+                      <span aria-hidden="true" className="text-pink-500 font-black text-sm leading-none opacity-80 mt-0.5 shrink-0">✦</span>
                       <Text3D as="p" depth={1} className="text-xs md:text-sm font-medium text-slate-700 leading-snug">{course}</Text3D>
                     </div>
-                  </motion.div>
+                  </motion.article>
                 ))}
               </div>
-
             </div>
           ))}
         </div>
@@ -813,18 +992,18 @@ const Footer = ({ rotateX, rotateY, isMobile }) => {
   const handleSubmit = (e) => { e.preventDefault(); playUISound(); setSubmitted(true); setTimeout(() => setSubmitted(false), 4000); };
 
   return (
-    <footer id="contact" className="relative pt-20 md:pt-32 pb-12 px-6 md:px-10 overflow-hidden z-10 pointer-events-none perspective-[1200px]">
+    <footer id="contact" aria-labelledby="heading-contact" className="relative pt-20 md:pt-32 pb-12 px-6 md:px-10 overflow-hidden z-10 pointer-events-none perspective-[1200px]">
       <div className="absolute inset-0 bg-gradient-to-b from-transparent to-[#f1f5f9] z-[-1]" />
       <motion.div style={{ rotateX: isMobile ? 0 : rotateX, rotateY: isMobile ? 0 : rotateY, transformStyle: 'preserve-3d' }} className="max-w-7xl mx-auto border-t border-slate-200 pt-16 pointer-events-auto will-change-transform">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 mb-16">
           <div className="lg:col-span-7 space-y-6">
-            <Text3D depth={6} className="tts-card text-4xl md:text-6xl font-black tracking-tighter cursor-pointer" color="text-slate-900" shadowColor="#cbd5e1">{t("Let's build something exceptional.", "आइए कुछ असाधारण बनाएं।")}</Text3D>
+            <Text3D as="h2" id="heading-contact" depth={6} className="tts-card text-4xl md:text-6xl font-black tracking-tighter cursor-pointer" color="text-slate-900" shadowColor="#cbd5e1">{t("Let's build something exceptional.", "आइए कुछ असाधारण बनाएं।")}</Text3D>
             <Text3D as="p" depth={1} className="tts-card text-sm md:text-base text-slate-600 font-medium max-w-lg leading-relaxed cursor-pointer" onClick={playUISound}>
               {t('I am currently open to freelance engineering projects, contract opportunities, internships, and full-time software engineering or architecture roles. If you are looking for someone to design, build, optimize, or maintain a production-ready application, I would be glad to discuss your requirements. I can contribute across the complete development lifecycle—from architecture and UI engineering to multimedia systems, databases, backend integration, 3D/WebGL experiences, testing, deployment, and release. My primary strengths include Kotlin and Jetpack Compose for native Android applications, as well as React, Three.js, WebGL, and Firebase for interactive modern web experiences. If you have a project, product idea, technical requirement, or engineering opportunity that aligns with these skills, please feel free to reach out. I would be happy to connect, understand your needs, and explore how I can contribute to building it.', 'मैं वर्तमान में फ्रीलांस इंजीनियरिंग प्रोजेक्ट्स, कॉन्ट्रैक्ट अवसरों, इंटर्नशिप तथा फुल-टाइम सॉफ्टवेयर इंजीनियरिंग या आर्किटेक्चर भूमिकाओं के लिए उपलब्ध हूँ। यदि आप किसी प्रोडक्शन-रेडी एप्लिकेशन को डिजाइन, विकसित, ऑप्टिमाइज़ या मेंटेन करने के लिए किसी इंजीनियर की तलाश कर रहे हैं, तो मुझे आपकी आवश्यकताओं पर चर्चा करने में खुशी होगी। मैं पूरे डेवलपमेंट लाइफसाइकल में योगदान दे सकता हूँ—आर्किटेक्चर और UI इंजीनियरिंग से लेकर मल्टीमीडिया सिस्टम, डेटाबेस, बैकएंड इंटीग्रेशन, 3D/WebGL अनुभव, टेस्टिंग, डिप्लॉयमेंट और रिलीज़ तक। मेरी मुख्य विशेषज्ञताओं में नेटिव Android एप्लिकेशन के लिए Kotlin और Jetpack Compose तथा इंटरैक्टिव आधुनिक वेब अनुभवों के लिए React, Three.js, WebGL और Firebase शामिल हैं। यदि आपके पास कोई प्रोजेक्ट, प्रोडक्ट आइडिया, तकनीकी आवश्यकता या ऐसी इंजीनियरिंग opportunity है जो मेरी skills से मेल खाती है, तो कृपया मुझसे संपर्क करें। मुझे आपसे जुड़कर आपकी आवश्यकताओं को समझने और यह जानने में खुशी होगी कि मैं आपके प्रोजेक्ट के निर्माण में किस प्रकार योगदान दे सकता हूँ।')}
             </Text3D>
             <div className="flex flex-col gap-3">
-              <motion.a whileHover={!isMobile ? { x: 6 } : {}} href="mailto:ishanmall789@gmail.com" onClick={playUISound} className="tts-card inline-flex items-center gap-3 text-xl md:text-2xl font-bold transition-colors text-slate-900 hover:text-pink-600 w-fit group">
-                <Mail className="text-pink-500" /> <Text3D depth={2} color="currentColor" shadowColor="#e2e8f0" interactive={false}>ishanmall789@gmail.com</Text3D> <ArrowUpRight size={22} className="text-pink-500 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
+              <motion.a whileHover={!isMobile ? { x: 6 } : {}} href="mailto:ishanmall789@gmail.com" title="Email Ishan Mall" onClick={playUISound} className="tts-card inline-flex items-center gap-3 text-xl md:text-2xl font-bold transition-colors text-slate-900 hover:text-pink-600 w-fit group">
+                <Mail className="text-pink-500" /> <Text3D depth={2} color="currentColor" shadowColor="#e2e8f0">ishanmall789@gmail.com</Text3D> <ArrowUpRight size={22} className="text-pink-500 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
               </motion.a>
             </div>
           </div>
@@ -846,8 +1025,14 @@ const Footer = ({ rotateX, rotateY, isMobile }) => {
         </div>
         <div className="flex flex-col md:flex-row items-center justify-between gap-6 pt-8 border-t border-slate-200">
           <div className="flex flex-wrap gap-3">
-            {[{ label: 'GitHub', icon: Code2, url: 'https://github.com/ishanmall' }, { label: 'LinkedIn', icon: Briefcase, url: 'https://www.linkedin.com/in/ishan-mall-4b20ab296/' }, { label: 'YouTube', icon: Tv, url: 'https://www.youtube.com/@ishanmall9527' }, { label: 'Google Developer', icon: Code2, url: 'https://me.developers.google.com/u/114187295149454370660' }, { label: 'Credly', icon: Award, url: 'https://www.credly.com/users/ishan-mall/' }].map((social) => (
-              <motion.a key={social.label} href={social.url} target="_blank" rel="noreferrer" onClick={playUISound} whileHover={{ y: -3, boxShadow: '0 6px 10px -2px rgba(0,0,0,0.15)' }} whileTap={{ y: 0, boxShadow: 'none' }} className="tts-card flex items-center gap-2 px-4 py-2 rounded-full border font-bold bg-white/90 border-slate-200 text-slate-700 text-xs shadow-md transition-all active:scale-95"><social.icon size={16} /> <Text3D depth={1} color="text-slate-700">{social.label}</Text3D></motion.a>
+            {[
+              { label: 'GitHub', icon: Code2, url: 'https://github.com/ishanmall' },
+              { label: 'LinkedIn', icon: Briefcase, url: 'https://www.linkedin.com/in/ishan-mall-4b20ab296/' },
+              { label: 'YouTube', icon: Tv, url: 'https://www.youtube.com/@ishanmall9527' },
+              { label: 'Google Developer', icon: Code2, url: 'https://me.developers.google.com/u/114187295149454370660' },
+              { label: 'Credly', icon: Award, url: 'https://www.credly.com/users/ishan-mall/' }
+            ].map((social) => (
+              <motion.a key={social.label} href={social.url} target="_blank" rel="noopener noreferrer" title={`Ishan Mall on ${social.label}`} onClick={playUISound} whileHover={{ y: -3, boxShadow: '0 6px 10px -2px rgba(0,0,0,0.15)' }} whileTap={{ y: 0, boxShadow: 'none' }} className="tts-card flex items-center gap-2 px-4 py-2 rounded-full border font-bold bg-white/90 border-slate-200 text-slate-700 text-xs shadow-md transition-all active:scale-95"><social.icon size={16} /> <Text3D depth={1} color="text-slate-700">{social.label}</Text3D></motion.a>
             ))}
           </div>
           <Text3D as="p" depth={1} className="tts-card text-xs font-mono font-bold text-slate-400 cursor-pointer" onClick={playUISound}>&copy; {new Date().getFullYear()} Ishan Mall — Gorakhpur, UP, India.</Text3D>
@@ -925,17 +1110,10 @@ export default function App() {
 
       if (sourceElement) {
         const clone = sourceElement.cloneNode(true);
-        
         const hiddenElements = clone.querySelectorAll('[aria-hidden="true"]');
-        hiddenElements.forEach(el => {
-          if (el.parentNode) el.parentNode.removeChild(el);
-        });
-
+        hiddenElements.forEach(el => { if (el.parentNode) el.parentNode.removeChild(el); });
         const noTtsElements = clone.querySelectorAll('.no-tts');
-        noTtsElements.forEach(el => {
-          if (el.parentNode) el.parentNode.removeChild(el);
-        });
-
+        noTtsElements.forEach(el => { if (el.parentNode) el.parentNode.removeChild(el); });
         textToRead = clone.textContent;
       }
 
@@ -957,6 +1135,7 @@ export default function App() {
 
   return (
     <TranslationContext.Provider value={{ lang, t }}>
+      <SEOHead lang={lang} />
       <ReactLenis root options={{ lerp: isMobile ? 0.08 : 0.05, smoothWheel: true }}>
         <main className="min-h-screen bg-[#f8fafc] selection:bg-pink-500 selection:text-white overflow-hidden font-sans relative">
           <LoaderOverlay />
