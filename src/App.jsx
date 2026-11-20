@@ -109,10 +109,11 @@ const STRUCTURED_DATA = {
         { '@type': 'ListItem', position: 8, item: { '@type': 'WebApplication', name: 'Gaystiny', applicationCategory: 'EntertainmentApplication', url: 'https://gaystiny-a5016.web.app/', description: 'Humorous interactive prank questionnaire web app with animated transitions and playful fictional results.', author: { '@id': `${SITE_URL}/#person` } } },
         { '@type': 'ListItem', position: 9, item: { '@type': 'WebApplication', name: 'Mandir Dharshan', applicationCategory: 'ReferenceApplication', url: 'https://mandir-dharshan.web.app/', description: 'Large-scale visual temple knowledge catalogue driven by structured local data with custom location search and dark mode.', author: { '@id': `${SITE_URL}/#person` } } },
         { '@type': 'ListItem', position: 10, item: { '@type': 'WebApplication', name: 'Who Is God?', applicationCategory: 'EducationalApplication', url: 'https://who-is-god.web.app/', description: 'Interactive spiritual knowledge platform exploring the concept of God, divine philosophies, and Vedic Hindu philosophy.', author: { '@id': `${SITE_URL}/#person` } } },
-        { '@type': 'ListItem', position: 11, item: { '@type': 'SoftwareApplication', name: 'FacebookSwift', operatingSystem: 'Chrome', applicationCategory: 'BrowserApplication', url: 'https://github.com/ishanmall/FacebookSwift', description: 'Manifest V3 Chrome Extension for Facebook maintained on GitHub.', author: { '@id': `${SITE_URL}/#person` } } },
-        { '@type': 'ListItem', position: 12, item: { '@type': 'SoftwareApplication', name: 'WhatsAppSwift', operatingSystem: 'Chrome', applicationCategory: 'BrowserApplication', url: 'https://github.com/ishanmall/WhatsAppSwift', description: 'Manifest V3 Chrome Extension for WhatsApp maintained on GitHub.', author: { '@id': `${SITE_URL}/#person` } } },
-        { '@type': 'ListItem', position: 13, item: { '@type': 'SoftwareSourceCode', name: 'Ananta Sanatan', programmingLanguage: 'Kotlin', codeRepository: 'https://github.com/ishanmall/AnantaSanatan', description: 'Work-in-progress digital Sanatan knowledge Android app built with Kotlin, Jetpack Compose, Firestore, and Room.', author: { '@id': `${SITE_URL}/#person` } } },
-        { '@type': 'ListItem', position: 14, item: { '@type': 'SoftwareSourceCode', name: 'Portfolio Website Source', programmingLanguage: 'JavaScript, TypeScript, React, Three.js', codeRepository: 'https://github.com/ishanmall/Portfolio-Website', description: 'Full-stack 3D WebGL portfolio architecture using React, GSAP, Three.js, and Firebase.', author: { '@id': `${SITE_URL}/#person` } } },
+        { '@type': 'ListItem', position: 11, item: { '@type': 'WebApplication', name: 'Tic-Tac-Toe', applicationCategory: 'GameApplication', url: 'https://github.com/ishanmall/Tic-Tac-Toe', description: 'Neon-noir HTML5 Canvas Tic-Tac-Toe web game featuring an unbeatable Minimax AI, local 2-player mode, 60 FPS particle effects, synthwave visuals, and Web Audio SFX.', author: { '@id': `${SITE_URL}/#person` } } },
+        { '@type': 'ListItem', position: 12, item: { '@type': 'SoftwareApplication', name: 'FacebookSwift', operatingSystem: 'Chrome', applicationCategory: 'BrowserApplication', url: 'https://github.com/ishanmall/FacebookSwift', description: 'Manifest V3 Chrome Extension for Facebook maintained on GitHub.', author: { '@id': `${SITE_URL}/#person` } } },
+        { '@type': 'ListItem', position: 13, item: { '@type': 'SoftwareApplication', name: 'WhatsAppSwift', operatingSystem: 'Chrome', applicationCategory: 'BrowserApplication', url: 'https://github.com/ishanmall/WhatsAppSwift', description: 'Manifest V3 Chrome Extension for WhatsApp maintained on GitHub.', author: { '@id': `${SITE_URL}/#person` } } },
+        { '@type': 'ListItem', position: 14, item: { '@type': 'SoftwareSourceCode', name: 'Ananta Sanatan', programmingLanguage: 'Kotlin', codeRepository: 'https://github.com/ishanmall/AnantaSanatan', description: 'Work-in-progress digital Sanatan knowledge Android app built with Kotlin, Jetpack Compose, Firestore, and Room.', author: { '@id': `${SITE_URL}/#person` } } },
+        { '@type': 'ListItem', position: 15, item: { '@type': 'SoftwareSourceCode', name: 'Portfolio Website Source', programmingLanguage: 'JavaScript, TypeScript, React, Three.js', codeRepository: 'https://github.com/ishanmall/Portfolio-Website', description: 'Full-stack 3D WebGL portfolio architecture using React, GSAP, Three.js, and Firebase.', author: { '@id': `${SITE_URL}/#person` } } },
       ],
     },
   ],
@@ -128,7 +129,7 @@ const SEOHead = ({ lang = 'en' }) => {
         : 'Ishan Mall — Android Developer, Software Engineer | Apps, 3D Websites, NASA & ISRO Certifications';
 
     const description =
-      'Official portfolio of Ishan Mall (B.Tech CSE, AKTU, Gorakhpur). Explore published Android apps (GalleryBox, Ananta Brahmanda, ResumeMakers, Ananta Gita, Water Ejector), 3D/Web platforms (Cosmic Codex, Mandir Dharshan, Who Is God?, Gaystiny), Chrome Extensions (FacebookSwift, WhatsAppSwift), and 30+ NASA, ISRO/IIRS, Google Developer, and Cisco certifications.';
+      'Official portfolio of Ishan Mall (B.Tech CSE, AKTU, Gorakhpur). Explore published Android apps (GalleryBox, Ananta Brahmanda, ResumeMakers, Ananta Gita, Water Ejector), 3D/Web platforms (Cosmic Codex, Mandir Dharshan, Who Is God?, Gaystiny, Tic-Tac-Toe), Chrome Extensions (FacebookSwift, WhatsAppSwift), and 30+ NASA, ISRO/IIRS, Google Developer, and Cisco certifications.';
 
     document.title = title;
 
@@ -143,7 +144,7 @@ const SEOHead = ({ lang = 'en' }) => {
     };
 
     setMeta('name', 'description', description);
-    setMeta('name', 'keywords', 'Ishan Mall, Ishan Mall portfolio, Android Developer India, Kotlin Jetpack Compose Developer, GalleryBox, Ananta Brahmanda, ResumeMakers, Ananta Gita, Water Ejector, Cosmic Codex, Mandir Dharshan, Who Is God, Gaystiny, FacebookSwift, WhatsAppSwift, Ananta Sanatan, NASA ARSET certified, ISRO IIRS certified, AKTU B.Tech CSE, Three.js WebGL Developer, Gorakhpur Software Engineer');
+    setMeta('name', 'keywords', 'Ishan Mall, Ishan Mall portfolio, Android Developer India, Kotlin Jetpack Compose Developer, GalleryBox, Ananta Brahmanda, ResumeMakers, Ananta Gita, Water Ejector, Cosmic Codex, Mandir Dharshan, Who Is God, Gaystiny, Tic-Tac-Toe, FacebookSwift, WhatsAppSwift, Ananta Sanatan, NASA ARSET certified, ISRO IIRS certified, AKTU B.Tech CSE, Three.js WebGL Developer, Gorakhpur Software Engineer');
     setMeta('name', 'author', 'Ishan Mall');
     setMeta('name', 'robots', 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1');
 
@@ -656,6 +657,18 @@ const UnifiedDatabase = ({ rotateX, rotateY, isMobile }) => {
       tags: ['Websites', 'Spirituality', 'Hindu Philosophy', 'Vedic Knowledge'],
       icon: <BookOpen size={24} className="text-amber-500" />,
       url: 'https://who-is-god.web.app/'
+    },
+    {
+      title: 'Tic-Tac-Toe',
+      type: 'Web Game',
+      category: 'Websites',
+      desc: t(
+        'Neon-noir HTML5 Canvas Tic-Tac-Toe web game featuring an unbeatable Minimax AI, local 2-player mode, 60 FPS particle effects, synthwave visuals, and Web Audio SFX.',
+        'अनबीटेबल मिनिमैक्स AI, लोकल 2-प्लेयर मोड, 60 FPS पार्टिकल इफेक्ट्स, सिंथवेव विजुअल्स और वेब ऑडियो SFX के साथ नियॉन-नॉयर HTML5 कैनवास टिक-टैक-टो वेब गेम।'
+      ),
+      tags: ['Websites', 'HTML5 Canvas', 'Minimax AI', 'Game'],
+      icon: <Play size={24} className="text-cyan-500" />,
+      url: 'https://github.com/ishanmall/Tic-Tac-Toe'
     },
     {
       title: 'FacebookSwift',
